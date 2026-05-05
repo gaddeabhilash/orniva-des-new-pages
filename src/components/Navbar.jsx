@@ -15,10 +15,19 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close mobile menu on route change
+  // Close mobile menu on route change and handle scroll lock
   useEffect(() => {
     setIsMobileMenuOpen(false);
+    document.body.style.overflow = 'unset';
   }, [location]);
+
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  }, [isMobileMenuOpen]);
 
   const navLinks = [
     { name: 'Home', path: '/' },
@@ -31,14 +40,14 @@ const Navbar = () => {
   return (
     <header 
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'py-4 bg-white/90 backdrop-blur-md shadow-sm' : 'py-6 bg-transparent'
-      }`}
+        isScrolled || isMobileMenuOpen ? 'py-3 bg-white shadow-sm' : 'py-4 bg-transparent md:bg-transparent'
+      } ${!isScrolled && !isMobileMenuOpen ? 'max-md:bg-white max-md:py-3 max-md:shadow-sm' : ''}`}
     >
       <div className="container mx-auto px-4 md:px-8 flex justify-between items-center">
         {/* Logo */}
-        <Link to="/" className="text-2xl font-heading font-bold tracking-tight text-primary z-50">
-          Orniva
-          <span className="block text-[0.65rem] uppercase tracking-widest font-sans font-medium text-neutral-500 -mt-1">
+        <Link to="/" className="flex items-baseline gap-2 text-xl md:text-2xl font-heading font-bold tracking-tight text-primary z-50">
+          <span>Orniva</span>
+          <span className="text-[0.6rem] md:text-[0.7rem] uppercase tracking-[0.2em] font-sans font-medium text-neutral-500">
             Design Studio
           </span>
         </Link>
@@ -61,7 +70,7 @@ const Navbar = () => {
           </ul>
           <Link 
             to="/contact" 
-            className="px-6 py-2.5 bg-primary text-white rounded-full text-sm font-medium hover:bg-neutral-800 transition-colors"
+            className="px-6 py-2 bg-primary text-white rounded-full text-sm font-medium hover:bg-neutral-800 transition-colors"
           >
             Get Quote
           </Link>
@@ -69,10 +78,10 @@ const Navbar = () => {
 
         {/* Mobile Menu Button */}
         <button 
-          className="md:hidden text-primary z-50"
+          className="md:hidden text-primary z-50 p-2"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
-          {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
 
         {/* Mobile Nav Overlay */}
@@ -81,7 +90,7 @@ const Navbar = () => {
             isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
         >
-          <ul className="flex flex-col items-center gap-8 text-2xl font-heading">
+          <ul className="flex flex-col items-center gap-10 text-3xl font-heading">
             {navLinks.map((link) => (
               <li key={link.name}>
                 <Link 

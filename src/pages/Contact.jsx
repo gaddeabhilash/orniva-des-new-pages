@@ -96,7 +96,7 @@ const Contact = () => {
             )}
             
             <div className="mt-8 pt-8 border-t border-neutral-200">
-              <a href="https://wa.me/1234567890" target="_blank" rel="noreferrer" className="w-full py-4 bg-[#25D366]/10 text-[#25D366] border border-[#25D366]/30 rounded-xl font-medium hover:bg-[#25D366]/20 transition-colors flex justify-center items-center gap-2">
+              <a href="https://wa.me/919398801834" target="_blank" rel="noreferrer" className="w-full py-4 bg-[#25D366]/10 text-[#25D366] border border-[#25D366]/30 rounded-xl font-medium hover:bg-[#25D366]/20 transition-colors flex justify-center items-center gap-2">
                 <MessageCircle size={20} /> Chat on WhatsApp
               </a>
             </div>
@@ -116,7 +116,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <h4 className="font-bold text-primary mb-1">Studio Location</h4>
-                    <p className="text-neutral-500">123 Design Boulevard, Suite 400<br/>New York, NY 10001</p>
+                    <p className="text-neutral-500">Hyderabad, Telangana</p>
                   </div>
                 </li>
                 <li className="flex gap-4">
@@ -125,7 +125,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <h4 className="font-bold text-primary mb-1">Phone</h4>
-                    <p className="text-neutral-500">+1 (555) 123-4567<br/>Mon-Fri, 9am - 6pm EST</p>
+                    <p className="text-neutral-500">+91 93988 01834<br/>+91 79931 07169</p>
                   </div>
                 </li>
                 <li className="flex gap-4">
@@ -134,18 +134,15 @@ const Contact = () => {
                   </div>
                   <div>
                     <h4 className="font-bold text-primary mb-1">Email</h4>
-                    <p className="text-neutral-500">hello@ornivadesign.com<br/>careers@ornivadesign.com</p>
+                    <p className="text-neutral-500">ornivadesignstudio@gmail.com</p>
                   </div>
                 </li>
               </ul>
             </div>
 
-            {/* Google Map Mock */}
-            <div className="w-full h-[300px] bg-neutral-200 rounded-3xl overflow-hidden relative grayscale hover:grayscale-0 transition-all duration-500">
-              <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Map Location" className="w-full h-full object-cover" />
-              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center shadow-xl animate-bounce">
-                <MapPin size={24} />
-              </div>
+            {/* Google Map Image */}
+            <div className="w-full h-[400px] bg-neutral-200 rounded-3xl overflow-hidden relative border border-neutral-100 shadow-xl">
+              <img src="/map-location-v2.png" alt="Orniva Studio Hyderabad, Telangana" className="w-full h-full object-cover" />
             </div>
           </motion.div>
 

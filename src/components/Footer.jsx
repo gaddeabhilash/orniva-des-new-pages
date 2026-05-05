@@ -63,15 +63,15 @@ const Footer = () => {
             <ul className="space-y-4 text-neutral-400 text-sm">
               <li className="flex gap-3">
                 <MapPin size={18} className="text-accent shrink-0" />
-                <span>123 Design Boulevard, Suite 400<br/>New York, NY 10001</span>
+                <span>Hyderabad, Telangana</span>
               </li>
               <li className="flex items-center gap-3">
                 <Phone size={18} className="text-accent shrink-0" />
-                <span>+1 (555) 123-4567</span>
+                <span>+91 93988 01834<br/>+91 79931 07169</span>
               </li>
               <li className="flex items-center gap-3">
                 <Mail size={18} className="text-accent shrink-0" />
-                <span>hello@ornivadesign.com</span>
+                <span>ornivadesignstudio@gmail.com</span>
               </li>
             </ul>
           </div>

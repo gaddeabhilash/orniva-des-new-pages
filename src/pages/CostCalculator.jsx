@@ -54,35 +54,35 @@ const CostCalculator = () => {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="w-full lg:w-1/2 relative h-[500px] lg:h-[600px] flex items-center justify-center"
+            className="w-full lg:w-1/2 relative h-[350px] md:h-[500px] lg:h-[600px] flex items-center justify-center mt-12 lg:mt-0"
           >
-            {/* Background Room Image (Placeholder) */}
-            <div className="absolute inset-0 right-10 rounded-[2rem] overflow-hidden shadow-2xl bg-neutral-200">
+            {/* Background Room Image */}
+            <div className="absolute inset-0 md:right-10 rounded-[2rem] overflow-hidden shadow-2xl bg-neutral-200">
               <img 
                 src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
-                alt="Beautiful living room with pink sofa" 
+                alt="Beautiful living room" 
                 className="w-full h-full object-cover"
               />
             </div>
             
-            {/* Phone Mockup overlay */}
+            {/* Phone Mockup overlay - Refined positioning and style */}
             <motion.div 
-              initial={{ y: 50, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
+              initial={{ y: 50, opacity: 0, rotate: 0 }}
+              animate={{ y: 0, opacity: 1, rotate: -2 }}
               transition={{ duration: 0.8, delay: 0.5, type: 'spring' }}
-              className="absolute -right-4 lg:-right-12 bottom-10 w-[280px] h-[580px] bg-black rounded-[3rem] shadow-2xl border-[12px] border-black overflow-hidden z-20 flex flex-col items-center justify-center"
+              className="hidden md:flex absolute -right-6 lg:-right-16 bottom-8 w-[260px] lg:w-[300px] h-[520px] lg:h-[600px] bg-black rounded-[3rem] shadow-[0_20px_50px_rgba(0,0,0,0.4)] border-[12px] border-black overflow-hidden z-20 flex-col items-center justify-center"
             >
               <div className="absolute top-0 w-32 h-6 bg-black rounded-b-3xl z-30"></div>
-              <div className="w-full h-full bg-[#1C1C1E] p-4 flex flex-col justify-end pb-8">
+              <div className="w-full h-full bg-[#1C1C1E] p-3 md:p-4 flex flex-col justify-end pb-6 md:pb-8">
                 {/* Mock Calculator UI on Phone */}
-                <div className="w-full text-right text-white text-5xl font-light mb-6">
+                <div className="w-full text-right text-white text-3xl md:text-5xl font-light mb-4 md:mb-6">
                   0
                 </div>
-                <div className="grid grid-cols-4 gap-3 w-full">
+                <div className="grid grid-cols-4 gap-2 md:gap-3 w-full">
                   {['C','±','%','÷','7','8','9','×','4','5','6','-','1','2','3','+','0','.','='].map((btn, i) => (
                     <div 
                       key={i} 
-                      className={`h-14 rounded-full flex items-center justify-center text-xl font-medium ${
+                      className={`h-10 md:h-14 rounded-full flex items-center justify-center text-base md:text-xl font-medium ${
                         btn === '0' ? 'col-span-2' : ''
                       } ${
                         ['÷','×','-','+','='].includes(btn) 

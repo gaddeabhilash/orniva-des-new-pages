@@ -18,21 +18,64 @@ const About = () => {
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}
             className="text-xl text-neutral-600 leading-relaxed"
           >
-            Founded in 2015, Orniva Design Studio has grown from a passionate duo to an award-winning agency dedicated to transforming how people experience interior environments.
+            Founded in 2026, Orniva Design Studio is a forward-thinking agency dedicated to transforming how people experience interior environments with modern innovation and timeless elegance.
           </motion.p>
         </div>
       </section>
 
-      {/* Story Image */}
-      <section className="py-12">
-        <div className="container mx-auto px-4 md:px-8">
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
-            className="w-full h-[60vh] rounded-3xl overflow-hidden relative"
-          >
-            <img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80" alt="Orniva Studio" className="w-full h-full object-cover" />
-          </motion.div>
+      {/* Rolling Projects Marquee */}
+      <section className="py-20 bg-white overflow-hidden relative">
+        {/* Subtle Grid Background */}
+        <div className="absolute inset-0 z-0 opacity-[0.03]" 
+             style={{ backgroundImage: 'linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)', backgroundSize: '100px 100px' }}>
         </div>
+
+        <div className="relative z-10">
+          <div className="flex gap-4 md:gap-8 animate-marquee whitespace-nowrap">
+            <div className="flex gap-4 md:gap-8 min-w-full shrink-0 items-center">
+              {[
+                'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6',
+                'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace',
+                'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0',
+                'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d',
+                'https://images.unsplash.com/photo-1600566752355-35792bedcfea',
+                'https://images.unsplash.com/photo-1600121848594-d8644e57abab'
+              ].map((img, i) => (
+                <div key={i} className={`shrink-0 rounded-2xl overflow-hidden shadow-xl ${i % 2 === 0 ? 'w-[300px] h-[400px]' : 'w-[450px] h-[320px]'}`}>
+                  <img src={`${img}?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80`} alt="Project" className="w-full h-full object-cover" />
+                </div>
+              ))}
+            </div>
+            {/* Duplicate for infinite effect */}
+            <div className="flex gap-4 md:gap-8 min-w-full shrink-0 items-center">
+              {[
+                'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6',
+                'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace',
+                'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0',
+                'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d',
+                'https://images.unsplash.com/photo-1600566752355-35792bedcfea',
+                'https://images.unsplash.com/photo-1600121848594-d8644e57abab'
+              ].map((img, i) => (
+                <div key={i} className={`shrink-0 rounded-2xl overflow-hidden shadow-xl ${i % 2 === 0 ? 'w-[300px] h-[400px]' : 'w-[450px] h-[320px]'}`}>
+                  <img src={`${img}?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80`} alt="Project" className="w-full h-full object-cover" />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <style dangerouslySetInnerHTML={{ __html: `
+          @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+          }
+          .animate-marquee {
+            animation: marquee 40s linear infinite;
+          }
+          .animate-marquee:hover {
+            animation-play-state: paused;
+          }
+        `}} />
       </section>
 
       {/* Mission & Vision */}
@@ -62,10 +105,10 @@ const About = () => {
         <div className="container mx-auto px-4 md:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             {[
-              { num: '8+', label: 'Years Experience' },
-              { num: '150+', label: 'Projects Completed' },
-              { num: '12', label: 'Design Awards' },
-              { num: '100%', label: 'Client Satisfaction' }
+              { num: '24/7', label: 'Support' },
+              { num: '100%', label: 'Commitment' },
+              { num: 'Modern', label: 'Aesthetics' },
+              { num: 'Premium', label: 'Quality' }
             ].map((stat, i) => (
               <div key={i}>
                 <div className="text-5xl md:text-6xl font-heading font-bold text-accent mb-2">{stat.num}</div>
@@ -76,28 +119,57 @@ const About = () => {
         </div>
       </section>
 
-      {/* Team */}
-      <section className="py-24 bg-secondary/30">
+      {/* Team Section */}
+      <section className="py-32 bg-white mt-12">
         <div className="container mx-auto px-4 md:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-heading font-bold text-primary mb-4">Meet the Team</h2>
-            <p className="text-neutral-500 max-w-2xl mx-auto">The creative minds and technical experts behind our award-winning designs.</p>
+          <div className="text-center mb-24 pt-10">
+            <h2 
+              className="text-5xl md:text-7xl mb-6 text-primary"
+              style={{ fontFamily: "'Dancing Script', cursive" }}
+            >
+              together, we've achieved great things
+            </h2>
+            <p className="text-neutral-500 max-w-3xl mx-auto text-lg leading-relaxed">
+              At Orniva, we foster strong partnerships to deliver exceptional results. We work closely with our clients to understand their unique needs and deliver tailored solutions.
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-6xl mx-auto px-4">
             {[
-              { name: 'Sarah Jenkins', role: 'Principal Designer', img: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80' },
-              { name: 'David Chen', role: 'Lead Architect', img: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80' },
-              { name: 'Amira Hassan', role: 'Interior Stylist', img: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80' }
+              { name: 'P Harsha', role: 'Design Lead', img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
+              { name: 'G Lakshmi Abhilash', role: 'CEO & Project Manager', img: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
+              { name: 'M Rudiwka', role: 'Designer & Project Lead', img: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' }
             ].map((member, i) => (
-              <div key={i} className="text-center group">
-                <div className="rounded-full overflow-hidden w-48 h-48 mx-auto mb-6 relative">
-                  <div className="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
-                  <img src={member.img} alt={member.name} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" />
+              <motion.div 
+                key={i}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: i * 0.1 }}
+                className="group relative"
+              >
+                <div className="relative aspect-[3/4] overflow-hidden rounded-2xl mb-8 shadow-sm group-hover:shadow-2xl transition-all duration-500">
+                  <img 
+                    src={member.img} 
+                    alt={member.name} 
+                    className="w-full h-full object-cover sepia-[0.2] brightness-[1.05] group-hover:scale-105 transition-transform duration-700" 
+                  />
+                  {/* Soft Gradient Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 </div>
-                <h3 className="text-2xl font-heading font-bold text-primary">{member.name}</h3>
-                <p className="text-accent uppercase tracking-wider text-sm mt-1">{member.role}</p>
-              </div>
+                
+                <div className="text-center md:text-left">
+                  <h3 className="text-3xl font-heading font-bold text-primary mb-2 tracking-tight group-hover:text-accent transition-colors duration-300">
+                    {member.name}
+                  </h3>
+                  <div className="flex items-center justify-center md:justify-start gap-3">
+                    <span className="w-8 h-[1px] bg-accent"></span>
+                    <p className="text-neutral-500 uppercase tracking-widest text-[0.7rem] font-medium">
+                      {member.role}
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
             ))}
           </div>
         </div>
