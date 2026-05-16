@@ -134,44 +134,7 @@ const About = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-6xl mx-auto px-4">
-            {[
-              { name: 'P Harsha', role: 'Design Lead', img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-              { name: 'G Lakshmi Abhilash', role: 'CEO & Project Manager', img: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-              { name: 'M Rudiwka', role: 'Designer & Project Lead', img: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' }
-            ].map((member, i) => (
-              <motion.div 
-                key={i}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: i * 0.1 }}
-                className="group relative"
-              >
-                <div className="relative aspect-[3/4] overflow-hidden rounded-2xl mb-8 shadow-sm group-hover:shadow-2xl transition-all duration-500">
-                  <img 
-                    src={member.img} 
-                    alt={member.name} 
-                    className="w-full h-full object-cover sepia-[0.2] brightness-[1.05] group-hover:scale-105 transition-transform duration-700" 
-                  />
-                  {/* Soft Gradient Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                </div>
-                
-                <div className="text-center md:text-left">
-                  <h3 className="text-3xl font-heading font-bold text-primary mb-2 tracking-tight group-hover:text-accent transition-colors duration-300">
-                    {member.name}
-                  </h3>
-                  <div className="flex items-center justify-center md:justify-start gap-3">
-                    <span className="w-8 h-[1px] bg-accent"></span>
-                    <p className="text-neutral-500 uppercase tracking-widest text-[0.7rem] font-medium">
-                      {member.role}
-                    </p>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+
         </div>
       </section>
       
