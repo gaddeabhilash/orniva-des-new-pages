@@ -107,12 +107,12 @@ const CostCalculator = () => {
 
   // Interactive Form Section
   return (
-    <div className="pt-32 pb-24 min-h-screen bg-secondary/50">
+    <div className="pt-24 pb-8 min-h-screen bg-secondary/50 flex flex-col justify-center">
       <div className="container mx-auto px-4 md:px-8 max-w-4xl">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-16"
+          className="text-center mb-8"
         >
           <h1 className="text-4xl md:text-5xl font-heading font-bold text-primary mb-4">
             Cost Estimator
@@ -124,17 +124,17 @@ const CostCalculator = () => {
           <div className="flex flex-col md:flex-row">
             
             {/* Form Side */}
-            <div className="w-full md:w-3/5 p-8 md:p-12">
+            <div className="w-full md:w-3/5 p-6 md:p-8">
               {!isCalculated ? (
-                <form onSubmit={calculateEstimate} className="space-y-8">
+                <form onSubmit={calculateEstimate} className="space-y-5">
                   <div>
-                    <label className="block text-sm font-medium text-primary mb-3">What kind of space are we designing?</label>
-                    <div className="grid grid-cols-2 gap-4">
+                    <label className="block text-sm font-medium text-primary mb-2">What kind of space are we designing?</label>
+                    <div className="grid grid-cols-2 gap-3">
                       {['Residential', 'Commercial', 'Office', 'Hospitality'].map(type => (
                         <div 
                           key={type}
                           onClick={() => setFormData({...formData, roomType: type})}
-                          className={`p-4 rounded-xl border-2 cursor-pointer transition-all ${
+                          className={`p-3 rounded-xl border-2 cursor-pointer transition-all ${
                             formData.roomType === type 
                               ? 'border-accent bg-accent/5' 
                               : 'border-neutral-200 hover:border-accent/30'
@@ -150,24 +150,24 @@ const CostCalculator = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-primary mb-3">Total Area (Sq Ft)</label>
+                    <label className="block text-sm font-medium text-primary mb-2">Total Area (Sq Ft)</label>
                     <input 
                       type="number" 
                       required
                       placeholder="e.g. 1500"
                       value={formData.area}
                       onChange={(e) => setFormData({...formData, area: e.target.value})}
-                      className="w-full px-5 py-4 bg-neutral-50 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all text-primary"
+                      className="w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all text-primary"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-primary mb-3">Quality & Finish Preference</label>
+                    <label className="block text-sm font-medium text-primary mb-2">Quality & Finish Preference</label>
                     <select 
                       required
                       value={formData.budget}
                       onChange={(e) => setFormData({...formData, budget: e.target.value})}
-                      className="w-full px-5 py-4 bg-neutral-50 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all text-primary appearance-none"
+                      className="w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all text-primary appearance-none"
                     >
                       <option value="" disabled>Select finish quality</option>
                       <option value="essential">Essential (Budget Friendly)</option>
@@ -178,7 +178,7 @@ const CostCalculator = () => {
 
                   <button 
                     type="submit"
-                    className="w-full py-4 bg-primary text-white rounded-xl font-medium hover:bg-neutral-800 transition-colors flex items-center justify-center gap-2"
+                    className="w-full py-3 bg-primary text-white rounded-xl font-medium hover:bg-neutral-800 transition-colors flex items-center justify-center gap-2"
                   >
                     <Calculator size={20} />
                     Generate Estimate
@@ -206,21 +206,21 @@ const CostCalculator = () => {
                     >
                       Recalculate
                     </button>
-                    <button className="flex-1 py-3 bg-primary text-white rounded-xl font-medium hover:bg-neutral-800 transition-colors">
+                    <a href="https://cal.com/orniva-design-studio/30min" target="_blank" rel="noreferrer" className="flex-1 py-3 bg-primary text-white rounded-xl font-medium hover:bg-neutral-800 transition-colors text-center block leading-tight pt-3.5">
                       Book Consultation
-                    </button>
+                    </a>
                   </div>
                 </motion.div>
               )}
             </div>
 
             {/* Info Side */}
-            <div className="w-full md:w-2/5 bg-primary text-white p-8 md:p-12 flex flex-col justify-between relative overflow-hidden">
+            <div className="w-full md:w-2/5 bg-primary text-white p-6 md:p-8 flex flex-col justify-between relative overflow-hidden">
               <div className="absolute top-0 right-0 w-64 h-64 bg-accent/10 rounded-full blur-3xl -mr-20 -mt-20"></div>
               
               <div className="relative z-10">
-                <h3 className="text-2xl font-heading font-semibold mb-6">What's included?</h3>
-                <ul className="space-y-4">
+                <h3 className="text-xl font-heading font-semibold mb-4">What's included?</h3>
+                <ul className="space-y-3">
                   {[
                     'Detailed 2D & 3D planning',
                     'Material selection guidance',
@@ -229,22 +229,22 @@ const CostCalculator = () => {
                     'Post-handover support'
                   ].map((item, i) => (
                     <li key={i} className="flex items-start gap-3 text-neutral-300">
-                      <Check size={20} className="text-accent shrink-0 mt-0.5" />
+                      <Check size={18} className="text-accent shrink-0 mt-0.5" />
                       <span className="text-sm leading-relaxed">{item}</span>
                     </li>
                   ))}
                 </ul>
               </div>
 
-              <div className="relative z-10 mt-12 pt-8 border-t border-neutral-800">
-                <p className="text-sm text-neutral-400 italic">
+              <div className="relative z-10 mt-8 pt-6 border-t border-neutral-800">
+                <p className="text-xs text-neutral-400 italic">
                   "The calculator gave us a very realistic idea of what to expect, making our planning phase so much easier."
                 </p>
-                <div className="mt-4 flex items-center gap-3">
-                  <div className="w-10 h-10 bg-neutral-800 rounded-full"></div>
+                <div className="mt-3 flex items-center gap-3">
+                  <div className="w-8 h-8 bg-neutral-800 rounded-full"></div>
                   <div>
-                    <p className="text-sm font-medium text-white">Sarah Jenkins</p>
-                    <p className="text-xs text-neutral-500">Residential Client</p>
+                    <p className="text-xs font-medium text-white">Sarah Jenkins</p>
+                    <p className="text-[10px] text-neutral-500">Residential Client</p>
                   </div>
                 </div>
               </div>

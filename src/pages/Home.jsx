@@ -89,9 +89,9 @@ const Home = () => {
             transition={{ duration: 0.8, delay: 0.6 }}
             className="flex flex-col sm:flex-row items-center justify-center gap-4"
           >
-            <Link to="/contact" className="px-8 py-4 bg-accent text-white rounded-full font-medium hover:bg-white hover:text-primary transition-colors w-full sm:w-auto">
+            <a href="https://cal.com/orniva-design-studio/30min" target="_blank" rel="noreferrer" className="px-8 py-4 bg-accent text-white rounded-full font-medium hover:bg-white hover:text-primary transition-colors w-full sm:w-auto text-center">
               Get Free Consultation
-            </Link>
+            </a>
             <Link to="/projects" className="px-8 py-4 border border-white text-white rounded-full font-medium hover:bg-white hover:text-primary transition-colors w-full sm:w-auto flex items-center justify-center gap-2">
               View Design Concepts
             </Link>
