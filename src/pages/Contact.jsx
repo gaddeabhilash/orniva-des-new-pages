@@ -54,7 +54,7 @@ const Contact = () => {
   };
 
   return (
-    <div className="pt-24 pb-8 bg-white h-screen flex flex-col justify-center">
+    <div className="pt-32 pb-32 lg:pt-24 lg:pb-8 bg-white min-h-screen lg:h-screen flex flex-col justify-center">
       <div className="container mx-auto px-4 md:px-8">
         
         <motion.div 

@@ -111,8 +111,8 @@ const About = () => {
               { num: 'Premium', label: 'Quality' }
             ].map((stat, i) => (
               <div key={i}>
-                <div className="text-5xl md:text-6xl font-heading font-bold text-accent mb-2">{stat.num}</div>
-                <div className="text-sm uppercase tracking-wider text-neutral-400">{stat.label}</div>
+                <div className="text-3xl md:text-6xl font-heading font-bold text-accent mb-2 truncate" title={stat.num}>{stat.num}</div>
+                <div className="text-xs md:text-sm uppercase tracking-wider text-neutral-400">{stat.label}</div>
               </div>
             ))}
           </div>
