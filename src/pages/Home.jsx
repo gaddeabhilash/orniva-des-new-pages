@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, ChevronDown } from 'lucide-react';
+import { ArrowRight, ChevronDown, Loader2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { supabase } from '../lib/supabase';
 
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
@@ -47,6 +48,49 @@ const FAQItem = ({ question, answer }) => {
 };
 
 const Home = () => {
+  const [formData, setFormData] = useState({ name: '', phone: '', project_type: '' });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
+  const [isSelectOpen, setIsSelectOpen] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setErrorMsg('');
+
+    const cleanedPhone = formData.phone.replace(/\D/g, '');
+    if (cleanedPhone.length !== 10) {
+      setErrorMsg('Please enter a valid 10-digit phone number.');
+      setIsSubmitting(false);
+      return;
+    }
+
+    try {
+      const { error } = await supabase
+        .from('inquiries')
+        .insert([
+          { 
+            source: 'landing_page',
+            name: formData.name,
+            phone: formData.phone,
+            project_type: formData.project_type
+          }
+        ]);
+
+      if (error) throw error;
+
+      setIsSubmitted(true);
+      setFormData({ name: '', phone: '', project_type: '' });
+      setTimeout(() => setIsSubmitted(false), 5000);
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setErrorMsg(error.message || 'An unexpected error occurred. Please check your Supabase configuration.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className="bg-white">
       
@@ -286,27 +330,91 @@ const Home = () => {
             <h2 className="text-4xl md:text-5xl font-heading font-bold mb-6">Ready to transform your space?</h2>
             <p className="text-neutral-400 text-lg mb-12">Tell us what you are dreaming of. We will reply within 24 hours with next steps and a rough estimate.</p>
             
-            <form className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto mb-8 text-left">
-              <div>
-                <input type="text" placeholder="Your Name" className="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-accent text-white" />
+            {isSubmitted ? (
+              <div className="max-w-2xl mx-auto mb-8 p-6 bg-accent/20 border border-accent/30 rounded-xl text-center">
+                <h3 className="text-xl font-bold text-white mb-2">Request Received!</h3>
+                <p className="text-neutral-300">Thank you for reaching out. Our team will contact you shortly.</p>
               </div>
-              <div>
-                <input type="tel" placeholder="Phone Number" className="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-accent text-white" />
-              </div>
-              <div className="md:col-span-2">
-                <select className="w-full px-5 py-4 bg-[#141414] border border-white/10 rounded-xl focus:outline-none focus:border-accent text-white appearance-none">
-                  <option value="">Select Project Type</option>
-                  <option value="residential">Residential Interior</option>
-                  <option value="commercial">Commercial Space</option>
-                  <option value="renovation">Renovation</option>
-                </select>
-              </div>
-              <div className="md:col-span-2 mt-4">
-                <button type="submit" className="w-full py-4 bg-accent text-white rounded-xl font-medium hover:bg-white hover:text-primary transition-colors">
-                  Submit Inquiry
-                </button>
-              </div>
-            </form>
+            ) : (
+              <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto mb-8 text-left">
+                <div>
+                  <input 
+                    type="text" required placeholder="Your Name" 
+                    value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})}
+                    className="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-accent text-white" 
+                  />
+                </div>
+                <div>
+                  <input 
+                    type="tel" required placeholder="Phone Number" 
+                    value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})}
+                    className="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-accent text-white" 
+                  />
+                </div>
+                <div className="md:col-span-2 relative">
+                  <div 
+                    onClick={() => setIsSelectOpen(!isSelectOpen)}
+                    className="w-full px-5 py-4 bg-[#141414] border border-white/10 rounded-xl cursor-pointer flex justify-between items-center text-white"
+                  >
+                    <span className={formData.project_type ? "text-white" : "text-neutral-400"}>
+                      {formData.project_type === 'residential' ? 'Residential Interior' :
+                       formData.project_type === 'commercial' ? 'Commercial Space' :
+                       formData.project_type === 'renovation' ? 'Renovation' :
+                       'Select Project Type'}
+                    </span>
+                    <ChevronDown size={20} className={`text-neutral-400 transition-transform ${isSelectOpen ? 'rotate-180' : ''}`} />
+                  </div>
+                  
+                  <AnimatePresence>
+                    {isSelectOpen && (
+                      <motion.div 
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        className="absolute z-50 w-full mt-2 bg-[#1a1a1a] border border-white/10 rounded-xl overflow-hidden shadow-2xl"
+                      >
+                        {[
+                          { value: 'residential', label: 'Residential Interior' },
+                          { value: 'commercial', label: 'Commercial Space' },
+                          { value: 'renovation', label: 'Renovation' }
+                        ].map((option) => (
+                          <div 
+                            key={option.value}
+                            onClick={() => {
+                              setFormData({...formData, project_type: option.value});
+                              setIsSelectOpen(false);
+                            }}
+                            className={`px-5 py-4 cursor-pointer transition-colors ${formData.project_type === option.value ? 'bg-accent/20 text-accent' : 'text-white hover:bg-white/5'}`}
+                          >
+                            {option.label}
+                          </div>
+                        ))}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+                
+                {errorMsg && (
+                  <div className="md:col-span-2 p-3 bg-red-500/10 text-red-400 text-sm rounded-xl border border-red-500/20">
+                    {errorMsg}
+                  </div>
+                )}
+                
+                <div className="md:col-span-2 mt-4">
+                  <button 
+                    type="submit" 
+                    disabled={isSubmitting || !formData.project_type}
+                    className="w-full py-4 bg-accent text-white rounded-xl font-medium hover:bg-white hover:text-primary transition-colors flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+                  >
+                    {isSubmitting ? (
+                      <>Submitting... <Loader2 size={18} className="animate-spin" /></>
+                    ) : (
+                      'Submit Inquiry'
+                    )}
+                  </button>
+                </div>
+              </form>
+            )}
           </motion.div>
         </div>
       </section>
