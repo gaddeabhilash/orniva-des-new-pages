@@ -19,7 +19,7 @@ const ProjectDetail = () => {
       desc: 'The Minimalist Haven is a testament to the idea that less is more. By focusing on clean lines, natural light, and a restrained material palette, we created a space that feels both expansive and intimately cozy. The design prioritizes functional elegance, ensuring every element serves a purpose while contributing to the overall aesthetic harmony.',
       gallery: [
         'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-        'https://images.unsplash.com/photo-1600566753086-00f18efc2291?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1600607687644-c7171b42498f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
         'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
       ]
     },
@@ -49,8 +49,8 @@ const ProjectDetail = () => {
       desc: 'An industrial loft transformed into a warm, sophisticated retreat. We preserved the original exposed brick and structural beams while introducing custom walnut cabinetry, bespoke lighting, and plush textiles to soften the industrial edge.',
       gallery: [
         'https://images.unsplash.com/photo-1600607686527-6fb886090705?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-        'https://images.unsplash.com/photo-1600585154526-990dced4e5fd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-        'https://images.unsplash.com/photo-1600566752355-35792bedcfea?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+        'https://images.unsplash.com/photo-1513694203232-719a280e022f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
       ]
     },
     "4": {
@@ -79,8 +79,8 @@ const ProjectDetail = () => {
       desc: 'Inspired by Nordic design principles, this mountain villa emphasizes natural materials, muted tones, and an abundance of natural light. The design seamlessly integrates the stunning exterior landscape with the cozy, hygge-inspired interior.',
       gallery: [
         'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-        'https://images.unsplash.com/photo-1600607687644-c7171b42498f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-        'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+        'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
       ]
     },
     "6": {
