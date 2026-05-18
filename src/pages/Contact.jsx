@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { MapPin, Phone, Mail, Send, MessageCircle, Calendar, Loader2 } from 'lucide-react';
+import { MapPin, Phone, Mail, Send, MessageCircle, Calendar, Loader2, Instagram } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 
 const Contact = () => {
@@ -182,6 +182,17 @@ const Contact = () => {
                   <div>
                     <h4 className="text-xl font-bold text-primary mb-2">Email</h4>
                     <p className="text-neutral-500 text-lg">ornivadesignstudio@gmail.com</p>
+                  </div>
+                </li>
+                <li className="flex gap-6 items-center">
+                  <div className="w-16 h-16 bg-secondary rounded-full flex items-center justify-center shrink-0">
+                    <Instagram size={32} className="text-accent" />
+                  </div>
+                  <div>
+                    <h4 className="text-xl font-bold text-primary mb-2">Instagram</h4>
+                    <a href="https://www.instagram.com/orniva.design_studio/" target="_blank" rel="noreferrer" className="text-neutral-500 text-lg hover:text-accent transition-colors">
+                      @orniva.design_studio
+                    </a>
                   </div>
                 </li>
               </ul>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, MapPin, Phone } from 'lucide-react';
-import { FaInstagram, FaFacebook, FaTwitter } from 'react-icons/fa';
+import { Mail, MapPin, Phone, Calendar } from 'lucide-react';
+import { FaInstagram, FaFacebook } from 'react-icons/fa';
 
 const Footer = () => {
   return (
@@ -21,14 +21,14 @@ const Footer = () => {
               Premium interior design studio crafting timeless, elegant spaces that perfectly reflect your unique vision and lifestyle.
             </p>
             <div className="flex gap-4">
-              <a href="#" className="w-10 h-10 rounded-full border border-neutral-700 flex items-center justify-center text-neutral-400 hover:bg-accent hover:text-white hover:border-accent transition-all">
+              <a href="https://www.instagram.com/orniva.design_studio/" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full border border-neutral-700 flex items-center justify-center text-neutral-400 hover:bg-accent hover:text-white hover:border-accent transition-all">
                 <FaInstagram size={18} />
               </a>
               <a href="#" className="w-10 h-10 rounded-full border border-neutral-700 flex items-center justify-center text-neutral-400 hover:bg-accent hover:text-white hover:border-accent transition-all">
                 <FaFacebook size={18} />
               </a>
-              <a href="#" className="w-10 h-10 rounded-full border border-neutral-700 flex items-center justify-center text-neutral-400 hover:bg-accent hover:text-white hover:border-accent transition-all">
-                <FaTwitter size={18} />
+              <a href="https://cal.com/orniva-design-studio/30min" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full border border-neutral-700 flex items-center justify-center text-neutral-400 hover:bg-accent hover:text-white hover:border-accent transition-all">
+                <Calendar size={18} />
               </a>
             </div>
           </div>
