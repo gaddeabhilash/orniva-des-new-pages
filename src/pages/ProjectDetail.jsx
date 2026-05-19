@@ -5,97 +5,157 @@ import { ArrowLeft } from 'lucide-react';
 
 const ProjectDetail = () => {
   const { id } = useParams();
-  
-  // Mock data for all 6 projects
+
+  // Data updated from portfolio
   const projectsData = {
     "1": {
-      title: 'The Minimalist Haven',
+      title: 'Mr. Abhi - Vidyanagar',
       cat: 'Residential',
-      client: 'Private Owner',
-      location: 'Beverly Hills, CA',
-      area: '4,500 sq ft',
-      duration: '8 Months',
-      heroImg: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80',
-      desc: 'The Minimalist Haven is a testament to the idea that less is more. By focusing on clean lines, natural light, and a restrained material palette, we created a space that feels both expansive and intimately cozy. The design prioritizes functional elegance, ensuring every element serves a purpose while contributing to the overall aesthetic harmony.',
+      client: 'Mr. Madhusudan Rao',
+      location: 'Vidyanagar, Hyderabad',
+      area: '3BHK',
+      duration: '6 Months',
+      heroImg: 'https://res.cloudinary.com/dbmvjtbqk/image/upload/v1779110836/2_zmwgd2.jpg',
+      desc: 'The 3BHK interior design is created with a perfect balance of simplicity, functionality, and modern aesthetics. Each space is thoughtfully designed to maintain a clean and clutter-free look while highlighting unique design elements. The living room features elegant wall textures, cozy furniture, and soft lighting that create a warm and welcoming ambiance.',
       gallery: [
-        'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-        'https://images.unsplash.com/photo-1600607687644-c7171b42498f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+        'https://res.cloudinary.com/dbmvjtbqk/image/upload/v1779110836/2_zmwgd2.jpg',
+        'https://res.cloudinary.com/dbmvjtbqk/image/upload/v1779111279/imresizer-2_rwnmyw.jpg',
         'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
       ]
     },
     "2": {
-      title: 'Modern Corporate HQ',
+      title: 'Gym Studio - Hyderabad',
       cat: 'Commercial',
-      client: 'Tech Innovations Inc.',
-      location: 'San Francisco, CA',
-      area: '12,000 sq ft',
-      duration: '14 Months',
-      heroImg: 'https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80',
-      desc: 'Designed for a forward-thinking tech company, this corporate headquarters balances collaborative open workspaces with private acoustic pods. The aesthetic relies on raw concrete, warm oak, and extensive interior landscaping to foster creativity and employee wellbeing.',
+      client: 'Private Client',
+      location: 'Hyderabad',
+      area: '2,500 sq ft',
+      duration: '4 Months',
+      heroImg: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80',
+      desc: 'A modern, high-energy gym studio located in Hyderabad. Designed to motivate and inspire, the space features dynamic lighting, durable materials, and an optimal layout for various workout zones. The interior balances raw, industrial elements with sleek, modern finishes to create a premium fitness environment.',
       gallery: [
-        'https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-        'https://images.unsplash.com/photo-1497366811353-6870744d04b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-        'https://images.unsplash.com/photo-1524758631624-e2822e304c36?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+        'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1540497077202-7c8a3999166f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
       ]
     },
     "3": {
-      title: 'Urban Loft Retreat',
-      cat: 'Residential',
-      client: 'Private Couple',
-      location: 'New York, NY',
-      area: '2,200 sq ft',
-      duration: '6 Months',
-      heroImg: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80',
-      desc: 'An industrial loft transformed into a warm, sophisticated retreat. We preserved the original exposed brick and structural beams while introducing custom walnut cabinetry, bespoke lighting, and plush textiles to soften the industrial edge.',
+      title: 'Mini Banquet Hall',
+      cat: 'Hospitality',
+      client: 'Private Client',
+      location: 'Hyderabad',
+      area: '4,000 sq ft',
+      duration: '5 Months',
+      heroImg: 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80',
+      desc: 'An elegant and versatile mini banquet hall designed to host intimate gatherings and celebrations. The interior features sophisticated lighting, premium acoustic treatments, and a flexible layout. The design emphasizes a grand yet welcoming atmosphere, utilizing rich textures and a refined color palette to create a memorable experience for guests.',
       gallery: [
-        'https://images.unsplash.com/photo-1600607686527-6fb886090705?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-        'https://images.unsplash.com/photo-1513694203232-719a280e022f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-        'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+        'https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1478146896981-b80fe463b330?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
       ]
     },
     "4": {
-      title: 'Boutique Hotel Lobby',
-      cat: 'Hospitality',
-      client: 'Luxe Hotels Group',
-      location: 'Miami, FL',
-      area: '3,500 sq ft',
-      duration: '10 Months',
-      heroImg: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80',
-      desc: 'The lobby design serves as a captivating first impression for this luxury boutique hotel. Featuring custom terrazzo floors, brass accents, and a breathtaking central lighting installation, the space invites guests to linger and socialize in style.',
+      title: 'Premium Modular Kitchen',
+      cat: 'Residential',
+      client: 'Private Client',
+      location: 'Hyderabad',
+      area: '300 sq ft',
+      duration: '2 Months',
+      heroImg: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80',
+      desc: 'This modular kitchen is designed with a soothing combination of sage green and creamy white, reflecting elegance, freshness, and functionality. The cabinetry is crafted using HDHMR for durability and longevity, paired with glossy acrylic shutters for a sleek, modern appearance. Wicker baskets add a natural touch while enhancing ventilation for dry storage.',
       gallery: [
-        'https://images.unsplash.com/photo-1582719508461-905c673771fd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-        'https://images.unsplash.com/photo-1542314831-c6a4d140f6f5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-        'https://images.unsplash.com/photo-1566665797739-1674de7a421a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+        'https://images.unsplash.com/photo-1556911220-bff31c812dba?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1556910103-1c02745aae4d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1556911073-a517e052029d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
       ]
     },
     "5": {
-      title: 'Serene Scandinavian Villa',
+      title: 'Master Bedroom Suite',
       cat: 'Residential',
-      client: 'Private Family',
-      location: 'Aspen, CO',
-      area: '5,800 sq ft',
-      duration: '12 Months',
-      heroImg: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80',
-      desc: 'Inspired by Nordic design principles, this mountain villa emphasizes natural materials, muted tones, and an abundance of natural light. The design seamlessly integrates the stunning exterior landscape with the cozy, hygge-inspired interior.',
+      client: 'Private Client',
+      location: 'Hyderabad',
+      area: '400 sq ft',
+      duration: '2 Months',
+      heroImg: 'https://images.unsplash.com/photo-1616594039964-ae9021a400a0?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80',
+      desc: 'The detailing of the master bedroom focuses on a luxurious yet balanced composition of the bed and its background wall. The bed background features layered panel detailing, combining wooden textures, fabric padding, and profile lighting for a sophisticated ambiance. Wall grooves and laminate patterns are illustrated with precision to enhance visual depth.',
       gallery: [
-        'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-        'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-        'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+        'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1616594039964-ae9021a400a0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
       ]
     },
     "6": {
-      title: 'Artisan Coffee Roasters',
-      cat: 'Commercial',
-      client: 'Artisan Beans Co.',
-      location: 'Portland, OR',
-      area: '1,800 sq ft',
-      duration: '4 Months',
-      heroImg: 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80',
-      desc: 'A vibrant and inviting space designed for a specialty coffee roaster. We utilized warm woods, deep green accents, and custom tile work to create a community-focused atmosphere that reflects the artisanal quality of the product.',
+      title: 'Children\'s Bedroom Design',
+      cat: 'Residential',
+      client: 'Private Client',
+      location: 'Hyderabad',
+      area: '350 sq ft',
+      duration: '2 Months',
+      heroImg: 'https://images.unsplash.com/photo-1505693314120-0d443867891c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80',
+      desc: 'A lively, imaginative, and functional space tailored to a child’s needs and comfort. The layout is designed to ensure safe circulation, playful aesthetics, and efficient use of space. The color palette features cheerful hues and contrasting tones that stimulate creativity and positivity.',
       gallery: [
-        'https://images.unsplash.com/photo-1498804103079-a6351b050096?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-        'https://images.unsplash.com/photo-1559925393-8be0ec4767c8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-        'https://images.unsplash.com/photo-1509042239860-f550ce710b93?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+        'https://images.unsplash.com/photo-1513694203232-719a280e022f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1505693314120-0d443867891c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+      ]
+    },
+    "7": {
+      title: 'Ergonomic Study Unit',
+      cat: 'Residential',
+      client: 'Private Client',
+      location: 'Hyderabad',
+      area: '150 sq ft',
+      duration: '1 Month',
+      heroImg: 'https://images.unsplash.com/photo-1512290923902-8a9f81dc2069?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80',
+      desc: 'The detailing of the study unit highlights a perfect balance between functionality, comfort, and aesthetic design. The design focuses on creating a productive workspace with ample storage and display options. Shelves, drawers, and cabinets are arranged ergonomically.',
+      gallery: [
+        'https://images.unsplash.com/photo-1512290923902-8a9f81dc2069?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1544413647-14fb81c2be52?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1513694203232-719a280e022f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+      ]
+    },
+    "8": {
+      title: 'Pooja Unit Detailing',
+      cat: 'Residential',
+      client: 'Private Client',
+      location: 'Hyderabad',
+      area: '100 sq ft',
+      duration: '1 Month',
+      heroImg: 'https://images.unsplash.com/photo-1585412727339-54e4bae3bbf9?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80',
+      desc: 'A timeless design that brings spirituality into everyday living. The 2D detailing of the pooja unit showcases multiple design variations, each reflecting a balance between tradition and modern aesthetics. Each design emphasizes symmetry, simplicity, and the spiritual essence.',
+      gallery: [
+        'https://images.unsplash.com/photo-1585412727339-54e4bae3bbf9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+      ]
+    },
+    "9": {
+      title: 'Contemporary Ceiling Concepts',
+      cat: 'Residential',
+      client: 'Private Client',
+      location: 'Hyderabad',
+      area: 'Full House',
+      duration: '2 Months',
+      heroImg: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80',
+      desc: 'A contemporary ceiling concept combining elegance and functionality. Warm wood textures add depth and a sense of natural sophistication. Profile lighting highlights architectural lines and enhances ambience.',
+      gallery: [
+        'https://images.unsplash.com/photo-1513694203232-719a280e022f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1600607687644-c7171b42498f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+      ]
+    },
+    "10": {
+      title: 'Luxury Living Area',
+      cat: 'Residential',
+      client: 'Private Client',
+      location: 'Hyderabad',
+      area: '800 sq ft',
+      duration: '3 Months',
+      heroImg: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80',
+      desc: 'A luxurious living space designed to reflect sophistication and comfort. Every element blends elegance with functionality. Rich textures and refined finishes enhance visual warmth. A seamless balance of space, light, and texture.',
+      gallery: [
+        'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1513694203232-719a280e022f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
       ]
     }
   };
@@ -106,9 +166,9 @@ const ProjectDetail = () => {
     <div className="bg-white">
       {/* Hero Image */}
       <section className="relative h-[60vh] min-h-[500px] w-full">
-        <img 
-          src={project.heroImg} 
-          alt={project.title} 
+        <img
+          src={project.heroImg}
+          alt={project.title}
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
@@ -129,7 +189,7 @@ const ProjectDetail = () => {
       <section className="py-24">
         <div className="container mx-auto px-4 md:px-8">
           <div className="flex flex-col lg:flex-row gap-16">
-            
+
             {/* Left: Info */}
             <div className="w-full lg:w-1/3 space-y-8">
               <div className="bg-secondary/50 p-8 rounded-2xl">
@@ -161,11 +221,16 @@ const ProjectDetail = () => {
               <p className="text-neutral-600 leading-relaxed text-lg mb-12">
                 {project.desc}
               </p>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {project.gallery.map((img, i) => (
-                  <div key={i} className={`rounded-2xl overflow-hidden ${i === 2 ? 'md:col-span-2' : ''}`}>
-                    <img src={img} alt={`${project.title} view ${i+1}`} className="w-full h-full object-cover aspect-[4/3] hover:scale-105 transition-transform duration-700" />
+                  <div key={i} className="rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                    <img
+                      src={img}
+                      alt={`${project.title} view ${i + 1}`}
+                      className="w-full h-full object-cover aspect-[4/3] hover:scale-105 transition-transform duration-700"
+                      loading="lazy"
+                    />
                   </div>
                 ))}
               </div>
@@ -174,7 +239,7 @@ const ProjectDetail = () => {
           </div>
         </div>
       </section>
-      
+
       {/* Next Project CTA */}
       <section className="py-24 bg-primary text-center">
         <div className="container mx-auto px-4">

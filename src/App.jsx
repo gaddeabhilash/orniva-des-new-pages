@@ -43,12 +43,12 @@ function App() {
           </Routes>
         </main>
         <Footer />
-        
+
         {/* Floating Contact Buttons */}
         <div className="fixed bottom-6 right-4 md:right-6 z-50 flex flex-col items-end gap-2 md:gap-3">
           {/* Floating Call Button */}
-          <a 
-            href="tel:9398801834" 
+          <a
+            href="tel:9398801834"
             className="bg-[#111111] text-[#E5C298] p-3 md:py-3 md:px-5 rounded-full flex items-center justify-center md:justify-start gap-3 shadow-2xl hover:scale-105 transition-transform border border-[#E5C298]/30 group w-14 h-14 md:w-auto md:h-auto md:min-w-[240px]"
           >
             <div className="flex items-center justify-center shrink-0">
@@ -61,10 +61,10 @@ function App() {
           </a>
 
           {/* Floating WhatsApp Button */}
-          <a 
-            href="https://wa.me/919398801834" 
-            target="_blank" 
-            rel="noreferrer" 
+          <a
+            href="https://wa.me/919398801834"
+            target="_blank"
+            rel="noreferrer"
             className="bg-[#E5C298] text-[#111111] p-3 md:py-3 md:px-5 rounded-full flex items-center justify-center md:justify-start gap-3 shadow-2xl hover:scale-105 transition-transform w-14 h-14 md:w-auto md:h-auto md:min-w-[240px]"
           >
             <div className="flex items-center justify-center shrink-0">
@@ -83,5 +83,4 @@ function App() {
     </Router>
   );
 }
-
 export default App;

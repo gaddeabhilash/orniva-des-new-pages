@@ -3,12 +3,16 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
 const projects = [
-  { id: 1, title: 'The Minimalist Haven', cat: 'Residential', img: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-  { id: 2, title: 'Modern Corporate HQ', cat: 'Commercial', img: 'https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-  { id: 3, title: 'Urban Loft Retreat', cat: 'Residential', img: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-  { id: 4, title: 'Boutique Hotel Lobby', cat: 'Hospitality', img: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-  { id: 5, title: 'Serene Scandinavian Villa', cat: 'Residential', img: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-  { id: 6, title: 'Artisan Coffee Roasters', cat: 'Commercial', img: 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
+  { id: 1, title: 'Mr. Madhusudan Rao - Vidyanagar', cat: 'Residential', img: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
+  { id: 2, title: 'Gym Studio - Hyderabad', cat: 'Commercial', img: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
+  { id: 3, title: 'Mini Banquet Hall', cat: 'Hospitality', img: 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
+  { id: 4, title: 'Premium Modular Kitchen', cat: 'Residential', img: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
+  { id: 5, title: 'Master Bedroom Suite', cat: 'Residential', img: 'https://images.unsplash.com/photo-1616594039964-ae9021a400a0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
+  { id: 6, title: 'Children\'s Bedroom Design', cat: 'Residential', img: 'https://images.unsplash.com/photo-1505693314120-0d443867891c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
+  { id: 7, title: 'Ergonomic Study Unit', cat: 'Residential', img: 'https://images.unsplash.com/photo-1512290923902-8a9f81dc2069?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
+  { id: 8, title: 'Pooja Unit Detailing', cat: 'Residential', img: 'https://images.unsplash.com/photo-1585412727339-54e4bae3bbf9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
+  { id: 9, title: 'Contemporary Ceiling Concepts', cat: 'Residential', img: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
+  { id: 10, title: 'Luxury Living Area', cat: 'Residential', img: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
 ];
 
 const categories = ['All', 'Residential', 'Commercial', 'Hospitality'];
@@ -16,14 +20,14 @@ const categories = ['All', 'Residential', 'Commercial', 'Hospitality'];
 const Projects = () => {
   const [activeCat, setActiveCat] = useState('All');
 
-  const filteredProjects = activeCat === 'All' 
-    ? projects 
+  const filteredProjects = activeCat === 'All'
+    ? projects
     : projects.filter(p => p.cat === activeCat);
 
   return (
     <div className="pt-32 pb-24 min-h-screen bg-white">
       <div className="container mx-auto px-4 md:px-8">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
           className="text-center mb-16 max-w-3xl mx-auto"
         >
@@ -37,11 +41,10 @@ const Projects = () => {
             <button
               key={cat}
               onClick={() => setActiveCat(cat)}
-              className={`px-6 py-2.5 rounded-full text-sm font-medium transition-colors ${
-                activeCat === cat 
-                  ? 'bg-primary text-white' 
-                  : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'
-              }`}
+              className={`px-6 py-2.5 rounded-full text-sm font-medium transition-colors ${activeCat === cat
+                ? 'bg-primary text-white'
+                : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'
+                }`}
             >
               {cat}
             </button>
@@ -51,13 +54,13 @@ const Projects = () => {
         {/* Grid */}
         <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredProjects.map((project) => (
-            <motion.div 
+            <motion.div
               layout
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9 }}
               transition={{ duration: 0.4 }}
-              key={project.id} 
+              key={project.id}
               className="group"
             >
               <Link to={`/projects/${project.id}`}>
@@ -65,9 +68,9 @@ const Projects = () => {
                   <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-500 z-10 flex flex-col justify-end p-6 opacity-0 group-hover:opacity-100">
                     <span className="text-white bg-accent/90 backdrop-blur-sm px-4 py-1.5 rounded-full text-xs uppercase tracking-wider font-semibold self-start mb-3">View Project</span>
                   </div>
-                  <img 
-                    src={project.img} 
-                    alt={project.title} 
+                  <img
+                    src={project.img}
+                    alt={project.title}
                     className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
                   />
                 </div>
