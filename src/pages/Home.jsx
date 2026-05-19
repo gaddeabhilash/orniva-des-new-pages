@@ -268,6 +268,120 @@ const Home = () => {
         </div>
       </section>
 
+      {/* 6.5 Client Portal Promotion */}
+      <section className="py-24 bg-[#0d0d0d] border-t border-b border-neutral-900 relative overflow-hidden">
+        {/* Subtle decorative glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-accent/5 rounded-full blur-[120px] pointer-events-none"></div>
+        
+        <div className="container mx-auto px-4 md:px-8 relative z-10">
+          <div className="max-w-5xl mx-auto bg-neutral-900/40 border border-white/5 rounded-3xl p-8 md:p-16 backdrop-blur-md">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+              
+              {/* Text Column */}
+              <div className="lg:col-span-7 space-y-6">
+                <motion.div
+                  initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn}
+                >
+                  <h4 className="text-accent text-xs font-bold tracking-[0.25em] uppercase mb-4">
+                    Orniva Experience
+                  </h4>
+                  <h2 className="text-4xl md:text-5xl font-heading font-normal text-white leading-tight mb-6">
+                    No Waiting. <br className="hidden sm:block"/>No Wondering.
+                  </h2>
+                  <p className="text-neutral-400 text-base md:text-lg font-light leading-relaxed mb-8">
+                    We believe you should never have to wait for a weekly update or chase for status reports. From initial 3D renderings and moodboards to site preparation and final paint coats, follow every milestone of your home's transformation live. Seamless transparency, entirely on your own terms.
+                  </p>
+                </motion.div>
+
+                {/* Features Grid */}
+                <motion.div 
+                  variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true }}
+                  className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4 border-t border-white/10"
+                >
+                  <motion.div variants={fadeIn} className="flex gap-4">
+                    <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center shrink-0 border border-accent/20">
+                      <svg className="w-5 h-5 text-accent" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h4 className="text-white font-medium text-sm mb-1">Live Milestone Status</h4>
+                      <p className="text-neutral-500 text-xs leading-relaxed">Follow active phases from electrical layouts to bespoke cabinetry.</p>
+                    </div>
+                  </motion.div>
+
+                  <motion.div variants={fadeIn} className="flex gap-4">
+                    <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center shrink-0 border border-accent/20">
+                      <svg className="w-5 h-5 text-accent" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h4 className="text-white font-medium text-sm mb-1">Instant Design Access</h4>
+                      <p className="text-neutral-500 text-xs leading-relaxed">Instantly view floor plans, 3D renderings, and color swatches.</p>
+                    </div>
+                  </motion.div>
+                </motion.div>
+              </div>
+
+              {/* Interactive Card Column */}
+              <div className="lg:col-span-5 flex flex-col justify-center">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6 }}
+                  className="bg-[#141414] border border-white/10 rounded-2xl p-6 md:p-8 shadow-2xl relative"
+                >
+                  <div className="absolute top-4 right-4 flex gap-1.5">
+                    <span className="w-2.5 h-2.5 rounded-full bg-red-500/40"></span>
+                    <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/40"></span>
+                    <span className="w-2.5 h-2.5 rounded-full bg-green-500/40"></span>
+                  </div>
+
+                  <span className="text-[10px] uppercase tracking-wider text-accent font-bold mb-2 block">Secure Access</span>
+                  <h3 className="text-lg font-heading text-white font-semibold mb-6">Orniva Client Portal</h3>
+                  
+                  {/* Mock UI Graphic inside the box */}
+                  <div className="space-y-4 mb-8 bg-neutral-900/50 p-4 rounded-xl border border-white/5 text-xs text-neutral-400">
+                    <div className="flex justify-between items-center border-b border-white/5 pb-2">
+                      <span className="font-medium text-white">Project Name</span>
+                      <span className="text-accent font-medium">Jubilee Hills Villa</span>
+                    </div>
+                    <div className="space-y-2">
+                      <div className="flex justify-between">
+                        <span>Design Concept</span>
+                        <span className="text-green-400 font-semibold flex items-center gap-1">
+                          <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></span> Approved
+                        </span>
+                      </div>
+                      <div className="w-full bg-white/5 rounded-full h-1.5 overflow-hidden">
+                        <div className="bg-accent h-full w-[80%] rounded-full"></div>
+                      </div>
+                    </div>
+                    <div className="flex justify-between items-center text-[10px] text-neutral-500 pt-1">
+                      <span>Milestone: Carpentry & Custom Fixtures</span>
+                      <span>80% Complete</span>
+                    </div>
+                  </div>
+
+                  <a 
+                    href="https://odscp.vercel.app/login" 
+                    target="_blank" 
+                    rel="noreferrer"
+                    className="w-full py-4 bg-accent text-white rounded-xl font-medium hover:bg-white hover:text-primary transition-all duration-300 flex items-center justify-center gap-2 group text-sm shadow-lg shadow-accent/10 text-center"
+                  >
+                    <span>View Your Progress Live</span>
+                    <ArrowRight size={16} className="transform group-hover:translate-x-1 transition-transform" />
+                  </a>
+                </motion.div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* 7. Philosophy */}
       <section className="py-24 bg-white">
         <div className="container mx-auto px-4 md:px-8">
