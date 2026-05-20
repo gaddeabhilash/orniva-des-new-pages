@@ -132,20 +132,30 @@ const Contact = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-3 bg-primary text-white rounded-xl font-medium hover:bg-neutral-800 transition-colors flex justify-center items-center gap-2 disabled:opacity-70"
+                  className="relative overflow-hidden w-full py-3.5 bg-primary text-white rounded-xl font-medium transition-all duration-500 hover:shadow-[0_0_25px_rgba(17,17,17,0.15)] hover:scale-[1.01] flex justify-center items-center gap-2 disabled:opacity-70 group/btn"
                 >
-                  {isSubmitting ? (
-                    <>Submitting... <Loader2 size={18} className="animate-spin" /></>
-                  ) : (
-                    <>Submit Inquiry <Send size={18} /></>
-                  )}
+                  <span className="relative z-10 flex items-center gap-2">
+                    {isSubmitting ? (
+                      <>Submitting... <Loader2 size={18} className="animate-spin" /></>
+                    ) : (
+                      <>Submit Inquiry <Send size={18} /></>
+                    )}
+                  </span>
+                  <span className="absolute inset-0 bg-white opacity-0 group-hover/btn:opacity-10 transition-opacity duration-300"></span>
                 </button>
               </form>
             )}
 
             <div className="mt-6 pt-6 border-t border-neutral-200">
-              <a href="https://wa.me/919398801834" target="_blank" rel="noreferrer" className="w-full py-3 bg-[#25D366]/10 text-[#25D366] border border-[#25D366]/30 rounded-xl font-medium hover:bg-[#25D366]/20 transition-colors flex justify-center items-center gap-2">
-                <MessageCircle size={20} /> Chat on WhatsApp
+              <a 
+                href="https://wa.me/919398801834" 
+                target="_blank" 
+                rel="noreferrer" 
+                className="relative overflow-hidden w-full py-3.5 bg-[#25D366]/10 text-[#25D366] border border-[#25D366]/30 rounded-xl font-medium transition-all duration-500 hover:bg-[#25D366]/20 hover:scale-[1.01] flex justify-center items-center gap-2 group/btn"
+              >
+                <span className="relative z-10 flex items-center gap-2">
+                  <MessageCircle size={20} /> Chat on WhatsApp
+                </span>
               </a>
             </div>
           </motion.div>
@@ -167,28 +177,33 @@ const Contact = () => {
                     <p className="text-neutral-500 text-lg">Hyderabad, Telangana</p>
                   </div>
                 </li>
-                <li className="flex gap-6 items-center">
-                  <div className="w-16 h-16 bg-secondary rounded-full flex items-center justify-center shrink-0">
+                <li className="flex gap-6 items-center group/item">
+                  <a href="tel:9398801834" className="w-16 h-16 bg-secondary rounded-full flex items-center justify-center shrink-0 transition-transform duration-300 group-hover/item:scale-105">
                     <Phone size={32} className="text-accent" />
-                  </div>
+                  </a>
                   <div>
                     <h4 className="text-xl font-bold text-primary mb-2">Phone</h4>
-                    <p className="text-neutral-500 text-lg">+91 93988 01834<br />+91 79931 07169</p>
+                    <div className="flex flex-col">
+                      <a href="tel:9398801834" className="text-neutral-500 text-lg hover:text-accent transition-colors">+91 93988 01834</a>
+                      <a href="tel:7993107169" className="text-neutral-500 text-lg hover:text-accent transition-colors">+91 79931 07169</a>
+                    </div>
                   </div>
                 </li>
-                <li className="flex gap-6 items-center">
-                  <div className="w-16 h-16 bg-secondary rounded-full flex items-center justify-center shrink-0">
+                <li className="flex gap-6 items-center group/item">
+                  <a href="mailto:ornivadesignstudio@gmail.com" className="w-16 h-16 bg-secondary rounded-full flex items-center justify-center shrink-0 transition-transform duration-300 group-hover/item:scale-105">
                     <Mail size={32} className="text-accent" />
-                  </div>
+                  </a>
                   <div>
                     <h4 className="text-xl font-bold text-primary mb-2">Email</h4>
-                    <p className="text-neutral-500 text-lg">ornivadesignstudio@gmail.com</p>
+                    <a href="mailto:ornivadesignstudio@gmail.com" className="text-neutral-500 text-lg hover:text-accent transition-colors">
+                      ornivadesignstudio@gmail.com
+                    </a>
                   </div>
                 </li>
-                <li className="flex gap-6 items-center">
-                  <div className="w-16 h-16 bg-secondary rounded-full flex items-center justify-center shrink-0">
+                <li className="flex gap-6 items-center group/item">
+                  <a href="https://www.instagram.com/orniva.design_studio/" target="_blank" rel="noreferrer" className="w-16 h-16 bg-secondary rounded-full flex items-center justify-center shrink-0 transition-transform duration-300 group-hover/item:scale-105">
                     <FaInstagram size={32} className="text-accent" />
-                  </div>
+                  </a>
                   <div>
                     <h4 className="text-xl font-bold text-primary mb-2">Instagram</h4>
                     <a href="https://www.instagram.com/orniva.design_studio/" target="_blank" rel="noreferrer" className="text-neutral-500 text-lg hover:text-accent transition-colors">
@@ -203,9 +218,12 @@ const Contact = () => {
                   href="https://cal.com/orniva-design-studio/30min"
                   target="_blank"
                   rel="noreferrer"
-                  className="w-full py-4 bg-primary text-white rounded-xl font-medium hover:bg-neutral-800 transition-colors flex justify-center items-center gap-2"
+                  className="relative overflow-hidden w-full py-4 bg-[#C5A47E] text-white rounded-xl font-medium transition-all duration-500 hover:shadow-[0_0_25px_rgba(197,164,126,0.35)] hover:scale-[1.01] flex justify-center items-center gap-2 group/btn"
                 >
-                  <Calendar size={20} /> Book a Meeting
+                  <span className="relative z-10 flex items-center gap-2">
+                    <Calendar size={20} /> Book a Meeting
+                  </span>
+                  <span className="absolute inset-0 bg-white opacity-0 group-hover/btn:opacity-10 transition-opacity duration-300"></span>
                 </a>
               </div>
             </div>
