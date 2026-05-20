@@ -133,11 +133,21 @@ const Home = () => {
             transition={{ duration: 0.8, delay: 0.6 }}
             className="flex flex-col sm:flex-row items-center justify-center gap-4"
           >
-            <a href="https://cal.com/orniva-design-studio/30min" target="_blank" rel="noreferrer" className="px-8 py-4 bg-accent text-white rounded-full font-medium hover:bg-white hover:text-primary transition-colors w-full sm:w-auto text-center">
-              Get Free Consultation
+            <a 
+              href="https://cal.com/orniva-design-studio/30min" 
+              target="_blank" 
+              rel="noreferrer" 
+              className="relative overflow-hidden px-8 py-4 bg-accent text-white rounded-full font-medium transition-all duration-500 hover:shadow-[0_0_25px_rgba(197,164,126,0.45)] hover:scale-[1.02] group w-full sm:w-auto text-center"
+            >
+              <span className="relative z-10">Get Free Consultation</span>
+              <span className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300"></span>
             </a>
-            <Link to="/projects" className="px-8 py-4 border border-white text-white rounded-full font-medium hover:bg-white hover:text-primary transition-colors w-full sm:w-auto flex items-center justify-center gap-2">
-              View Design Concepts
+            <Link 
+              to="/projects" 
+              className="relative overflow-hidden px-8 py-4 border border-white text-white rounded-full font-medium transition-all duration-500 hover:shadow-[0_0_25px_rgba(255,255,255,0.15)] hover:scale-[1.02] group w-full sm:w-auto flex items-center justify-center gap-2"
+            >
+              <span className="relative z-10">View Design Concepts</span>
+              <span className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300"></span>
             </Link>
           </motion.div>
         </div>
@@ -196,7 +206,7 @@ const Home = () => {
             ].map((project, i) => (
               <motion.div key={i} variants={fadeIn} className="group cursor-pointer flex flex-col h-full">
                 <div className="relative overflow-hidden rounded-2xl aspect-[4/5] mb-6">
-                  <img src={project.img} alt={project.title} className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out" />
+                  <img src={project.img} alt={project.title} className="w-full h-full object-cover transform scale-100 group-hover:scale-[1.04] transition-transform duration-[1200ms] ease-[cubic-bezier(0.25,1,0.5,1)]" />
                 </div>
                 <span className="text-xs font-bold text-accent tracking-wider uppercase mb-2 block">{project.type}</span>
                 <h3 className="text-2xl font-heading font-semibold text-primary mb-3">{project.title}</h3>

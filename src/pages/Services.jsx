@@ -44,7 +44,7 @@ const Services = () => {
         {/* Services List */}
         <div className="space-y-32">
           {services.map((service, index) => (
-            <div key={service.id} className={`flex flex-col lg:flex-row gap-12 items-center ${index % 2 !== 0 ? 'lg:flex-row-reverse' : ''}`}>
+            <div key={service.id} className={`flex flex-col lg:flex-row gap-12 items-center ${index % 2 !== 0 ? 'lg:flex-row-reverse' : ''} group`}>
               
               {/* Image */}
               <motion.div 
@@ -55,7 +55,11 @@ const Services = () => {
                 className="w-full lg:w-1/2"
               >
                 <div className="relative rounded-3xl overflow-hidden aspect-square md:aspect-[4/3]">
-                  <img src={service.img} alt={service.title} className="w-full h-full object-cover" />
+                  <img 
+                    src={service.img} 
+                    alt={service.title} 
+                    className="w-full h-full object-cover transform scale-100 group-hover:scale-[1.04] transition-transform duration-[1200ms] ease-[cubic-bezier(0.25,1,0.5,1)]" 
+                  />
                   <div className="absolute inset-0 bg-black/10"></div>
                 </div>
               </motion.div>
@@ -84,8 +88,12 @@ const Services = () => {
                   ))}
                 </ul>
 
-                <Link to="/contact" className="inline-block px-8 py-4 bg-primary text-white rounded-full font-medium hover:bg-accent transition-colors">
-                  Discuss your project
+                <Link 
+                  to="/contact" 
+                  className="relative overflow-hidden inline-block px-8 py-4 bg-primary text-white rounded-full font-medium transition-all duration-500 hover:shadow-[0_0_25px_rgba(17,17,17,0.15)] hover:scale-[1.02] group/btn w-full sm:w-auto text-center"
+                >
+                  <span className="relative z-10">Discuss your project</span>
+                  <span className="absolute inset-0 bg-white opacity-0 group-hover/btn:opacity-10 transition-opacity duration-300"></span>
                 </Link>
               </motion.div>
             </div>

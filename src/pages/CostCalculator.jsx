@@ -89,10 +89,13 @@ const CostCalculator = () => {
             <div className="pt-4">
               <button
                 onClick={handleStart}
-                className="px-8 py-3.5 bg-transparent border-2 border-primary text-primary rounded-full text-lg font-medium hover:bg-primary hover:text-white transition-all duration-300 w-full sm:w-auto flex items-center justify-center gap-2 group"
+                className="relative overflow-hidden px-8 py-3.5 bg-transparent border-2 border-primary text-primary rounded-full text-lg font-medium transition-all duration-500 hover:shadow-[0_0_25px_rgba(17,17,17,0.15)] hover:scale-[1.02] w-full sm:w-auto flex items-center justify-center gap-2 group"
               >
-                Calculate now
-                <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                <span className="relative z-10 flex items-center gap-2">
+                  Calculate now
+                  <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                </span>
+                <span className="absolute inset-0 bg-primary opacity-0 group-hover:opacity-10 transition-opacity duration-300"></span>
               </button>
             </div>
           </motion.div>
@@ -101,14 +104,14 @@ const CostCalculator = () => {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="w-full lg:w-1/2 relative h-[350px] md:h-[500px] lg:h-[600px] flex items-center justify-center mt-12 lg:mt-0"
+            className="w-full lg:w-1/2 relative h-[350px] md:h-[500px] lg:h-[600px] flex items-center justify-center mt-12 lg:mt-0 group"
           >
             {/* Background Room Image */}
             <div className="absolute inset-0 md:right-10 rounded-[2rem] overflow-hidden shadow-2xl bg-neutral-200">
               <img
                 src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
                 alt="Beautiful living room"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover transform scale-100 group-hover:scale-[1.04] transition-transform duration-[1200ms] ease-[cubic-bezier(0.25,1,0.5,1)]"
               />
             </div>
 
@@ -230,10 +233,13 @@ const CostCalculator = () => {
 
                   <button
                     type="submit"
-                    className="w-full py-3 bg-primary text-white rounded-xl font-medium hover:bg-neutral-800 transition-colors flex items-center justify-center gap-2"
+                    className="relative overflow-hidden w-full py-3.5 bg-accent text-white rounded-xl font-medium transition-all duration-500 hover:shadow-[0_0_25px_rgba(197,164,126,0.45)] hover:scale-[1.02] flex items-center justify-center gap-2 group/btn"
                   >
-                    <Calculator size={20} />
-                    Generate Estimate
+                    <span className="relative z-10 flex items-center gap-2">
+                      <Calculator size={20} />
+                      Generate Estimate
+                    </span>
+                    <span className="absolute inset-0 bg-white opacity-0 group-hover/btn:opacity-10 transition-opacity duration-300"></span>
                   </button>
                 </form>
               ) : (
@@ -255,12 +261,18 @@ const CostCalculator = () => {
                   <div className="flex gap-4 w-full mt-4">
                     <button
                       onClick={() => setIsCalculated(false)}
-                      className="flex-1 py-3 border border-neutral-200 text-primary rounded-xl font-medium hover:bg-neutral-50 transition-colors"
+                      className="flex-1 py-3.5 border border-neutral-200 text-primary rounded-xl font-medium transition-all duration-300 hover:bg-neutral-50 hover:scale-[1.02]"
                     >
                       Recalculate
                     </button>
-                    <a href="https://cal.com/orniva-design-studio/30min" target="_blank" rel="noreferrer" className="flex-1 py-3 bg-primary text-white rounded-xl font-medium hover:bg-neutral-800 transition-colors text-center block leading-tight pt-3.5">
-                      Book Consultation
+                    <a 
+                      href="https://cal.com/orniva-design-studio/30min" 
+                      target="_blank" 
+                      rel="noreferrer" 
+                      className="relative overflow-hidden flex-1 py-3.5 bg-accent text-white rounded-xl font-medium transition-all duration-500 hover:shadow-[0_0_25px_rgba(197,164,126,0.45)] hover:scale-[1.02] text-center block leading-tight group/btn"
+                    >
+                      <span className="relative z-10 block pt-0.5">Book Consultation</span>
+                      <span className="absolute inset-0 bg-white opacity-0 group-hover/btn:opacity-10 transition-opacity duration-300"></span>
                     </a>
                   </div>
                 </motion.div>

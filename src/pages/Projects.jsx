@@ -71,7 +71,7 @@ const Projects = () => {
                   <img
                     src={project.img}
                     alt={project.title}
-                    className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
+                    className="w-full h-full object-cover transform scale-100 group-hover:scale-[1.04] transition-transform duration-[1200ms] ease-[cubic-bezier(0.25,1,0.5,1)]"
                   />
                 </div>
                 <span className="text-xs font-medium text-neutral-400 tracking-wider uppercase mb-1 block">{project.cat}</span>
