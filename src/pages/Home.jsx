@@ -95,7 +95,7 @@ const Home = () => {
     <div className="bg-white">
       
       {/* 2. Hero Section */}
-      <section className="relative h-screen min-h-[700px] flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-neutral-900 z-0">
           <img 
             src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80" 
@@ -104,7 +104,7 @@ const Home = () => {
           />
         </div>
         
-        <div className="container mx-auto px-4 relative z-10 text-center text-white pt-20">
+        <div className="container mx-auto px-4 relative z-10 text-center text-white pt-32 pb-16 md:py-24">
           <motion.p 
             initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
             className="text-accent text-sm md:text-base font-bold tracking-[0.2em] uppercase mb-6"
