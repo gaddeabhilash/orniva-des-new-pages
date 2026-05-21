@@ -37,6 +37,9 @@ const Navbar = () => {
     { name: 'Calculator', path: '/calculator' },
   ];
 
+  // Bright white theme when overlaying dark hero backgrounds unscrolled on Home or Project details
+  const useWhiteText = !isScrolled && !isMobileMenuOpen && (location.pathname === '/' || location.pathname.startsWith('/projects/'));
+
   return (
     <header 
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -44,23 +47,26 @@ const Navbar = () => {
       } ${!isScrolled && !isMobileMenuOpen ? 'max-md:bg-white max-md:py-3 max-md:shadow-sm' : ''}`}
     >
       <div className="container mx-auto px-4 md:px-8 flex justify-between items-center">
-        {/* Logo */}
-        <Link to="/" className="flex items-baseline gap-2 text-xl md:text-2xl font-heading font-bold tracking-tight text-primary z-50">
+        <Link 
+          to="/" 
+          className={`flex items-baseline gap-2 text-2xl md:text-3xl font-heading font-bold tracking-tight z-50 transition-colors duration-300 ${
+            useWhiteText ? 'text-white' : 'text-primary'
+          }`}
+        >
           <span>Orniva</span>
-          <span className="text-[0.6rem] md:text-[0.7rem] uppercase tracking-[0.2em] font-sans font-medium text-neutral-500">
-            Design Studio
-          </span>
         </Link>
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-8">
-          <ul className="flex items-center gap-8 text-sm font-medium">
+          <ul className={`flex items-center gap-8 text-[15px] font-semibold transition-colors duration-300`}>
             {navLinks.map((link) => (
               <li key={link.name}>
                 <Link 
                   to={link.path} 
-                  className={`hover:text-accent transition-colors ${
-                    location.pathname === link.path ? 'text-accent' : 'text-primary'
+                  className={`hover:text-accent transition-colors duration-300 ${
+                    location.pathname === link.path 
+                      ? 'text-accent' 
+                      : (useWhiteText ? 'text-white hover:text-accent' : 'text-primary hover:text-accent')
                   }`}
                 >
                   {link.name}
@@ -70,7 +76,11 @@ const Navbar = () => {
           </ul>
           <Link 
             to="/contact" 
-            className="px-6 py-2 bg-primary text-white rounded-full text-sm font-medium hover:bg-neutral-800 transition-colors"
+            className={`px-6 py-2 rounded-full text-[15px] font-semibold transition-all duration-300 ${
+              useWhiteText 
+                ? 'bg-white text-primary hover:bg-accent hover:text-white' 
+                : 'bg-primary text-white hover:bg-neutral-800'
+            }`}
           >
             Get Quote
           </Link>
@@ -78,7 +88,9 @@ const Navbar = () => {
 
         {/* Mobile Menu Button */}
         <button 
-          className="md:hidden text-primary z-50 p-2"
+          className={`md:hidden z-50 p-2 transition-colors duration-300 ${
+            useWhiteText ? 'text-white' : 'text-primary'
+          }`}
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
           {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}

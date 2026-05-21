@@ -123,11 +123,8 @@ const About = () => {
       <section className="py-32 bg-white mt-12">
         <div className="container mx-auto px-4 md:px-8">
           <div className="text-center mb-24 pt-10">
-            <h2 
-              className="text-5xl md:text-7xl mb-6 text-primary"
-              style={{ fontFamily: "'Dancing Script', cursive" }}
-            >
-              together, we've achieved great things
+            <h2 className="text-5xl md:text-7xl font-heading text-primary mb-6">
+              together, we've achieved <span className="text-accent italic font-light">great things.</span>
             </h2>
             <p className="text-neutral-500 max-w-3xl mx-auto text-lg leading-relaxed">
               At Orniva, we foster strong partnerships to deliver exceptional results. We work closely with our clients to understand their unique needs and deliver tailored solutions.

@@ -173,7 +173,7 @@ const Contact = () => {
                     <MapPin size={32} className="text-accent" />
                   </div>
                   <div>
-                    <h4 className="text-xl font-bold text-primary mb-2">Studio Location</h4>
+                    <h4 className="text-xl font-heading font-bold text-primary mb-2">Studio Location</h4>
                     <p className="text-neutral-500 text-lg">Hyderabad, Telangana</p>
                   </div>
                 </li>
@@ -182,7 +182,7 @@ const Contact = () => {
                     <Phone size={32} className="text-accent" />
                   </a>
                   <div>
-                    <h4 className="text-xl font-bold text-primary mb-2">Phone</h4>
+                    <h4 className="text-xl font-heading font-bold text-primary mb-2">Phone</h4>
                     <div className="flex flex-col">
                       <a href="tel:9398801834" className="text-neutral-500 text-lg hover:text-accent transition-colors">+91 93988 01834</a>
                       <a href="tel:7993107169" className="text-neutral-500 text-lg hover:text-accent transition-colors">+91 79931 07169</a>
@@ -194,7 +194,7 @@ const Contact = () => {
                     <Mail size={32} className="text-accent" />
                   </a>
                   <div>
-                    <h4 className="text-xl font-bold text-primary mb-2">Email</h4>
+                    <h4 className="text-xl font-heading font-bold text-primary mb-2">Email</h4>
                     <a href="mailto:ornivadesignstudio@gmail.com" className="text-neutral-500 text-lg hover:text-accent transition-colors">
                       ornivadesignstudio@gmail.com
                     </a>
@@ -205,7 +205,7 @@ const Contact = () => {
                     <FaInstagram size={32} className="text-accent" />
                   </a>
                   <div>
-                    <h4 className="text-xl font-bold text-primary mb-2">Instagram</h4>
+                    <h4 className="text-xl font-heading font-bold text-primary mb-2">Instagram</h4>
                     <a href="https://www.instagram.com/orniva.design_studio/" target="_blank" rel="noreferrer" className="text-neutral-500 text-lg hover:text-accent transition-colors">
                       @orniva.design_studio
                     </a>

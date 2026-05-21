@@ -96,11 +96,11 @@ const Home = () => {
       
       {/* 2. Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-neutral-900 z-0">
+        <div className="absolute inset-0 bg-neutral-900 z-0 overflow-hidden">
           <img 
             src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80" 
             alt="Interior Design Studio" 
-            className="w-full h-full object-cover opacity-50"
+            className="w-full h-full object-cover opacity-50 blur-[5px] scale-105"
           />
         </div>
         
@@ -178,7 +178,7 @@ const Home = () => {
               { title: 'Space planning', desc: 'Layouts, zoning, 3D views, and detail-ready plans before work begins on site.' }
             ].map((service, i) => (
               <motion.div key={i} variants={fadeIn} className="bg-[#1a1a1a] p-8 rounded-2xl hover:bg-[#222] transition-colors duration-300 h-full flex flex-col">
-                <h3 className="text-lg font-sans font-semibold text-white mb-4">{service.title}</h3>
+                <h3 className="text-lg font-heading font-semibold text-white mb-4">{service.title}</h3>
                 <p className="text-[#999999] leading-relaxed text-sm">{service.desc}</p>
               </motion.div>
             ))}
@@ -508,7 +508,7 @@ const Home = () => {
             
             {isSubmitted ? (
               <div className="max-w-2xl mx-auto mb-8 p-6 bg-accent/20 border border-accent/30 rounded-xl text-center">
-                <h3 className="text-xl font-bold text-white mb-2">Request Received!</h3>
+                <h3 className="text-xl font-heading font-bold text-white mb-2">Request Received!</h3>
                 <p className="text-neutral-300">Thank you for reaching out. Our team will contact you shortly.</p>
               </div>
             ) : (

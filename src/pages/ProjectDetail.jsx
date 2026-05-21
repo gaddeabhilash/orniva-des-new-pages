@@ -165,11 +165,11 @@ const ProjectDetail = () => {
   return (
     <div className="bg-white">
       {/* Hero Image */}
-      <section className="relative h-[60vh] min-h-[500px] w-full">
+      <section className="relative h-[60vh] min-h-[500px] w-full overflow-hidden">
         <img
           src={project.heroImg}
           alt={project.title}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover blur-[5px] scale-105"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
         <div className="absolute bottom-0 left-0 w-full p-8 md:p-16">

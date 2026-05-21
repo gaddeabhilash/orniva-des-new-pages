@@ -10,10 +10,10 @@ const Footer = () => {
 
         {/* Massive Brand Statement (Reference Style: Antigravity) */}
         <div className="pb-16 flex flex-col items-center justify-center select-none overflow-hidden px-2">
-          <h2 className="text-[20vw] sm:text-[18vw] md:text-[16vw] lg:text-[14vw] font-extrabold tracking-tighter text-white font-sans leading-none select-none text-center">
+          <h2 className="text-[20vw] sm:text-[18vw] md:text-[16vw] lg:text-[14vw] font-bold text-white font-heading leading-none select-none text-center">
             Orniva
           </h2>
-          <span className="text-xs md:text-sm uppercase tracking-[0.4em] text-neutral-400 font-sans font-semibold mt-4 block text-center">
+          <span className="text-xs md:text-sm uppercase tracking-[0.4em] text-neutral-400 font-semibold mt-4 block text-center">
             Design Studio
           </span>
         </div>
