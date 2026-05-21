@@ -13,6 +13,8 @@ import Services from './pages/Services';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import CostCalculator from './pages/CostCalculator';
+import LuxeInteriors from './pages/LuxeInteriors';
+import LuxeGate from './components/LuxeGate';
 import NotFound from './pages/NotFound';
 
 // Scroll to top on route change
@@ -41,6 +43,7 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/calculator" element={<CostCalculator />} />
+            <Route path="/luxe" element={<LuxeGate><LuxeInteriors /></LuxeGate>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>

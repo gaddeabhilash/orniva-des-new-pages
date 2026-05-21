@@ -37,7 +37,7 @@ const Navbar = () => {
     { name: 'Calculator', path: '/calculator' },
   ];
 
-  // Bright white theme when overlaying dark hero backgrounds unscrolled on Home or Project details
+  // Bright white theme when overlaying dark hero backgrounds unscrolled on Home, Project details, or Luxe page
   const useWhiteText = !isScrolled && !isMobileMenuOpen && (location.pathname === '/' || location.pathname.startsWith('/projects/'));
 
   return (
@@ -63,13 +63,16 @@ const Navbar = () => {
               <li key={link.name}>
                 <Link 
                   to={link.path} 
-                  className={`hover:text-accent transition-colors duration-300 ${
+                  className={`hover:text-accent transition-colors duration-300 relative flex items-center gap-1.5 ${
                     location.pathname === link.path 
                       ? 'text-accent' 
                       : (useWhiteText ? 'text-white hover:text-accent' : 'text-primary hover:text-accent')
                   }`}
                 >
-                  {link.name}
+                  <span>{link.name}</span>
+                  {link.path === '/luxe' && (
+                    <span className="w-1.5 h-1.5 bg-accent rounded-full animate-pulse shadow-[0_0_8px_rgba(197,164,126,0.8)] shrink-0" />
+                  )}
                 </Link>
               </li>
             ))}
@@ -107,9 +110,14 @@ const Navbar = () => {
               <li key={link.name}>
                 <Link 
                   to={link.path} 
-                  className={location.pathname === link.path ? 'text-accent' : 'text-primary'}
+                  className={`flex items-center gap-2 ${
+                    location.pathname === link.path ? 'text-accent' : 'text-primary'
+                  }`}
                 >
-                  {link.name}
+                  <span>{link.name}</span>
+                  {link.path === '/luxe' && (
+                    <span className="w-2.5 h-2.5 bg-accent rounded-full animate-pulse shadow-[0_0_10px_rgba(197,164,126,0.8)]" />
+                  )}
                 </Link>
               </li>
             ))}
