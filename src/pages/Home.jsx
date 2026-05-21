@@ -393,27 +393,79 @@ const Home = () => {
       </section>
 
       {/* 7. Philosophy */}
-      <section className="py-24 bg-white">
-        <div className="container mx-auto px-4 md:px-8">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
-            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn}>
-              <h4 className="text-accent text-xs font-bold tracking-[0.2em] uppercase mb-4">Philosophy</h4>
-              <h2 className="text-4xl md:text-5xl font-heading font-bold text-primary max-w-2xl">What we believe in</h2>
-            </motion.div>
-          </div>
+      <section className="py-28 bg-[#faf7f2]/40 relative overflow-hidden border-t border-b border-neutral-100">
+        <div className="absolute top-1/2 left-1/3 w-[400px] h-[400px] bg-accent/5 rounded-full blur-[120px] pointer-events-none" />
 
-          <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true }} className="grid grid-cols-1 md:grid-cols-3 gap-12">
-            {[
-              { title: 'Craftsmanship', desc: 'Quality, precision, and creativity are at the core of everything we build.' },
-              { title: 'Collaboration', desc: 'Turning ideas into meaningful spatial experiences requires listening and shared vision.' },
-              { title: 'Sustainability', desc: 'Using materials and methods that inspire longevity and reduce environmental footprint.' }
-            ].map((item, i) => (
-              <motion.div key={i} variants={fadeIn} className="border-t-2 border-primary pt-6">
-                <h3 className="text-2xl font-heading font-bold text-primary mb-4">{item.title}</h3>
-                <p className="text-neutral-600 leading-relaxed">{item.desc}</p>
+        <div className="container mx-auto px-4 md:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+            
+            {/* Left Column: Sticky Brand Statement */}
+            <div className="lg:col-span-5 lg:sticky lg:top-32 space-y-6">
+              <motion.div 
+                initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn}
+                className="space-y-4"
+              >
+                <h4 className="text-accent text-xs font-bold tracking-[0.25em] uppercase">Philosophy</h4>
+                <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-normal text-primary leading-tight">
+                  What we<br className="hidden lg:block" /> believe in.
+                </h2>
+                <p className="text-neutral-500 text-base md:text-lg font-light leading-relaxed max-w-md pt-2">
+                  We believe spaces have a profound effect on our wellbeing, relationships, and routines. Every project is an opportunity to craft a sanctuary that feels both inspiring and deeply functional.
+                </p>
+                <div className="w-20 h-[2px] bg-accent mt-8 shrink-0" />
               </motion.div>
-            ))}
-          </motion.div>
+            </div>
+
+            {/* Right Column: Premium Staggered Stacked Cards */}
+            <div className="lg:col-span-7">
+              <motion.div 
+                variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true }}
+                className="space-y-8"
+              >
+                {[
+                  { 
+                    title: 'Craftsmanship', 
+                    desc: 'Quality, precision, and creativity are at the core of everything we build. We source exquisite materials and partner with highly skilled local artisans to deliver details that endure.' 
+                  },
+                  { 
+                    title: 'Collaboration', 
+                    desc: 'Turning concepts into meaningful spatial experiences requires listening and shared vision. We co-create with you, ensuring your stories and daily habits shape every corner.' 
+                  },
+                  { 
+                    title: 'Sustainability', 
+                    desc: 'Using materials and methods that inspire longevity and reduce the environmental footprint. We design with future relevance in mind, selecting products built to stand the test of time.' 
+                  }
+                ].map((item, i) => (
+                  <motion.div 
+                    key={i} 
+                    variants={fadeIn} 
+                    className="bg-white p-8 md:p-10 rounded-3xl border border-neutral-100 hover:border-accent/40 transition-all duration-500 shadow-sm hover:shadow-[0_20px_50px_rgba(197,164,126,0.08)] group relative overflow-hidden flex flex-col sm:flex-row gap-6 md:gap-8"
+                  >
+                    {/* Circle Number */}
+                    <div className="w-12 h-12 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center font-bold text-accent shrink-0 text-sm font-heading select-none">
+                      0{i+1}
+                    </div>
+                    
+                    {/* Card Content */}
+                    <div className="space-y-3 z-10 relative">
+                      <h3 className="text-2xl font-heading font-semibold text-primary group-hover:text-accent transition-colors duration-300">
+                        {item.title}
+                      </h3>
+                      <p className="text-neutral-500 leading-relaxed font-light text-sm md:text-base">
+                        {item.desc}
+                      </p>
+                    </div>
+
+                    {/* Watermark Logo/Text on Hover */}
+                    <div className="absolute right-6 bottom-4 select-none pointer-events-none font-heading italic text-5xl font-extrabold text-accent/5 opacity-0 group-hover:opacity-100 transition-all duration-700 transform translate-y-2 group-hover:translate-y-0">
+                      {item.title}
+                    </div>
+                  </motion.div>
+                ))}
+              </motion.div>
+            </div>
+
+          </div>
         </div>
       </section>
 

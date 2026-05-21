@@ -13,6 +13,7 @@ import Services from './pages/Services';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import CostCalculator from './pages/CostCalculator';
+import NotFound from './pages/NotFound';
 
 // Scroll to top on route change
 function ScrollToTop() {
@@ -40,6 +41,7 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/calculator" element={<CostCalculator />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </main>
         <Footer />
