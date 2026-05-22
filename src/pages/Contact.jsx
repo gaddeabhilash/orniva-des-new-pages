@@ -1,20 +1,16 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { MapPin, Phone, Mail, Send, MessageCircle, Calendar, Loader2 } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { MapPin, Phone, Mail, Loader2, CheckCircle, ChevronDown } from 'lucide-react';
 import { FaInstagram } from 'react-icons/fa';
 import { supabase } from '../lib/supabase';
 
 const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    message: ''
-  });
+  const [formData, setFormData] = useState({ name: '', phone: '', project_type: '', message: '' });
   const [isSubmitted, setIsSubmitted] = useState(false);
-
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
+  const [focusedField, setFocusedField] = useState(null);
+  const [isSelectOpen, setIsSelectOpen] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,206 +27,244 @@ const Contact = () => {
     try {
       const { error } = await supabase
         .from('inquiries')
-        .insert([
-          {
-            source: 'contact_page',
-            name: formData.name,
-            email: formData.email,
-            phone: formData.phone,
-            message: formData.message
-          }
-        ]);
-
+        .insert([{ source: 'contact_page', name: formData.name, phone: formData.phone, project_type: formData.project_type, message: formData.message }]);
       if (error) throw error;
-
       setIsSubmitted(true);
-      setFormData({ name: '', email: '', phone: '', message: '' });
-      setTimeout(() => setIsSubmitted(false), 5000);
+      setFormData({ name: '', phone: '', project_type: '', message: '' });
+      setTimeout(() => setIsSubmitted(false), 6000);
     } catch (error) {
-      console.error('Error submitting form:', error);
-      setErrorMsg(error.message || 'An unexpected error occurred. Please check your Supabase configuration.');
+      setErrorMsg(error.message || 'An unexpected error occurred.');
     } finally {
       setIsSubmitting(false);
     }
   };
 
+  const inputClass = (field) =>
+    `w-full px-4 py-3 bg-[#0a0a0b] border border-[#27272a] rounded-lg text-white text-sm placeholder-neutral-600 focus:outline-none transition-all duration-300 ${
+      focusedField === field
+        ? 'border-neutral-400 bg-[#111113]'
+        : 'hover:border-neutral-600'
+    }`;
+
   return (
-    <div className="pt-32 pb-32 lg:pt-24 lg:pb-8 bg-white min-h-screen lg:h-screen flex flex-col justify-center">
-      <div className="container mx-auto px-4 md:px-8">
+    <div className="min-h-screen bg-[#09090b] text-white relative flex flex-col justify-center pt-28 pb-20 px-4 md:px-8">
+      {/* Background glow for depth */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-white/[0.02] rounded-full blur-[120px] pointer-events-none" />
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-4 max-w-3xl mx-auto"
-        >
-          <h1 className="text-4xl md:text-5xl font-heading font-bold text-primary mb-3">Let's create something beautiful.</h1>
-          <p className="text-lg text-neutral-500">Reach out to discuss your upcoming project, request a consultation, or simply say hello.</p>
-        </motion.div>
-        <div className="flex flex-col lg:flex-row gap-8 max-w-6xl mx-auto items-start">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7 }}
+        className="relative w-full max-w-5xl mx-auto"
+      >
+        {/* Corner Plus Marks */}
+        <div className="absolute -top-[11px] -left-[11px] text-neutral-500 font-light text-xl select-none pointer-events-none">+</div>
+        <div className="absolute -top-[11px] -right-[11px] text-neutral-500 font-light text-xl select-none pointer-events-none">+</div>
+        <div className="absolute -bottom-[11px] -left-[11px] text-neutral-500 font-light text-xl select-none pointer-events-none">+</div>
+        <div className="absolute -bottom-[11px] -right-[11px] text-neutral-500 font-light text-xl select-none pointer-events-none">+</div>
 
-          {/* Form */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }}
-            className="w-full lg:w-1/2 bg-secondary/30 p-6 md:p-8 rounded-3xl"
-          >
-            <h3 className="text-2xl font-heading font-bold text-primary mb-6">Send us a message</h3>
+        {/* Main Box Container */}
+        <div className="bg-[#18181a] border border-[#27272a] rounded-xl overflow-hidden flex flex-col md:flex-row relative z-10 shadow-2xl">
+          
+          {/* Left Column: Info */}
+          <div className="w-full md:w-1/2 p-8 md:p-12 lg:p-16 flex flex-col justify-between">
+            <div>
+              <h1 className="text-4xl lg:text-5xl font-bold mb-4 text-white font-sans tracking-tight">Get in touch</h1>
+              <p className="text-[#a1a1aa] leading-relaxed mb-12 text-[15px] max-w-md">
+                If you have any questions regarding our Services or need help, please fill out the form here. We do our best to respond within 1 business day.
+              </p>
 
-            {isSubmitted ? (
-              <div className="bg-green-50 text-green-800 p-6 rounded-xl border border-green-200 flex items-center gap-4">
-                <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center shrink-0">
-                  <Send size={20} className="text-green-600" />
-                </div>
-                <div>
-                  <h4 className="font-bold">Message sent successfully!</h4>
-                  <p className="text-sm">We'll get back to you within 24 hours.</p>
-                </div>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-primary mb-1">Full Name</label>
-                  <input
-                    type="text" required
-                    value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full px-4 py-3 bg-white border border-neutral-200 rounded-xl focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all text-primary"
-                    placeholder="Jane Doe"
-                  />
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-primary mb-1">Email Address</label>
-                    <input
-                      type="email" required
-                      value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full px-4 py-3 bg-white border border-neutral-200 rounded-xl focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all text-primary"
-                      placeholder="jane@example.com"
-                    />
+              <div className="flex flex-col gap-8">
+                {/* Email */}
+                <div className="flex gap-4">
+                  <div className="w-10 h-10 rounded-lg bg-[#222224] border border-[#303033] flex items-center justify-center shrink-0">
+                    <Mail size={16} className="text-white" />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-primary mb-1">Phone Number</label>
-                    <input
-                      type="tel"
-                      value={formData.phone} onChange={e => setFormData({ ...formData, phone: e.target.value })}
-                      className="w-full px-4 py-3 bg-white border border-neutral-200 rounded-xl focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all text-primary"
-                      placeholder="+1 (555) 000-0000"
-                    />
-                  </div>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-primary mb-1">Project Details</label>
-                  <textarea
-                    required rows="3"
-                    value={formData.message} onChange={e => setFormData({ ...formData, message: e.target.value })}
-                    className="w-full px-4 py-3 bg-white border border-neutral-200 rounded-xl focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all text-primary resize-none"
-                    placeholder="Tell us about your space, budget, and vision..."
-                  ></textarea>
-                </div>
-                {errorMsg && (
-                  <div className="p-3 bg-red-50 text-red-600 text-sm rounded-xl border border-red-100 mb-4">
-                    {errorMsg}
-                  </div>
-                )}
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="relative overflow-hidden w-full py-3.5 bg-primary text-white rounded-xl font-medium transition-all duration-500 hover:shadow-[0_0_25px_rgba(17,17,17,0.15)] hover:scale-[1.01] flex justify-center items-center gap-2 disabled:opacity-70 group/btn"
-                >
-                  <span className="relative z-10 flex items-center gap-2">
-                    {isSubmitting ? (
-                      <>Submitting... <Loader2 size={18} className="animate-spin" /></>
-                    ) : (
-                      <>Submit Inquiry <Send size={18} /></>
-                    )}
-                  </span>
-                  <span className="absolute inset-0 bg-white opacity-0 group-hover/btn:opacity-10 transition-opacity duration-300"></span>
-                </button>
-              </form>
-            )}
-
-            <div className="mt-6 pt-6 border-t border-neutral-200">
-              <a 
-                href="https://wa.me/919398801834" 
-                target="_blank" 
-                rel="noreferrer" 
-                className="relative overflow-hidden w-full py-3.5 bg-[#25D366]/10 text-[#25D366] border border-[#25D366]/30 rounded-xl font-medium transition-all duration-500 hover:bg-[#25D366]/20 hover:scale-[1.01] flex justify-center items-center gap-2 group/btn"
-              >
-                <span className="relative z-10 flex items-center gap-2">
-                  <MessageCircle size={20} /> Chat on WhatsApp
-                </span>
-              </a>
-            </div>
-          </motion.div>
-
-          {/* Contact Info */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.4 }}
-            className="w-full lg:w-1/2 mt-4 lg:mt-6"
-          >
-            <div className="pl-0 lg:pl-12">
-              <h3 className="text-3xl lg:text-4xl font-heading font-bold text-primary mb-6">Contact Information</h3>
-              <ul className="space-y-6">
-                <li className="flex gap-6 items-center">
-                  <div className="w-16 h-16 bg-secondary rounded-full flex items-center justify-center shrink-0">
-                    <MapPin size={32} className="text-accent" />
-                  </div>
-                  <div>
-                    <h4 className="text-xl font-heading font-bold text-primary mb-2">Studio Location</h4>
-                    <p className="text-neutral-500 text-lg">Hyderabad, Telangana</p>
-                  </div>
-                </li>
-                <li className="flex gap-6 items-center group/item">
-                  <a href="tel:9398801834" className="w-16 h-16 bg-secondary rounded-full flex items-center justify-center shrink-0 transition-transform duration-300 group-hover/item:scale-105">
-                    <Phone size={32} className="text-accent" />
-                  </a>
-                  <div>
-                    <h4 className="text-xl font-heading font-bold text-primary mb-2">Phone</h4>
-                    <div className="flex flex-col">
-                      <a href="tel:9398801834" className="text-neutral-500 text-lg hover:text-accent transition-colors">+91 93988 01834</a>
-                      <a href="tel:7993107169" className="text-neutral-500 text-lg hover:text-accent transition-colors">+91 79931 07169</a>
-                    </div>
-                  </div>
-                </li>
-                <li className="flex gap-6 items-center group/item">
-                  <a href="mailto:ornivadesignstudio@gmail.com" className="w-16 h-16 bg-secondary rounded-full flex items-center justify-center shrink-0 transition-transform duration-300 group-hover/item:scale-105">
-                    <Mail size={32} className="text-accent" />
-                  </a>
-                  <div>
-                    <h4 className="text-xl font-heading font-bold text-primary mb-2">Email</h4>
-                    <a href="mailto:ornivadesignstudio@gmail.com" className="text-neutral-500 text-lg hover:text-accent transition-colors">
+                    <h4 className="font-semibold text-white text-[15px] mb-0.5">Email</h4>
+                    <a href="mailto:ornivadesignstudio@gmail.com" className="text-[#a1a1aa] text-sm hover:text-white transition-colors break-words max-w-full block">
                       ornivadesignstudio@gmail.com
                     </a>
                   </div>
-                </li>
-                <li className="flex gap-6 items-center group/item">
-                  <a href="https://www.instagram.com/orniva.design_studio/" target="_blank" rel="noreferrer" className="w-16 h-16 bg-secondary rounded-full flex items-center justify-center shrink-0 transition-transform duration-300 group-hover/item:scale-105">
-                    <FaInstagram size={32} className="text-accent" />
-                  </a>
+                </div>
+
+                {/* Phone */}
+                <div className="flex gap-4">
+                  <div className="w-10 h-10 rounded-lg bg-[#222224] border border-[#303033] flex items-center justify-center shrink-0">
+                    <Phone size={16} className="text-white" />
+                  </div>
                   <div>
-                    <h4 className="text-xl font-heading font-bold text-primary mb-2">Instagram</h4>
-                    <a href="https://www.instagram.com/orniva.design_studio/" target="_blank" rel="noreferrer" className="text-neutral-500 text-lg hover:text-accent transition-colors">
+                    <h4 className="font-semibold text-white text-[15px] mb-0.5">Phone</h4>
+                    <a href="tel:9398801834" className="text-[#a1a1aa] text-sm hover:text-white transition-colors">
+                      +91 93988 01834
+                    </a>
+                  </div>
+                </div>
+
+                {/* Address */}
+                <div className="flex gap-4">
+                  <div className="w-10 h-10 rounded-lg bg-[#222224] border border-[#303033] flex items-center justify-center shrink-0">
+                    <MapPin size={16} className="text-white" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-white text-[15px] mb-0.5">Address</h4>
+                    <p className="text-[#a1a1aa] text-sm">
+                      Hyderabad, Telangana
+                    </p>
+                  </div>
+                </div>
+
+                {/* Instagram */}
+                <div className="flex gap-4">
+                  <div className="w-10 h-10 rounded-lg bg-[#222224] border border-[#303033] flex items-center justify-center shrink-0">
+                    <FaInstagram size={16} className="text-white" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-white text-[15px] mb-0.5">Instagram</h4>
+                    <a href="https://www.instagram.com/orniva.design_studio/" target="_blank" rel="noreferrer" className="text-[#a1a1aa] text-sm hover:text-white transition-colors">
                       @orniva.design_studio
                     </a>
                   </div>
-                </li>
-              </ul>
+                </div>
 
-              <div className="mt-8 pt-6 border-t border-neutral-200">
-                <a
-                  href="https://cal.com/orniva-design-studio/30min"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="relative overflow-hidden w-full py-4 bg-[#C5A47E] text-white rounded-xl font-medium transition-all duration-500 hover:shadow-[0_0_25px_rgba(197,164,126,0.35)] hover:scale-[1.01] flex justify-center items-center gap-2 group/btn"
-                >
-                  <span className="relative z-10 flex items-center gap-2">
-                    <Calendar size={20} /> Book a Meeting
-                  </span>
-                  <span className="absolute inset-0 bg-white opacity-0 group-hover/btn:opacity-10 transition-opacity duration-300"></span>
-                </a>
+
               </div>
             </div>
-          </motion.div>
+          </div>
 
+          {/* Right Column: Form */}
+          <div className="w-full md:w-1/2 p-8 md:p-12 lg:p-16 border-t md:border-t-0 md:border-l border-[#27272a] bg-[#141416]">
+            <AnimatePresence mode="wait">
+              {isSubmitted ? (
+                <motion.div
+                  key="success"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="flex flex-col items-center justify-center h-full text-center py-10"
+                >
+                  <div className="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center mb-6">
+                    <CheckCircle size={32} className="text-white" />
+                  </div>
+                  <h4 className="text-2xl font-bold text-white mb-2">Message sent!</h4>
+                  <p className="text-[#a1a1aa]">We'll be in touch with you shortly.</p>
+                </motion.div>
+              ) : (
+                <motion.form
+                  key="form"
+                  onSubmit={handleSubmit}
+                  className="space-y-5"
+                  initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+                >
+                  {/* Name */}
+                  <div>
+                    <label className="block text-[13px] font-semibold text-white mb-2">Name</label>
+                    <input
+                      type="text" required
+                      value={formData.name}
+                      onChange={e => setFormData({ ...formData, name: e.target.value })}
+                      onFocus={() => setFocusedField('name')}
+                      onBlur={() => setFocusedField(null)}
+                      className={inputClass('name')}
+                    />
+                  </div>
+
+                  {/* Project Type */}
+                  <div className="relative">
+                    <label className="block text-[13px] font-semibold text-white mb-2">Project Type</label>
+                    <div 
+                      onClick={() => setIsSelectOpen(!isSelectOpen)}
+                      className={`${inputClass('project_type')} cursor-pointer flex justify-between items-center ${isSelectOpen ? 'border-neutral-400 bg-[#111113]' : ''}`}
+                    >
+                      <span className={formData.project_type ? "text-white" : "text-neutral-600"}>
+                        {formData.project_type === 'residential' ? 'Residential Interior' :
+                         formData.project_type === 'commercial' ? 'Commercial Space' :
+                         formData.project_type === 'renovation' ? 'Renovation' :
+                         'Select project type'}
+                      </span>
+                      <ChevronDown size={16} className={`text-neutral-400 transition-transform ${isSelectOpen ? 'rotate-180' : ''}`} />
+                    </div>
+                    
+                    <AnimatePresence>
+                      {isSelectOpen && (
+                        <motion.div 
+                          initial={{ opacity: 0, y: -10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                          className="absolute z-50 w-full mt-2 bg-[#111113] border border-[#27272a] rounded-lg overflow-hidden shadow-2xl"
+                        >
+                          {[
+                            { value: 'residential', label: 'Residential Interior' },
+                            { value: 'commercial', label: 'Commercial Space' },
+                            { value: 'renovation', label: 'Renovation' }
+                          ].map((option) => (
+                            <div 
+                              key={option.value}
+                              onClick={() => {
+                                setFormData({...formData, project_type: option.value});
+                                setIsSelectOpen(false);
+                              }}
+                              className={`px-4 py-3 text-sm cursor-pointer transition-colors ${formData.project_type === option.value ? 'bg-white/10 text-white font-medium' : 'text-neutral-400 hover:bg-white/5 hover:text-white'}`}
+                            >
+                              {option.label}
+                            </div>
+                          ))}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+
+                  {/* Phone */}
+                  <div>
+                    <label className="block text-[13px] font-semibold text-white mb-2">Phone</label>
+                    <input
+                      type="tel"
+                      value={formData.phone}
+                      onChange={e => setFormData({ ...formData, phone: e.target.value })}
+                      onFocus={() => setFocusedField('phone')}
+                      onBlur={() => setFocusedField(null)}
+                      className={inputClass('phone')}
+                    />
+                  </div>
+
+                  {/* Message */}
+                  <div>
+                    <label className="block text-[13px] font-semibold text-white mb-2">Message</label>
+                    <textarea
+                      required rows={4}
+                      value={formData.message}
+                      onChange={e => setFormData({ ...formData, message: e.target.value })}
+                      onFocus={() => setFocusedField('message')}
+                      onBlur={() => setFocusedField(null)}
+                      className={`${inputClass('message')} resize-none`}
+                    />
+                  </div>
+
+                  {errorMsg && (
+                    <div className="p-3 bg-red-500/10 text-red-400 text-[13px] rounded-lg border border-red-500/20">
+                      {errorMsg}
+                    </div>
+                  )}
+
+                  <div className="pt-2">
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="w-full py-3.5 bg-[#f4f4f5] hover:bg-white text-black text-[15px] font-semibold rounded-lg transition-colors flex justify-center items-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+                    >
+                      {isSubmitting ? (
+                        <Loader2 size={18} className="animate-spin" />
+                      ) : (
+                        'Submit'
+                      )}
+                    </button>
+                  </div>
+                </motion.form>
+              )}
+            </AnimatePresence>
+          </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };

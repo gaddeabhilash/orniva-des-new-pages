@@ -37,8 +37,8 @@ const Navbar = () => {
     { name: 'Calculator', path: '/calculator' },
   ];
 
-  // Bright white theme when overlaying dark hero backgrounds unscrolled on Home, Project details, or Luxe page
-  const useWhiteText = !isScrolled && !isMobileMenuOpen && (location.pathname === '/' || location.pathname.startsWith('/projects/'));
+  // Bright white theme when overlaying dark hero backgrounds unscrolled on Home, Project details, or Contact page
+  const useWhiteText = !isScrolled && !isMobileMenuOpen && (location.pathname === '/' || location.pathname.startsWith('/projects/') || location.pathname === '/contact');
 
   return (
     <header 

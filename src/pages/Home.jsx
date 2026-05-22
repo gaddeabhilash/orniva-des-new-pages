@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, ChevronDown, Loader2 } from 'lucide-react';
+import { ArrowRight, ChevronDown, Loader2, Plus, Minus } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 
@@ -17,33 +17,69 @@ const staggerContainer = {
   }
 };
 
-const FAQItem = ({ question, answer }) => {
+// You can change the names of your collaborators/brands here whenever you want
+const collaborators = [
+  "NVIDIA", "supabase", "GitHub", "OpenAI",
+  "TURSO", "clerk", "Claude", "Vercel"
+];
+
+const FAQItem = ({ question, answer, index }) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <div className="border-b border-neutral-200 py-6">
-      <button 
+    <motion.div
+      layout
+      className={`relative rounded-2xl border transition-all duration-300 overflow-hidden ${
+        isOpen
+          ? 'bg-[#111111] border-accent/30 shadow-[0_8px_32px_rgba(197,164,126,0.08)]'
+          : 'bg-[#0d0d0d] border-white/[0.06] hover:border-white/[0.12]'
+      }`}
+    >
+      {/* Accent left bar when open */}
+      {isOpen && (
+        <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-gradient-to-b from-accent via-accent/60 to-transparent rounded-l-2xl" />
+      )}
+
+      <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex w-full justify-between items-center text-left focus:outline-none group"
+        className="w-full flex items-start gap-5 px-6 py-6 text-left focus:outline-none group"
       >
-        <h4 className="text-xl font-heading font-semibold text-primary group-hover:text-accent transition-colors">{question}</h4>
-        <ChevronDown 
-          className={`text-neutral-400 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} 
-          size={24} 
-        />
+        {/* Number badge */}
+        <span className={`shrink-0 w-7 h-7 rounded-full border flex items-center justify-center text-[11px] font-medium mt-0.5 transition-colors duration-300 ${
+          isOpen ? 'border-accent/50 text-accent bg-accent/10' : 'border-white/10 text-neutral-500 bg-white/[0.03]'
+        }`}>
+          {String(index + 1).padStart(2, '0')}
+        </span>
+
+        <div className="flex-1 flex justify-between items-start gap-4">
+          <h4 className={`text-base md:text-lg font-heading font-medium leading-snug transition-colors duration-300 ${
+            isOpen ? 'text-white' : 'text-neutral-200 group-hover:text-white'
+          }`}>
+            {question}
+          </h4>
+          <span className={`shrink-0 w-7 h-7 rounded-full flex items-center justify-center border transition-all duration-300 mt-0.5 ${
+            isOpen ? 'bg-accent border-accent text-primary rotate-0' : 'border-white/10 text-neutral-500 group-hover:border-white/20'
+          }`}>
+            {isOpen ? <Minus size={12} /> : <Plus size={12} />}
+          </span>
+        </div>
       </button>
-      <AnimatePresence>
+
+      <AnimatePresence initial={false}>
         {isOpen && (
           <motion.div
+            key="answer"
             initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1, transition: { duration: 0.35, ease: 'easeOut' } }}
+            exit={{ height: 0, opacity: 0, transition: { duration: 0.25, ease: 'easeIn' } }}
             className="overflow-hidden"
           >
-            <p className="pt-4 text-neutral-600 leading-relaxed">{answer}</p>
+            <div className="pl-[4.5rem] pr-6 pb-6">
+              <p className="text-neutral-400 text-sm md:text-base leading-relaxed font-light">{answer}</p>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </motion.div>
   );
 };
 
@@ -237,7 +273,7 @@ const Home = () => {
                 { title: 'Flexible Design Options', desc: 'Choices ranging from concept-only to full execution support.' }
               ].map((prop, i) => (
                 <motion.div key={i} variants={fadeIn}>
-                  <div className="w-12 h-12 bg-white text-primary rounded-full flex items-center justify-center font-bold font-heading mb-4 shadow-sm">
+                  <div className="w-12 h-12 bg-white text-primary rounded-full flex items-center justify-center font-bold mb-4 shadow-sm">
                     {i+1}
                   </div>
                   <h3 className="text-xl font-heading font-bold text-primary mb-2">{prop.title}</h3>
@@ -259,11 +295,11 @@ const Home = () => {
 
           <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true }} className="grid grid-cols-1 md:grid-cols-5 gap-8">
             {[
-              { title: 'Consultation', desc: 'Mapping lifestyle, priorities, and budget.' },
-              { title: 'Design', desc: 'Shaping layouts, palettes, and finishes.' },
-              { title: '3D Views', desc: 'Realistic visuals before build commitment.' },
-              { title: 'Execution', desc: 'On-site coordination and trusted vendor management.' },
-              { title: 'Delivery', desc: 'Final styling and handover.' }
+              { title: 'Consultation', desc: 'Understanding lifestyle and requirements.' },
+              { title: 'Concept Development', desc: 'Mood boards, layouts, and design direction.' },
+              { title: 'Material Selection', desc: 'Finishes, textures, lighting, and colors.' },
+              { title: 'Execution', desc: 'Coordinated implementation.' },
+              { title: 'Final Styling', desc: 'Furniture, decor, and finishing touches.' }
             ].map((step, i) => (
               <motion.div key={i} variants={fadeIn} className="relative">
                 {i !== 4 && <div className="hidden md:block absolute top-6 left-12 w-full h-[1px] bg-neutral-800 z-0"></div>}
@@ -279,113 +315,136 @@ const Home = () => {
       </section>
 
       {/* 6.5 Client Portal Promotion */}
-      <section className="py-24 bg-[#0d0d0d] border-t border-b border-neutral-900 relative overflow-hidden">
-        {/* Subtle decorative glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-accent/5 rounded-full blur-[120px] pointer-events-none"></div>
-        
+      <section className="py-28 bg-[#080809] relative overflow-hidden">
+        {/* Background grid */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808006_1px,transparent_1px),linear-gradient(to_bottom,#80808006_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none" />
+        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-accent/[0.05] rounded-full blur-[140px] pointer-events-none" />
+        <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-accent/[0.04] rounded-full blur-[120px] pointer-events-none" />
+
         <div className="container mx-auto px-4 md:px-8 relative z-10">
-          <div className="max-w-5xl mx-auto bg-neutral-900/40 border border-white/5 rounded-3xl p-8 md:p-16 backdrop-blur-md">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-              
-              {/* Text Column */}
-              <div className="lg:col-span-7 space-y-6">
-                <motion.div
-                  initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn}
-                >
-                  <h4 className="text-accent text-xs font-bold tracking-[0.25em] uppercase mb-4">
-                    Orniva Experience
-                  </h4>
-                  <h2 className="text-4xl md:text-5xl font-heading font-normal text-white leading-tight mb-6">
-                    No Waiting. <br className="hidden sm:block"/>No Wondering.
+          <div className="max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+
+              {/* Left: Text + features */}
+              <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} className="space-y-8">
+                <div className="space-y-4">
+                  <span className="inline-block text-accent text-[11px] font-semibold tracking-[0.3em] uppercase border border-accent/20 px-4 py-1.5 rounded-full bg-accent/5">
+                    Client Experience
+                  </span>
+                  <h2 className="text-4xl md:text-5xl lg:text-[3.25rem] font-heading font-normal text-white leading-tight">
+                    No Waiting.<br />No Wondering.
                   </h2>
-                  <p className="text-neutral-400 text-base md:text-lg font-light leading-relaxed mb-8">
-                    We believe you should never have to wait for a weekly update or chase for status reports. From initial 3D renderings and moodboards to site preparation and final paint coats, follow every milestone of your home's transformation live. Seamless transparency, entirely on your own terms.
+                  <p className="text-neutral-400 text-base md:text-lg font-light leading-relaxed max-w-lg">
+                    From first concept to final handover — every milestone of your project is tracked, documented, and accessible live. Zero chasing, zero guessing.
                   </p>
-                </motion.div>
+                </div>
 
-                {/* Features Grid */}
-                <motion.div 
-                  variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true }}
-                  className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4 border-t border-white/10"
+                {/* Feature list */}
+                <div className="space-y-5 pt-2">
+                  {[
+                    { icon: 'M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z', title: 'Live Milestone Tracking', desc: 'Follow every phase from electrical to cabinetry in real time.' },
+                    { icon: 'M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z', title: 'Instant Design Access', desc: 'View floor plans, 3D renders, and material boards anytime.' },
+                    { icon: 'M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z', title: 'Direct Designer Access', desc: 'WhatsApp updates and weekly video walkthroughs — no middlemen.' },
+                  ].map((f, i) => (
+                    <motion.div key={i} variants={fadeIn} className="flex items-start gap-4 group">
+                      <div className="w-10 h-10 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center shrink-0 group-hover:bg-accent/20 transition-colors duration-300">
+                        <svg className="w-5 h-5 text-accent" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" d={f.icon} />
+                        </svg>
+                      </div>
+                      <div>
+                        <h4 className="text-white text-sm font-semibold mb-0.5">{f.title}</h4>
+                        <p className="text-neutral-500 text-xs leading-relaxed">{f.desc}</p>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+
+                <motion.a
+                  variants={fadeIn}
+                  href="https://odscp.vercel.app/login"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2.5 px-7 py-4 bg-accent hover:bg-accent/90 text-primary text-sm font-bold rounded-full transition-all duration-300 hover:scale-[1.03] shadow-lg shadow-accent/20 group"
                 >
-                  <motion.div variants={fadeIn} className="flex gap-4">
-                    <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center shrink-0 border border-accent/20">
-                      <svg className="w-5 h-5 text-accent" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
-                      </svg>
-                    </div>
-                    <div>
-                      <h4 className="text-white font-medium text-sm mb-1">Live Milestone Status</h4>
-                      <p className="text-neutral-500 text-xs leading-relaxed">Follow active phases from electrical layouts to bespoke cabinetry.</p>
-                    </div>
-                  </motion.div>
+                  View Your Progress Live
+                  <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
+                </motion.a>
+              </motion.div>
 
-                  <motion.div variants={fadeIn} className="flex gap-4">
-                    <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center shrink-0 border border-accent/20">
-                      <svg className="w-5 h-5 text-accent" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
-                      </svg>
-                    </div>
-                    <div>
-                      <h4 className="text-white font-medium text-sm mb-1">Instant Design Access</h4>
-                      <p className="text-neutral-500 text-xs leading-relaxed">Instantly view floor plans, 3D renderings, and color swatches.</p>
-                    </div>
-                  </motion.div>
-                </motion.div>
-              </div>
+              {/* Right: Elevated portal mockup card */}
+              <motion.div
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7, ease: 'easeOut' }}
+                className="relative"
+              >
+                {/* Glow behind card */}
+                <div className="absolute -inset-4 bg-accent/5 rounded-3xl blur-2xl pointer-events-none" />
 
-              {/* Interactive Card Column */}
-              <div className="lg:col-span-5 flex flex-col justify-center">
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6 }}
-                  className="bg-[#141414] border border-white/10 rounded-2xl p-6 md:p-8 shadow-2xl relative"
-                >
-                  <div className="absolute top-4 right-4 flex gap-1.5">
-                    <span className="w-2.5 h-2.5 rounded-full bg-red-500/40"></span>
-                    <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/40"></span>
-                    <span className="w-2.5 h-2.5 rounded-full bg-green-500/40"></span>
+                <div className="relative bg-[#111113] border border-white/10 rounded-3xl overflow-hidden shadow-[0_32px_80px_rgba(0,0,0,0.6)]">
+                  {/* Card header bar */}
+                  <div className="flex items-center justify-between px-5 py-3.5 border-b border-white/[0.07] bg-[#0d0d0f]">
+                    <div className="flex items-center gap-2">
+                      <div className="flex gap-1.5">
+                        <span className="w-2.5 h-2.5 rounded-full bg-[#FF5F57]" />
+                        <span className="w-2.5 h-2.5 rounded-full bg-[#FEBC2E]" />
+                        <span className="w-2.5 h-2.5 rounded-full bg-[#28C840]" />
+                      </div>
+                      <span className="text-[11px] text-neutral-600 ml-2 font-mono">odscp.vercel.app/dashboard</span>
+                    </div>
+                    <span className="text-[10px] text-accent bg-accent/10 border border-accent/20 px-2 py-0.5 rounded-full font-semibold tracking-wide">LIVE</span>
                   </div>
 
-                  <span className="text-[10px] uppercase tracking-wider text-accent font-bold mb-2 block">Secure Access</span>
-                  <h3 className="text-lg font-heading text-white font-semibold mb-6">Orniva Client Portal</h3>
-                  
-                  {/* Mock UI Graphic inside the box */}
-                  <div className="space-y-4 mb-8 bg-neutral-900/50 p-4 rounded-xl border border-white/5 text-xs text-neutral-400">
-                    <div className="flex justify-between items-center border-b border-white/5 pb-2">
-                      <span className="font-medium text-white">Project Name</span>
-                      <span className="text-accent font-medium">Jubilee Hills Villa</span>
-                    </div>
-                    <div className="space-y-2">
-                      <div className="flex justify-between">
-                        <span>Design Concept</span>
-                        <span className="text-green-400 font-semibold flex items-center gap-1">
-                          <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></span> Approved
-                        </span>
+                  <div className="p-6 space-y-5">
+                    {/* Project header */}
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <p className="text-[10px] text-neutral-600 uppercase tracking-widest mb-1">Active Project</p>
+                        <h3 className="text-white font-heading font-semibold text-lg">Jubilee Hills Villa</h3>
+                        <p className="text-neutral-500 text-xs mt-0.5">Banjara Hills, Hyderabad</p>
                       </div>
-                      <div className="w-full bg-white/5 rounded-full h-1.5 overflow-hidden">
-                        <div className="bg-accent h-full w-[80%] rounded-full"></div>
-                      </div>
+                      <span className="text-[11px] text-green-400 bg-green-400/10 border border-green-400/20 px-3 py-1 rounded-full font-semibold flex items-center gap-1.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+                        On Track
+                      </span>
                     </div>
-                    <div className="flex justify-between items-center text-[10px] text-neutral-500 pt-1">
-                      <span>Milestone: Carpentry & Custom Fixtures</span>
-                      <span>80% Complete</span>
+
+                    {/* Milestones */}
+                    <div className="space-y-3">
+                      {[
+                        { label: 'Concept & 3D Design', pct: 100, done: true },
+                        { label: 'Material Procurement', pct: 100, done: true },
+                        { label: 'Carpentry & Fixtures', pct: 80, done: false },
+                        { label: 'Final Styling & Handover', pct: 15, done: false },
+                      ].map((m, i) => (
+                        <div key={i} className="space-y-1.5">
+                          <div className="flex justify-between text-[11px]">
+                            <span className={m.done ? 'text-neutral-400' : 'text-white'}>{m.label}</span>
+                            <span className={m.done ? 'text-green-400' : 'text-accent'}>{m.done ? '✓ Done' : `${m.pct}%`}</span>
+                          </div>
+                          <div className="w-full bg-white/[0.05] rounded-full h-1.5 overflow-hidden">
+                            <motion.div
+                              initial={{ width: 0 }}
+                              whileInView={{ width: `${m.pct}%` }}
+                              viewport={{ once: true }}
+                              transition={{ duration: 1, delay: i * 0.15, ease: 'easeOut' }}
+                              className={`h-full rounded-full ${m.done ? 'bg-green-500/70' : 'bg-gradient-to-r from-accent/60 to-accent'}`}
+                            />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Next update row */}
+                    <div className="flex items-center justify-between pt-3 border-t border-white/[0.06] text-[11px] text-neutral-500">
+                      <span>Next update: <span className="text-accent">Tomorrow, 10 AM</span></span>
+                      <span className="flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" /> Designer online</span>
                     </div>
                   </div>
-
-                  <a 
-                    href="https://odscp.vercel.app/login" 
-                    target="_blank" 
-                    rel="noreferrer"
-                    className="w-full py-4 bg-accent text-white rounded-xl font-medium hover:bg-white hover:text-primary transition-all duration-300 flex items-center justify-center gap-2 group text-sm shadow-lg shadow-accent/10 text-center"
-                  >
-                    <span>View Your Progress Live</span>
-                    <ArrowRight size={16} className="transform group-hover:translate-x-1 transition-transform" />
-                  </a>
-                </motion.div>
-              </div>
+                </div>
+              </motion.div>
 
             </div>
           </div>
@@ -393,107 +452,176 @@ const Home = () => {
       </section>
 
       {/* 7. Philosophy */}
-      <section className="py-28 bg-[#faf7f2]/40 relative overflow-hidden border-t border-b border-neutral-100">
-        <div className="absolute top-1/2 left-1/3 w-[400px] h-[400px] bg-accent/5 rounded-full blur-[120px] pointer-events-none" />
+      <section className="py-28 bg-[#0a0a0b] relative overflow-hidden">
+        {/* Decorative ambient glow */}
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-accent/[0.04] rounded-full blur-[160px] pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-accent/[0.03] rounded-full blur-[120px] pointer-events-none" />
 
-        <div className="container mx-auto px-4 md:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
-            
-            {/* Left Column: Sticky Brand Statement */}
-            <div className="lg:col-span-5 lg:sticky lg:top-32 space-y-6">
-              <motion.div 
-                initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn}
-                className="space-y-4"
+        <div className="container mx-auto px-4 md:px-8 relative z-10">
+
+          {/* Section Header */}
+          <motion.div
+            initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn}
+            className="max-w-2xl mb-20"
+          >
+            <span className="inline-block text-accent text-[11px] font-semibold tracking-[0.3em] uppercase mb-5 border border-accent/20 px-4 py-1.5 rounded-full bg-accent/5">
+              Philosophy
+            </span>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-normal text-white leading-tight mb-5">
+              What we<br className="hidden sm:block" /> believe in.
+            </h2>
+            <p className="text-neutral-500 text-base md:text-lg font-light leading-relaxed">
+              We believe spaces have a profound effect on our wellbeing, relationships, and routines. Every project is an opportunity to craft a sanctuary that feels both inspiring and deeply functional.
+            </p>
+          </motion.div>
+
+          {/* Cards */}
+          <motion.div
+            variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true }}
+            className="grid grid-cols-1 md:grid-cols-3 gap-6"
+          >
+            {[
+              {
+                num: '01',
+                title: 'Craftsmanship',
+                desc: 'Quality, precision, and creativity are at the core of everything we build. We source exquisite materials and partner with highly skilled artisans to deliver details that endure.',
+                icon: 'M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z'
+              },
+              {
+                num: '02',
+                title: 'Collaboration',
+                desc: 'Turning concepts into meaningful spatial experiences requires listening and shared vision. We co-create with you, ensuring your stories and daily habits shape every corner.',
+                icon: 'M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z'
+              },
+              {
+                num: '03',
+                title: 'Sustainability',
+                desc: 'Using materials and methods that inspire longevity and reduce the environmental footprint. We design with future relevance in mind, selecting products built to stand the test of time.',
+                icon: 'M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z'
+              }
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                variants={fadeIn}
+                className="group relative bg-[#111113] border border-white/[0.07] rounded-3xl p-8 hover:border-accent/30 transition-all duration-500 hover:shadow-[0_20px_60px_rgba(197,164,126,0.07)] overflow-hidden flex flex-col"
               >
-                <h4 className="text-accent text-xs font-bold tracking-[0.25em] uppercase">Philosophy</h4>
-                <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-normal text-primary leading-tight">
-                  What we<br className="hidden lg:block" /> believe in.
-                </h2>
-                <p className="text-neutral-500 text-base md:text-lg font-light leading-relaxed max-w-md pt-2">
-                  We believe spaces have a profound effect on our wellbeing, relationships, and routines. Every project is an opportunity to craft a sanctuary that feels both inspiring and deeply functional.
+                {/* Top accent line on hover */}
+                <div className="absolute top-0 left-6 right-6 h-[1px] bg-gradient-to-r from-transparent via-accent/50 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
+
+                {/* Number */}
+                <span className="text-[11px] font-semibold text-accent/50 tracking-[0.2em] mb-6 block">{item.num}</span>
+
+                {/* Icon */}
+                <div className="w-12 h-12 rounded-2xl bg-accent/10 border border-accent/20 flex items-center justify-center mb-6 group-hover:bg-accent/15 transition-colors duration-300">
+                  <svg className="w-6 h-6 text-accent" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d={item.icon} />
+                  </svg>
+                </div>
+
+                <h3 className="text-xl md:text-2xl font-heading font-normal text-white mb-4 group-hover:text-accent transition-colors duration-300">
+                  {item.title}
+                </h3>
+                <p className="text-neutral-500 text-sm md:text-base leading-relaxed font-light flex-1">
+                  {item.desc}
                 </p>
-                <div className="w-20 h-[2px] bg-accent mt-8 shrink-0" />
-              </motion.div>
-            </div>
 
-            {/* Right Column: Premium Staggered Stacked Cards */}
-            <div className="lg:col-span-7">
-              <motion.div 
-                variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true }}
-                className="space-y-8"
+                {/* Watermark on hover */}
+                <div className="absolute -bottom-4 -right-2 font-heading italic text-[5rem] font-extrabold text-white/[0.02] select-none pointer-events-none group-hover:text-accent/[0.04] transition-colors duration-700">
+                  {item.title[0]}
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+
+        </div>
+      </section>
+
+      {/* Collaborators / Brands */}
+      <section className="py-16 bg-[#080809] relative overflow-hidden">
+        <div className="container mx-auto px-4 md:px-8 max-w-5xl">
+          <h3 className="text-center text-neutral-400 text-lg md:text-[22px] font-light mb-12">
+            Companies we <span className="text-white font-semibold">collaborate</span> with.
+          </h3>
+          
+          <div className="relative mx-auto border-t border-l border-white/[0.08] grid grid-cols-2 md:grid-cols-4 bg-[#0a0a0a]/50">
+            {/* Grid corner plus marks */}
+            <div className="absolute -top-[13px] -left-[9px] text-neutral-500 font-light text-xl select-none pointer-events-none">+</div>
+            <div className="absolute -top-[13px] -right-[9px] text-neutral-500 font-light text-xl select-none pointer-events-none">+</div>
+            <div className="absolute -bottom-[13px] -left-[9px] text-neutral-500 font-light text-xl select-none pointer-events-none">+</div>
+            <div className="absolute -bottom-[13px] -right-[9px] text-neutral-500 font-light text-xl select-none pointer-events-none">+</div>
+
+            {collaborators.map((name, i) => (
+              <div 
+                key={i} 
+                className="h-24 sm:h-28 border-r border-b border-white/[0.08] flex items-center justify-center relative group hover:bg-white/[0.02] transition-colors"
               >
-                {[
-                  { 
-                    title: 'Craftsmanship', 
-                    desc: 'Quality, precision, and creativity are at the core of everything we build. We source exquisite materials and partner with highly skilled local artisans to deliver details that endure.' 
-                  },
-                  { 
-                    title: 'Collaboration', 
-                    desc: 'Turning concepts into meaningful spatial experiences requires listening and shared vision. We co-create with you, ensuring your stories and daily habits shape every corner.' 
-                  },
-                  { 
-                    title: 'Sustainability', 
-                    desc: 'Using materials and methods that inspire longevity and reduce the environmental footprint. We design with future relevance in mind, selecting products built to stand the test of time.' 
-                  }
-                ].map((item, i) => (
-                  <motion.div 
-                    key={i} 
-                    variants={fadeIn} 
-                    className="bg-white p-8 md:p-10 rounded-3xl border border-neutral-100 hover:border-accent/40 transition-all duration-500 shadow-sm hover:shadow-[0_20px_50px_rgba(197,164,126,0.08)] group relative overflow-hidden flex flex-col sm:flex-row gap-6 md:gap-8"
-                  >
-                    {/* Circle Number */}
-                    <div className="w-12 h-12 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center font-bold text-accent shrink-0 text-sm font-heading select-none">
-                      0{i+1}
-                    </div>
-                    
-                    {/* Card Content */}
-                    <div className="space-y-3 z-10 relative">
-                      <h3 className="text-2xl font-heading font-semibold text-primary group-hover:text-accent transition-colors duration-300">
-                        {item.title}
-                      </h3>
-                      <p className="text-neutral-500 leading-relaxed font-light text-sm md:text-base">
-                        {item.desc}
-                      </p>
-                    </div>
-
-                    {/* Watermark Logo/Text on Hover */}
-                    <div className="absolute right-6 bottom-4 select-none pointer-events-none font-heading italic text-5xl font-extrabold text-accent/5 opacity-0 group-hover:opacity-100 transition-all duration-700 transform translate-y-2 group-hover:translate-y-0">
-                      {item.title}
-                    </div>
-                  </motion.div>
-                ))}
-              </motion.div>
-            </div>
-
+                <span className="text-white/60 group-hover:text-white transition-colors duration-300 font-bold tracking-wider text-sm sm:text-base lg:text-lg">
+                  {name}
+                </span>
+                
+                {/* Crosshairs for internal intersections (desktop middle row) */}
+                {i < 4 && i !== 3 && (
+                  <div className="hidden md:flex absolute -right-[9px] -bottom-[13px] text-neutral-500 text-xl font-light select-none pointer-events-none z-10 w-4 h-4 items-center justify-center">+</div>
+                )}
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* 8. Frequently Asked Questions */}
-      <section className="py-24 bg-secondary/30">
-        <div className="container mx-auto px-4 md:px-8 max-w-4xl">
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} className="text-center mb-16">
-            <h4 className="text-accent text-xs font-bold tracking-[0.2em] uppercase mb-4">Frequently Asked Questions</h4>
-            <h2 className="text-4xl md:text-5xl font-heading font-bold text-primary">Answers before we begin.</h2>
+      <section className="py-28 bg-[#080809] relative overflow-hidden">
+        {/* Subtle glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-accent/[0.04] rounded-full blur-[120px] pointer-events-none" />
+
+        <div className="container mx-auto px-4 md:px-8 max-w-3xl relative z-10">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} className="text-center mb-14">
+            <span className="inline-block text-accent text-[11px] font-semibold tracking-[0.3em] uppercase mb-4 border border-accent/20 px-4 py-1.5 rounded-full bg-accent/5">
+              FAQ
+            </span>
+            <h2 className="text-3xl md:text-5xl font-heading font-normal text-white mt-4 mb-4 leading-tight">
+              Answers before<br className="hidden sm:block" /> we begin.
+            </h2>
+            <p className="text-neutral-500 text-sm md:text-base font-light max-w-lg mx-auto">
+              Everything you need to know about working with Orniva.
+            </p>
           </motion.div>
 
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn}>
-            <FAQItem 
-              question="What types of projects do you handle?" 
-              answer="We specialize in both high-end residential interiors and bespoke commercial spaces including offices, boutique retail, and salons." 
-            />
-            <FAQItem 
-              question="Can you help with just one room?" 
-              answer="Yes, we offer tailored packages that scale based on your needs, whether it's a single living room revamp or a complete property overhaul." 
-            />
-            <FAQItem 
-              question="Will I see 3D views before construction begins?" 
-              answer="Absolutely. 3D visualization is a core part of our 5-step process, ensuring you are completely confident in the design before any build commitment." 
-            />
-            <FAQItem 
-              question="How do I start a project with Orniva?" 
-              answer="Simply reach out via our contact form or WhatsApp. We will schedule a free initial consultation to map out your lifestyle needs and budget." 
-            />
+          <motion.div
+            initial="hidden" whileInView="visible" viewport={{ once: true }}
+            variants={{ hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.08 } } }}
+            className="space-y-3"
+          >
+            {[
+              { q: "What types of projects does Orniva take on?", a: "We work across high-end residential interiors — apartments, villas, penthouses, and duplexes — as well as curated commercial spaces like boutique offices, salons, and retail environments. Every project, regardless of size, receives the same founder-led attention and craft-first approach." },
+              { q: "Can you redesign just one room or a specific area?", a: "Absolutely. We offer focused single-room packages for spaces like master bedrooms, living rooms, or kitchens, as well as full-home transformations. Our process adapts to your scope — you only pay for what you actually need." },
+              { q: "How long does a typical interior project take?", a: "Timelines vary with scope. A single room concept and 3D design typically takes 2–3 weeks. A full home execution — from concept to handover — generally spans 3 to 5 months, depending on custom material sourcing and site conditions. We provide a clear milestone schedule before work begins." },
+              { q: "Will I see the design before anything is built or purchased?", a: "Yes, always. Concept development, mood boards, and photorealistic 3D views are delivered and approved by you before a single rupee is spent on execution. We believe you should be completely confident in the vision before committing to it." },
+              { q: "How does Orniva handle material and vendor sourcing?", a: "We manage the entire supply chain — from sourcing premium finishes, marble slabs, veneers, and lighting to coordinating with trusted local contractors and craftsmen. You don't deal with vendors. We do. This keeps quality consistent and timelines tight." },
+              { q: "What does the pricing structure look like?", a: "We offer transparent, package-based pricing rather than vague per-sqft estimates. Packages cover design-only, design + material guidance, and full turnkey execution. Exact costs are shared after the initial consultation once we understand your space and scope clearly." },
+              { q: "How do I get started with Orniva?", a: "Simply fill out the inquiry form below or reach out via WhatsApp. We'll schedule a free 30-minute consultation to understand your space, lifestyle, and vision — with zero obligation to proceed." },
+            ].map((item, i) => (
+              <motion.div key={i} variants={fadeIn}>
+                <FAQItem question={item.q} answer={item.a} index={i} />
+              </motion.div>
+            ))}
+          </motion.div>
+
+          {/* Bottom CTA */}
+          <motion.div
+            initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn}
+            className="mt-14 text-center border-t border-white/[0.06] pt-10"
+          >
+            <p className="text-neutral-500 text-sm mb-5">Still have questions? We're happy to help.</p>
+            <a
+              href="https://cal.com/orniva-design-studio/30min"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 px-7 py-3.5 bg-accent hover:bg-accent/90 text-primary text-sm font-semibold rounded-full transition-all duration-300 hover:scale-[1.03] shadow-lg shadow-accent/15 group"
+            >
+              Book a Free Consultation
+              <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+            </a>
           </motion.div>
         </div>
       </section>
