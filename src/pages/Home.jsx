@@ -19,7 +19,7 @@ const staggerContainer = {
 
 // You can change the names of your collaborators/brands here whenever you want
 const collaborators = [
-  "NVIDIA", "supabase", "GitHub", "OpenAI",
+  "Architects Hub", "supabase", "GitHub", "OpenAI",
   "TURSO", "clerk", "Claude", "Vercel"
 ];
 
@@ -28,11 +28,10 @@ const FAQItem = ({ question, answer, index }) => {
   return (
     <motion.div
       layout
-      className={`relative rounded-2xl border transition-all duration-300 overflow-hidden ${
-        isOpen
+      className={`relative rounded-2xl border transition-all duration-300 overflow-hidden ${isOpen
           ? 'bg-[#111111] border-accent/30 shadow-[0_8px_32px_rgba(197,164,126,0.08)]'
           : 'bg-[#0d0d0d] border-white/[0.06] hover:border-white/[0.12]'
-      }`}
+        }`}
     >
       {/* Accent left bar when open */}
       {isOpen && (
@@ -44,21 +43,18 @@ const FAQItem = ({ question, answer, index }) => {
         className="w-full flex items-start gap-5 px-6 py-6 text-left focus:outline-none group"
       >
         {/* Number badge */}
-        <span className={`shrink-0 w-7 h-7 rounded-full border flex items-center justify-center text-[11px] font-medium mt-0.5 transition-colors duration-300 ${
-          isOpen ? 'border-accent/50 text-accent bg-accent/10' : 'border-white/10 text-neutral-500 bg-white/[0.03]'
-        }`}>
+        <span className={`shrink-0 w-7 h-7 rounded-full border flex items-center justify-center text-[11px] font-medium mt-0.5 transition-colors duration-300 ${isOpen ? 'border-accent/50 text-accent bg-accent/10' : 'border-white/10 text-neutral-500 bg-white/[0.03]'
+          }`}>
           {String(index + 1).padStart(2, '0')}
         </span>
 
         <div className="flex-1 flex justify-between items-start gap-4">
-          <h4 className={`text-base md:text-lg font-heading font-medium leading-snug transition-colors duration-300 ${
-            isOpen ? 'text-white' : 'text-neutral-200 group-hover:text-white'
-          }`}>
+          <h4 className={`text-base md:text-lg font-heading font-medium leading-snug transition-colors duration-300 ${isOpen ? 'text-white' : 'text-neutral-200 group-hover:text-white'
+            }`}>
             {question}
           </h4>
-          <span className={`shrink-0 w-7 h-7 rounded-full flex items-center justify-center border transition-all duration-300 mt-0.5 ${
-            isOpen ? 'bg-accent border-accent text-primary rotate-0' : 'border-white/10 text-neutral-500 group-hover:border-white/20'
-          }`}>
+          <span className={`shrink-0 w-7 h-7 rounded-full flex items-center justify-center border transition-all duration-300 mt-0.5 ${isOpen ? 'bg-accent border-accent text-primary rotate-0' : 'border-white/10 text-neutral-500 group-hover:border-white/20'
+            }`}>
             {isOpen ? <Minus size={12} /> : <Plus size={12} />}
           </span>
         </div>
@@ -106,7 +102,7 @@ const Home = () => {
       const { error } = await supabase
         .from('inquiries')
         .insert([
-          { 
+          {
             source: 'landing_page',
             name: formData.name,
             phone: formData.phone,
@@ -129,25 +125,25 @@ const Home = () => {
 
   return (
     <div className="bg-white">
-      
+
       {/* 2. Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-neutral-900 z-0 overflow-hidden">
-          <img 
-            src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80" 
-            alt="Interior Design Studio" 
+          <img
+            src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80"
+            alt="Interior Design Studio"
             className="w-full h-full object-cover opacity-50 blur-[5px] scale-105"
           />
         </div>
-        
+
         <div className="container mx-auto px-4 relative z-10 text-center text-white pt-32 pb-16 md:py-24">
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
             className="text-accent text-sm md:text-base font-bold tracking-[0.2em] uppercase mb-6"
           >
             Interior Design Studio
           </motion.p>
-          <motion.h1 
+          <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
@@ -155,7 +151,7 @@ const Home = () => {
           >
             We design spaces that reflect your lifestyle.
           </motion.h1>
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.4 }}
@@ -163,23 +159,23 @@ const Home = () => {
           >
             A boutique launch studio for people who want premium interiors without the agency markup. Founder-led design, transparent pricing, and confident spaces created from day one.
           </motion.p>
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
             className="flex flex-col sm:flex-row items-center justify-center gap-4"
           >
-            <a 
-              href="https://cal.com/orniva-design-studio/30min" 
-              target="_blank" 
-              rel="noreferrer" 
+            <a
+              href="https://cal.com/orniva-design-studio/30min"
+              target="_blank"
+              rel="noreferrer"
               className="relative overflow-hidden px-8 py-4 bg-accent text-white rounded-full font-medium transition-all duration-500 hover:shadow-[0_0_25px_rgba(197,164,126,0.45)] hover:scale-[1.02] group w-full sm:w-auto text-center"
             >
               <span className="relative z-10">Get Free Consultation</span>
               <span className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300"></span>
             </a>
-            <Link 
-              to="/projects" 
+            <Link
+              to="/projects"
               className="relative overflow-hidden px-8 py-4 border border-white text-white rounded-full font-medium transition-all duration-500 hover:shadow-[0_0_25px_rgba(255,255,255,0.15)] hover:scale-[1.02] group w-full sm:w-auto flex items-center justify-center gap-2"
             >
               <span className="relative z-10">View Design Concepts</span>
@@ -192,7 +188,7 @@ const Home = () => {
       {/* 3. Expertise (What We Do) */}
       <section className="py-24 bg-[#0a0a0a]">
         <div className="container mx-auto px-4 md:px-8">
-          <motion.div 
+          <motion.div
             initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn}
             className="mb-16"
           >
@@ -202,7 +198,7 @@ const Home = () => {
             </h2>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             variants={staggerContainer}
             initial="hidden" whileInView="visible" viewport={{ once: true }}
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
@@ -231,7 +227,7 @@ const Home = () => {
             <p className="text-neutral-500 max-w-2xl text-lg">These are concept explorations created for our launch portfolio. They show how we think about space, materials, and modern living.</p>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true }}
             className="grid grid-cols-1 lg:grid-cols-3 gap-8"
           >
@@ -264,7 +260,7 @@ const Home = () => {
                 <p className="text-primary font-heading font-bold text-2xl">Only 10 slots left - Free 3D Design Consultation for the first 10 clients.</p>
               </div>
             </motion.div>
-            
+
             <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true }} className="w-full lg:w-1/2 grid grid-cols-1 sm:grid-cols-2 gap-8">
               {[
                 { title: 'Personalized Attention', desc: 'Direct collaboration with the founder for a tailored design process.' },
@@ -274,7 +270,7 @@ const Home = () => {
               ].map((prop, i) => (
                 <motion.div key={i} variants={fadeIn}>
                   <div className="w-12 h-12 bg-white text-primary rounded-full flex items-center justify-center font-bold mb-4 shadow-sm">
-                    {i+1}
+                    {i + 1}
                   </div>
                   <h3 className="text-xl font-heading font-bold text-primary mb-2">{prop.title}</h3>
                   <p className="text-neutral-600 text-sm leading-relaxed">{prop.desc}</p>
@@ -290,7 +286,7 @@ const Home = () => {
         <div className="container mx-auto px-4 md:px-8">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} className="text-center mb-16">
             <h4 className="text-accent text-xs font-bold tracking-[0.2em] uppercase mb-4">How we work</h4>
-            <h2 className="text-4xl md:text-5xl font-heading font-bold mb-6">A simple five-step journey<br className="hidden md:block"/>to your new space.</h2>
+            <h2 className="text-4xl md:text-5xl font-heading font-bold mb-6">A simple five-step journey<br className="hidden md:block" />to your new space.</h2>
           </motion.div>
 
           <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true }} className="grid grid-cols-1 md:grid-cols-5 gap-8">
@@ -304,7 +300,7 @@ const Home = () => {
               <motion.div key={i} variants={fadeIn} className="relative">
                 {i !== 4 && <div className="hidden md:block absolute top-6 left-12 w-full h-[1px] bg-neutral-800 z-0"></div>}
                 <div className="relative z-10 w-12 h-12 bg-neutral-900 border border-neutral-700 rounded-full flex items-center justify-center font-bold text-accent mb-6">
-                  0{i+1}
+                  0{i + 1}
                 </div>
                 <h3 className="text-xl font-heading font-semibold mb-3">{step.title}</h3>
                 <p className="text-neutral-400 text-sm leading-relaxed">{step.desc}</p>
@@ -542,7 +538,7 @@ const Home = () => {
           <h3 className="text-center text-neutral-400 text-lg md:text-[22px] font-light mb-12">
             Companies we <span className="text-white font-semibold">collaborate</span> with.
           </h3>
-          
+
           <div className="relative mx-auto border-t border-l border-white/[0.08] grid grid-cols-2 md:grid-cols-4 bg-[#0a0a0a]/50">
             {/* Grid corner plus marks */}
             <div className="absolute -top-[13px] -left-[9px] text-neutral-500 font-light text-xl select-none pointer-events-none">+</div>
@@ -551,14 +547,14 @@ const Home = () => {
             <div className="absolute -bottom-[13px] -right-[9px] text-neutral-500 font-light text-xl select-none pointer-events-none">+</div>
 
             {collaborators.map((name, i) => (
-              <div 
-                key={i} 
+              <div
+                key={i}
                 className="h-24 sm:h-28 border-r border-b border-white/[0.08] flex items-center justify-center relative group hover:bg-white/[0.02] transition-colors"
               >
                 <span className="text-white/60 group-hover:text-white transition-colors duration-300 font-bold tracking-wider text-sm sm:text-base lg:text-lg">
                   {name}
                 </span>
-                
+
                 {/* Crosshairs for internal intersections (desktop middle row) */}
                 {i < 4 && i !== 3 && (
                   <div className="hidden md:flex absolute -right-[9px] -bottom-[13px] text-neutral-500 text-xl font-light select-none pointer-events-none z-10 w-4 h-4 items-center justify-center">+</div>
@@ -633,7 +629,7 @@ const Home = () => {
             <h4 className="text-accent text-xs font-bold tracking-[0.2em] uppercase mb-4">Start a Project</h4>
             <h2 className="text-4xl md:text-5xl font-heading font-bold mb-6">Ready to transform your space?</h2>
             <p className="text-neutral-400 text-lg mb-12">Tell us what you are dreaming of. We will reply within 24 hours with next steps and a rough estimate.</p>
-            
+
             {isSubmitted ? (
               <div className="max-w-2xl mx-auto mb-8 p-6 bg-accent/20 border border-accent/30 rounded-xl text-center">
                 <h3 className="text-xl font-heading font-bold text-white mb-2">Request Received!</h3>
@@ -642,36 +638,36 @@ const Home = () => {
             ) : (
               <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto mb-8 text-left">
                 <div>
-                  <input 
-                    type="text" required placeholder="Your Name" 
-                    value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})}
-                    className="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-accent text-white" 
+                  <input
+                    type="text" required placeholder="Your Name"
+                    value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })}
+                    className="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-accent text-white"
                   />
                 </div>
                 <div>
-                  <input 
-                    type="tel" required placeholder="Phone Number" 
-                    value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})}
-                    className="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-accent text-white" 
+                  <input
+                    type="tel" required placeholder="Phone Number"
+                    value={formData.phone} onChange={e => setFormData({ ...formData, phone: e.target.value })}
+                    className="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-accent text-white"
                   />
                 </div>
                 <div className="md:col-span-2 relative">
-                  <div 
+                  <div
                     onClick={() => setIsSelectOpen(!isSelectOpen)}
                     className="w-full px-5 py-4 bg-[#141414] border border-white/10 rounded-xl cursor-pointer flex justify-between items-center text-white"
                   >
                     <span className={formData.project_type ? "text-white" : "text-neutral-400"}>
                       {formData.project_type === 'residential' ? 'Residential Interior' :
-                       formData.project_type === 'commercial' ? 'Commercial Space' :
-                       formData.project_type === 'renovation' ? 'Renovation' :
-                       'Select Project Type'}
+                        formData.project_type === 'commercial' ? 'Commercial Space' :
+                          formData.project_type === 'renovation' ? 'Renovation' :
+                            'Select Project Type'}
                     </span>
                     <ChevronDown size={20} className={`text-neutral-400 transition-transform ${isSelectOpen ? 'rotate-180' : ''}`} />
                   </div>
-                  
+
                   <AnimatePresence>
                     {isSelectOpen && (
-                      <motion.div 
+                      <motion.div
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
@@ -682,10 +678,10 @@ const Home = () => {
                           { value: 'commercial', label: 'Commercial Space' },
                           { value: 'renovation', label: 'Renovation' }
                         ].map((option) => (
-                          <div 
+                          <div
                             key={option.value}
                             onClick={() => {
-                              setFormData({...formData, project_type: option.value});
+                              setFormData({ ...formData, project_type: option.value });
                               setIsSelectOpen(false);
                             }}
                             className={`px-5 py-4 cursor-pointer transition-colors ${formData.project_type === option.value ? 'bg-accent/20 text-accent' : 'text-white hover:bg-white/5'}`}
@@ -697,16 +693,16 @@ const Home = () => {
                     )}
                   </AnimatePresence>
                 </div>
-                
+
                 {errorMsg && (
                   <div className="md:col-span-2 p-3 bg-red-500/10 text-red-400 text-sm rounded-xl border border-red-500/20">
                     {errorMsg}
                   </div>
                 )}
-                
+
                 <div className="md:col-span-2 mt-4">
-                  <button 
-                    type="submit" 
+                  <button
+                    type="submit"
                     disabled={isSubmitting || !formData.project_type}
                     className="w-full py-4 bg-accent text-white rounded-xl font-medium hover:bg-white hover:text-primary transition-colors flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
                   >
