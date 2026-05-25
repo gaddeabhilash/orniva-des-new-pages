@@ -127,6 +127,17 @@ const Contact = () => {
                   </div>
                 </div>
 
+                {/* Booking Button */}
+                <div className="pt-2">
+                  <a 
+                    href="https://cal.com/orniva-design-studio/30min" 
+                    target="_blank" 
+                    rel="noreferrer" 
+                    className="inline-flex items-center justify-center w-full px-8 py-3.5 bg-accent hover:bg-white text-primary text-[15px] font-bold rounded-lg transition-colors"
+                  >
+                    Book a Free Consultation
+                  </a>
+                </div>
 
               </div>
             </div>

@@ -72,6 +72,18 @@ const About = () => {
           .animate-marquee {
             animation: marquee 40s linear infinite;
           }
+          /* Faster on tablet */
+          @media (max-width: 1024px) {
+            .animate-marquee {
+              animation-duration: 20s;
+            }
+          }
+          /* Even faster on mobile */
+          @media (max-width: 768px) {
+            .animate-marquee {
+              animation-duration: 12s;
+            }
+          }
           .animate-marquee:hover {
             animation-play-state: paused;
           }

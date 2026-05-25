@@ -23,6 +23,90 @@ const collaborators = [
   "TURSO", "clerk", "Claude", "Vercel"
 ];
 
+// ─────────────────────────────────────────────────────────────
+// TESTIMONIALS — Edit, add or remove reviews here.
+// • To ADD a review    → copy any block below and paste it at the end of the array.
+// • To REMOVE a review → delete the entire { ... } block for that entry.
+// • To EDIT a review   → change any field: quote, name, project, location, or avatar.
+//
+// Row 1 uses entries [0–4]  (first 5)
+// Row 2 uses entries [5–9]  (last 5)
+// Keep the total at 10 for the best layout (5 per row).
+// ─────────────────────────────────────────────────────────────
+const TESTIMONIALS = [
+  // ── Row 1 ──────────────────────────────────────────────────
+  {
+    quote: "Orniva completely transformed our 3BHK into something we genuinely love coming home to. The attention to detail in every corner was remarkable. Worth every rupee.",
+    name: "Priya & Arjun Mehta",
+    project: "3BHK Residential",
+    location: "Banjara Hills",
+  },
+  {
+    quote: "What impressed me most was how they understood our lifestyle and translated it into the design without us having to explain twice. The 3D renders were spot on.",
+    name: "Siddharth Rao",
+    project: "Villa Interior",
+    location: "Jubilee Hills",
+    avatar: "",
+  },
+  {
+    quote: "We were worried about the budget but Orniva gave us a premium outcome at a price that made sense. The founder was involved at every step — that made all the difference.",
+    name: "Kavitha Nair",
+    project: "2BHK Apartment",
+    location: "Madhapur",
+    avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=face&q=80",
+  },
+  {
+    quote: "Our salon looks absolutely stunning. Clients comment on the interiors every single day. The brand feel we wanted came through perfectly. Highly recommend.",
+    name: "Deepika Sharma",
+    project: "Commercial Salon",
+    location: "Kukatpally",
+    avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&h=80&fit=crop&crop=face&q=80",
+  },
+  {
+    quote: "Fast, transparent, and incredibly creative. The WhatsApp updates kept us in the loop without us having to chase anyone. The handover was seamless.",
+    name: "Rahul & Sneha Verma",
+    project: "Duplex Penthouse",
+    location: "Gachibowli",
+    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop&crop=face&q=80",
+  },
+  // ── Row 2 ──────────────────────────────────────────────────
+  {
+    quote: "The space planning alone saved us so much space we didn't even know we had. Our small apartment now feels open, elegant, and surprisingly spacious.",
+    name: "Ananya Krishnan",
+    project: "Compact Apartment",
+    location: "Kondapur",
+    avatar: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=80&h=80&fit=crop&crop=face&q=80",
+  },
+  {
+    quote: "I came in with a vague mood board and left with a fully realized design that exceeded it. The team's aesthetic sensibility is genuinely refined.",
+    name: "Vikram Choudhary",
+    project: "Boutique Office",
+    location: "Film Nagar",
+    avatar: "https://images.unsplash.com/photo-1463453091185-61582044d556?w=80&h=80&fit=crop&crop=face&q=80",
+  },
+  {
+    quote: "From the first consultation to final styling, everything felt curated and intentional. Our home finally feels like it belongs to us. Thank you, Orniva.",
+    name: "Meera & Suresh Pillai",
+    project: "4BHK Renovation",
+    location: "Hitec City",
+    avatar: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=80&h=80&fit=crop&crop=face&q=80",
+  },
+  {
+    quote: "The kitchen redesign changed how we cook and feel at home. Every drawer, shelf, and light placement was thought through with incredible care.",
+    name: "Sunita Reddy",
+    project: "Kitchen Remodel",
+    location: "Secunderabad",
+    avatar: "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=80&h=80&fit=crop&crop=face&q=80",
+  },
+  {
+    quote: "Working with Orniva was effortless. They handled everything — vendors, timelines, decisions — so we could focus on our lives. The result speaks for itself.",
+    name: "Aditya & Pooja Bhat",
+    project: "Full Home Design",
+    location: "Manikonda",
+    avatar: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=80&h=80&fit=crop&crop=face&q=80",
+  },
+];
+
 const FAQItem = ({ question, answer, index }) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
@@ -79,12 +163,55 @@ const FAQItem = ({ question, answer, index }) => {
   );
 };
 
+const PromiseItem = ({ title, desc, icon, index, isOpen, onClick }) => {
+  return (
+    <motion.div
+      layout
+      className="bg-white rounded-[20px] shadow-[0_4px_20px_rgba(0,0,0,0.03)] overflow-hidden"
+    >
+      <button
+        onClick={onClick}
+        className="w-full flex items-center justify-between px-6 py-5 text-left focus:outline-none group"
+      >
+        <div className="flex items-center gap-4">
+          {/* Icon circle */}
+          <div className="w-10 h-10 rounded-full bg-[#111] flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-300">
+            {icon}
+          </div>
+          <h4 className="text-[17px] font-heading font-bold text-[#111]">
+            {title}
+          </h4>
+        </div>
+        <span className="text-neutral-400 font-light text-2xl group-hover:text-[#111] transition-colors">
+          {isOpen ? '−' : '+'}
+        </span>
+      </button>
+
+      <AnimatePresence initial={false}>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1, transition: { duration: 0.3 } }}
+            exit={{ height: 0, opacity: 0, transition: { duration: 0.2 } }}
+            className="overflow-hidden"
+          >
+            <div className="px-6 pb-6 pt-1">
+              <p className="text-neutral-500 text-sm leading-relaxed pl-[56px]">{desc}</p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
+  );
+};
+
 const Home = () => {
   const [formData, setFormData] = useState({ name: '', phone: '', project_type: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [isSelectOpen, setIsSelectOpen] = useState(false);
+  const [openPromise, setOpenPromise] = useState(0);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -277,6 +404,129 @@ const Home = () => {
                 </motion.div>
               ))}
             </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* 5.5 Promises */}
+      <section className="py-24 relative overflow-hidden bg-gradient-to-b from-[#f8f9fa] to-white">
+        
+        <div className="container mx-auto px-4 md:px-8 relative z-10">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-heading font-normal text-[#111]">
+              Orniva Promises!
+            </h2>
+          </div>
+
+          <div className="flex flex-col lg:flex-row gap-16 lg:gap-8 items-center">
+            {/* Left: Accordions */}
+            <div className="w-full lg:w-5/12 space-y-4">
+              {[
+                {
+                  title: 'On-Time Delivery',
+                  desc: 'We map out a strict milestone timeline before we begin. Your move-in date is locked, and we honor it with zero delays.',
+                  icon: <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                },
+                {
+                  title: '10+ Years Warranty',
+                  desc: 'We use premium marine-grade plywood and high-density boards, ensuring durability. All our core materials come with a decade-long warranty.',
+                  icon: <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" /></svg>
+                },
+                {
+                  title: 'No Hidden Costs',
+                  desc: 'Our estimates are comprehensive and fully transparent. What you see on the final BOQ is exactly what you pay. No sudden surprises.',
+                  icon: <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" /></svg>
+                },
+                {
+                  title: 'Free 3D Design',
+                  desc: 'Visualize your entire space before a single hammer swings. Photorealistic renders are included in your package at no extra cost.',
+                  icon: <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>
+                }
+              ].map((promise, i) => (
+                <PromiseItem
+                  key={i}
+                  index={i}
+                  title={promise.title}
+                  desc={promise.desc}
+                  icon={promise.icon}
+                  isOpen={openPromise === i}
+                  onClick={() => setOpenPromise(openPromise === i ? -1 : i)}
+                />
+              ))}
+
+              <div className="pt-8">
+                <Link
+                  to="/contact"
+                  onClick={() => window.scrollTo(0, 0)}
+                  className="inline-flex items-center gap-2 px-8 py-4 bg-[#EA7B4C] hover:bg-[#d66a3d] text-white text-sm font-bold rounded-full transition-all duration-300 shadow-lg shadow-[#EA7B4C]/30 hover:scale-[1.02]"
+                >
+                  Get a Free Quote <ArrowRight size={16} />
+                </Link>
+              </div>
+            </div>
+
+            {/* Right: Floating Circular Images */}
+            <div className="w-full lg:w-7/12 relative h-[500px] lg:h-[600px] flex items-center justify-center">
+              {/* Center Large Image */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+                className="absolute z-20 w-[280px] h-[280px] sm:w-[350px] sm:h-[350px] lg:w-[400px] lg:h-[400px] rounded-full overflow-hidden border-[6px] border-white shadow-2xl"
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1600210491369-e753d80a41f3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                  alt="Modern TV Unit"
+                  className="w-full h-full object-cover"
+                />
+              </motion.div>
+
+              {/* Bottom Left Medium Image */}
+              <motion.div
+                initial={{ opacity: 0, x: 30, y: -30 }}
+                whileInView={{ opacity: 1, x: 0, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+                className="absolute z-30 bottom-0 lg:bottom-[10%] left-0 lg:left-[5%] w-[180px] h-[180px] sm:w-[220px] sm:h-[220px] rounded-full overflow-hidden border-4 border-white shadow-xl"
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1600607686527-6fb886090705?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                  alt="Pooja Unit Design"
+                  className="w-full h-full object-cover"
+                />
+              </motion.div>
+
+              {/* Bottom Right Medium Image */}
+              <motion.div
+                initial={{ opacity: 0, x: -30, y: -30 }}
+                whileInView={{ opacity: 1, x: 0, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+                className="absolute z-10 bottom-[-5%] right-[5%] lg:right-[15%] w-[160px] h-[160px] sm:w-[200px] sm:h-[200px] rounded-full overflow-hidden border-4 border-white shadow-xl"
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1540518614846-7eded433c457?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                  alt="Bedroom Design"
+                  className="w-full h-full object-cover"
+                />
+              </motion.div>
+
+              {/* Far Right Small Image */}
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
+                className="absolute z-10 top-[40%] right-[-5%] lg:right-[-2%] w-[120px] h-[120px] sm:w-[150px] sm:h-[150px] rounded-full overflow-hidden border-4 border-white shadow-lg hidden sm:block"
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                  alt="Kitchen Design"
+                  className="w-full h-full object-cover"
+                />
+              </motion.div>
+            </div>
           </div>
         </div>
       </section>
@@ -622,8 +872,125 @@ const Home = () => {
         </div>
       </section>
 
+      {/* 9.5 Testimonials */}
+      <section className="py-28 bg-[#060607] relative overflow-hidden">
+        {/* Ambient glows */}
+        <div className="absolute top-1/4 left-0 w-[600px] h-[600px] bg-accent/[0.03] rounded-full blur-[150px] pointer-events-none" />
+        <div className="absolute bottom-1/4 right-0 w-[500px] h-[500px] bg-accent/[0.03] rounded-full blur-[130px] pointer-events-none" />
+
+        {/* Section header */}
+        <div className="container mx-auto px-4 md:px-8 relative z-10 mb-16">
+          <motion.div
+            initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn}
+            className="flex flex-col md:flex-row md:items-end md:justify-between gap-8"
+          >
+            <div>
+              <span className="inline-block text-accent text-[11px] font-semibold tracking-[0.3em] uppercase mb-5 border border-accent/20 px-4 py-1.5 rounded-full bg-accent/5">
+                Client Testimonials
+              </span>
+              <h2 className="text-3xl md:text-5xl font-heading font-normal text-white mt-4 leading-tight">
+                What our clients<br className="hidden sm:block" /> say about us.
+              </h2>
+            </div>
+
+            {/* Rating badge */}
+            <div className="flex items-center gap-5 bg-white/[0.03] border border-white/[0.07] rounded-2xl px-6 py-4 shrink-0 self-start md:self-auto">
+              <div>
+                <p className="text-4xl font-heading font-bold text-white leading-none">5.0</p>
+                <div className="flex gap-0.5 mt-1.5">
+                  {[1,2,3,4,5].map(s => (
+                    <svg key={s} className="w-3.5 h-3.5 text-accent" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                  ))}
+                </div>
+                <p className="text-neutral-500 text-[11px] mt-1 tracking-wide">Average Rating</p>
+              </div>
+              <div className="w-px h-12 bg-white/[0.08]" />
+              <div>
+                <p className="text-2xl font-heading font-bold text-white leading-none">50+</p>
+                <p className="text-neutral-500 text-[11px] mt-1.5 tracking-wide">Happy Clients</p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Row 1 — scrolls left */}
+        <div className="relative w-full overflow-hidden mb-5">
+          <div className="absolute left-0 top-0 bottom-0 w-20 md:w-40 bg-gradient-to-r from-[#060607] to-transparent z-10 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-20 md:w-40 bg-gradient-to-l from-[#060607] to-transparent z-10 pointer-events-none" />
+          <div className="flex gap-5 w-max testimonial-row-1 hover:[animation-play-state:paused]">
+            {/* Duplicated for seamless infinite scroll — edit TESTIMONIALS at the top of this file */}
+            {[...TESTIMONIALS.slice(0, 5), ...TESTIMONIALS.slice(0, 5)].map((t, i) => (
+              <div key={i} className="w-[300px] md:w-[360px] shrink-0 relative bg-[#0d0d10] border border-white/[0.06] rounded-2xl p-6 flex flex-col gap-4 group hover:border-accent/30 hover:bg-[#111114] transition-all duration-400 hover:shadow-[0_12px_50px_rgba(197,164,126,0.08)] overflow-hidden">
+                {/* Watermark quote */}
+                <span className="absolute -bottom-4 -right-2 text-[8rem] font-serif text-white/[0.025] leading-none select-none pointer-events-none group-hover:text-accent/[0.04] transition-colors duration-700">"</span>
+                {/* Top accent line */}
+                <div className="absolute top-0 left-6 right-6 h-[1px] bg-gradient-to-r from-transparent via-accent/40 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
+                <div className="flex gap-0.5">
+                  {[1,2,3,4,5].map(s => <svg key={s} className="w-3.5 h-3.5 text-accent" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>)}
+                </div>
+                <p className="text-neutral-300 text-sm leading-relaxed font-light flex-1">"{t.quote}"</p>
+                <div className="flex items-center gap-3 pt-4 border-t border-white/[0.05]">
+                  <div className="w-10 h-10 rounded-full shrink-0 bg-white/[0.05] border border-white/[0.12]" />
+                  <div className="min-w-0">
+                    <p className="text-white text-sm font-semibold leading-tight truncate">{t.name}</p>
+                    <p className="text-neutral-500 text-[11px] mt-0.5 truncate">{t.project} · {t.location}</p>
+                  </div>
+                  <span className="ml-auto shrink-0 text-[10px] font-semibold text-accent/70 bg-accent/10 border border-accent/15 px-2 py-0.5 rounded-full">✓ Verified</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Row 2 — scrolls right */}
+        <div className="relative w-full overflow-hidden">
+          <div className="absolute left-0 top-0 bottom-0 w-20 md:w-40 bg-gradient-to-r from-[#060607] to-transparent z-10 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-20 md:w-40 bg-gradient-to-l from-[#060607] to-transparent z-10 pointer-events-none" />
+          <div className="flex gap-5 w-max testimonial-row-2 hover:[animation-play-state:paused]">
+            {/* Duplicated for seamless infinite scroll — edit TESTIMONIALS at the top of this file */}
+            {[...TESTIMONIALS.slice(5), ...TESTIMONIALS.slice(5)].map((t, i) => (
+              <div key={i} className="w-[300px] md:w-[360px] shrink-0 relative bg-[#0d0d10] border border-white/[0.06] rounded-2xl p-6 flex flex-col gap-4 group hover:border-accent/30 hover:bg-[#111114] transition-all duration-400 hover:shadow-[0_12px_50px_rgba(197,164,126,0.08)] overflow-hidden">
+                <span className="absolute -bottom-4 -right-2 text-[8rem] font-serif text-white/[0.025] leading-none select-none pointer-events-none group-hover:text-accent/[0.04] transition-colors duration-700">"</span>
+                <div className="absolute top-0 left-6 right-6 h-[1px] bg-gradient-to-r from-transparent via-accent/40 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
+                <div className="flex gap-0.5">
+                  {[1,2,3,4,5].map(s => <svg key={s} className="w-3.5 h-3.5 text-accent" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>)}
+                </div>
+                <p className="text-neutral-300 text-sm leading-relaxed font-light flex-1">"{t.quote}"</p>
+                <div className="flex items-center gap-3 pt-4 border-t border-white/[0.05]">
+                  <div className="w-10 h-10 rounded-full shrink-0 bg-white/[0.05] border border-white/[0.12]" />
+                  <div className="min-w-0">
+                    <p className="text-white text-sm font-semibold leading-tight truncate">{t.name}</p>
+                    <p className="text-neutral-500 text-[11px] mt-0.5 truncate">{t.project} · {t.location}</p>
+                  </div>
+                  <span className="ml-auto shrink-0 text-[10px] font-semibold text-accent/70 bg-accent/10 border border-accent/15 px-2 py-0.5 rounded-full">✓ Verified</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <style>{`
+          .testimonial-row-1 {
+            animation: t-scroll-left 40s linear infinite;
+          }
+          .testimonial-row-2 {
+            animation: t-scroll-right 45s linear infinite;
+          }
+          @keyframes t-scroll-left {
+            0%   { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+          }
+          @keyframes t-scroll-right {
+            0%   { transform: translateX(-50%); }
+            100% { transform: translateX(0); }
+          }
+        `}</style>
+      </section>
+
       {/* 9. Contact (Start a Project) */}
-      <section className="py-24 bg-primary text-white">
+      <section id="contact-section" className="py-24 bg-primary text-white">
         <div className="container mx-auto px-4 md:px-8 max-w-4xl text-center">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn}>
             <h4 className="text-accent text-xs font-bold tracking-[0.2em] uppercase mb-4">Start a Project</h4>
