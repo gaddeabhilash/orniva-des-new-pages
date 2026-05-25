@@ -37,14 +37,17 @@ const Navbar = () => {
     { name: 'Calculator', path: '/calculator' },
   ];
 
-  // Bright white theme when overlaying dark hero backgrounds unscrolled on Home, Project details, or Contact page
-  const useWhiteText = !isScrolled && !isMobileMenuOpen && (location.pathname === '/' || location.pathname.startsWith('/projects/') || location.pathname === '/contact');
+  // Bright white theme when overlaying dark hero backgrounds unscrolled on Home or Contact page only
+  const useWhiteText = !isScrolled && !isMobileMenuOpen && (location.pathname === '/' || location.pathname === '/contact');
+
+  // Force white navbar on project detail pages always
+  const isProjectDetail = location.pathname.startsWith('/projects/');
 
   return (
     <header 
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled || isMobileMenuOpen ? 'py-3 bg-white shadow-sm' : 'py-4 bg-transparent md:bg-transparent'
-      } ${!isScrolled && !isMobileMenuOpen ? 'max-md:bg-white max-md:py-3 max-md:shadow-sm' : ''}`}
+        isScrolled || isMobileMenuOpen || isProjectDetail ? 'py-3 bg-white shadow-sm' : 'py-4 bg-transparent'
+      }`}
     >
       <div className="container mx-auto px-4 md:px-8 flex justify-between items-center">
         <Link 
@@ -92,7 +95,7 @@ const Navbar = () => {
         {/* Mobile Menu Button */}
         <button 
           className={`md:hidden z-50 p-2 transition-colors duration-300 ${
-            useWhiteText ? 'text-white' : 'text-primary'
+            isMobileMenuOpen ? 'text-primary' : (useWhiteText ? 'text-white' : 'text-primary')
           }`}
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
