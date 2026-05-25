@@ -29,8 +29,8 @@ const FAQItem = ({ question, answer, index }) => {
     <motion.div
       layout
       className={`relative rounded-2xl border transition-all duration-300 overflow-hidden ${isOpen
-          ? 'bg-[#111111] border-accent/30 shadow-[0_8px_32px_rgba(197,164,126,0.08)]'
-          : 'bg-[#0d0d0d] border-white/[0.06] hover:border-white/[0.12]'
+        ? 'bg-[#111111] border-accent/30 shadow-[0_8px_32px_rgba(197,164,126,0.08)]'
+        : 'bg-[#0d0d0d] border-white/[0.06] hover:border-white/[0.12]'
         }`}
     >
       {/* Accent left bar when open */}

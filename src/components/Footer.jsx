@@ -45,26 +45,26 @@ const Footer = () => {
           </div>
 
           {/* Contact Info & Socials */}
-          <div className="col-span-2 md:col-span-1 space-y-6 flex flex-col items-center md:items-start">
-            <div className="w-full flex flex-col items-center md:items-start text-center md:text-left">
+          <div className="col-span-2 md:col-span-1 space-y-6 flex flex-col items-start md:items-start">
+            <div className="w-full flex flex-col items-start md:items-start text-left md:text-left">
               <h4 className="text-lg font-heading font-semibold mb-6">Get in Touch</h4>
-              <ul className="space-y-4 text-neutral-400 text-sm flex flex-col items-center md:items-start w-full">
-                <li className="flex flex-col items-center md:flex-row md:items-start gap-2 md:gap-3 w-full">
-                  <MapPin size={18} className="text-accent shrink-0" />
+              <ul className="space-y-4 text-neutral-400 text-sm flex flex-col items-start md:items-start w-full">
+                <li className="flex flex-row items-start gap-3 w-full">
+                  <MapPin size={18} className="text-accent shrink-0 mt-0.5" />
                   <span>Hyderabad, Telangana</span>
                 </li>
-                <li className="flex flex-col items-center md:flex-row md:items-center gap-2 md:gap-3 w-full">
+                <li className="flex flex-row items-center gap-3 w-full">
                   <Phone size={18} className="text-accent shrink-0" />
-                  <span className="text-center md:text-left">+91 93988 01834<br/>+91 79931 07169</span>
+                  <span className="text-left">+91 93988 01834<br/>+91 79931 07169</span>
                 </li>
-                <li className="flex flex-col items-center md:flex-row md:items-center gap-2 md:gap-3 w-full">
+                <li className="flex flex-row items-center gap-3 w-full">
                   <Mail size={18} className="text-accent shrink-0" />
                   <span>ornivadesignstudio@gmail.com</span>
                 </li>
               </ul>
             </div>
             
-            <div className="flex gap-4 justify-center md:justify-start">
+            <div className="flex gap-4 justify-start md:justify-start">
               <a href="https://www.instagram.com/orniva.design_studio/" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full border border-neutral-700 flex items-center justify-center text-neutral-400 hover:bg-accent hover:text-white hover:border-accent transition-all">
                 <FaInstagram size={18} />
               </a>
