@@ -801,7 +801,7 @@ const Home = () => {
                 key={i}
                 className="h-24 sm:h-28 border-r border-b border-white/[0.08] flex items-center justify-center relative group hover:bg-white/[0.02] transition-colors"
               >
-                <span className="text-white/60 group-hover:text-white transition-colors duration-300 font-bold tracking-wider text-sm sm:text-base lg:text-lg">
+                <span className="text-white group-hover:text-accent transition-colors duration-300 font-bold tracking-wider text-sm sm:text-base lg:text-lg drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]">
                   {name}
                 </span>
 
