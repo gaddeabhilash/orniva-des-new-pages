@@ -783,7 +783,7 @@ const Home = () => {
       </section>
 
       {/* Collaborators / Brands */}
-      <section className="py-16 bg-[#080809] relative overflow-hidden">
+      <section className="hidden py-16 bg-[#080809] relative overflow-hidden">
         <div className="container mx-auto px-4 md:px-8 max-w-5xl">
           <h3 className="text-center text-neutral-400 text-lg md:text-[22px] font-light mb-12">
             Companies we <span className="text-white font-semibold">collaborate</span> with.
