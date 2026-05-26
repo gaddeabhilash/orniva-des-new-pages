@@ -47,7 +47,7 @@ const Contact = () => {
     }`;
 
   return (
-    <div className="min-h-screen bg-[#09090b] text-white relative flex flex-col justify-center pt-28 pb-20 px-4 md:px-8">
+    <div className="min-h-screen bg-[#09090b] text-white relative flex flex-col justify-center pt-28 pb-20 px-4 md:px-8 overflow-hidden">
       {/* Background glow for depth */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-white/[0.02] rounded-full blur-[120px] pointer-events-none" />
 
