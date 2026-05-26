@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ornivadesignstudio.vercel.app/sitemap.xml
