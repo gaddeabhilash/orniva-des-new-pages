@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight, ChevronDown, Loader2, Plus, Minus } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
+import { WebGLShader } from '@/components/ui/web-gl-shader';
+import { LiquidButton } from '@/components/ui/liquid-glass-button';
 
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
@@ -40,34 +43,40 @@ const TESTIMONIALS = [
     name: "Priya & Arjun Mehta",
     project: "3BHK Residential",
     location: "Banjara Hills",
+    avatar: "https://images.unsplash.com/photo-1614283233556-f35b0c801ef1?w=120&h=120&fit=crop&crop=face&q=80",
+    rating: 5,
   },
   {
     quote: "What impressed me most was how they understood our lifestyle and translated it into the design without us having to explain twice. The 3D renders were spot on.",
     name: "Siddharth Rao",
     project: "Villa Interior",
     location: "Jubilee Hills",
-    avatar: "",
+    avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=120&h=120&fit=crop&crop=face&q=80",
+    rating: 4,
   },
   {
     quote: "We were worried about the budget but Orniva gave us a premium outcome at a price that made sense. The founder was involved at every step — that made all the difference.",
     name: "Kavitha Nair",
     project: "2BHK Apartment",
     location: "Madhapur",
-    avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=face&q=80",
+    avatar: "https://images.unsplash.com/photo-1589156280159-27698a70f29e?w=120&h=120&fit=crop&crop=face&q=80",
+    rating: 5,
   },
   {
     quote: "Our salon looks absolutely stunning. Clients comment on the interiors every single day. The brand feel we wanted came through perfectly. Highly recommend.",
     name: "Deepika Sharma",
     project: "Commercial Salon",
     location: "Kukatpally",
-    avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&h=80&fit=crop&crop=face&q=80",
+    avatar: "https://images.unsplash.com/photo-1609357605129-26f69add5d6e?w=120&h=120&fit=crop&crop=face&q=80",
+    rating: 5,
   },
   {
     quote: "Fast, transparent, and incredibly creative. The WhatsApp updates kept us in the loop without us having to chase anyone. The handover was seamless.",
     name: "Rahul & Sneha Verma",
     project: "Duplex Penthouse",
     location: "Gachibowli",
-    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop&crop=face&q=80",
+    avatar: "https://images.unsplash.com/photo-1566492031773-4f4e44671857?w=120&h=120&fit=crop&crop=face&q=80",
+    rating: 4,
   },
   // ── Row 2 ──────────────────────────────────────────────────
   {
@@ -75,35 +84,40 @@ const TESTIMONIALS = [
     name: "Ananya Krishnan",
     project: "Compact Apartment",
     location: "Kondapur",
-    avatar: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=80&h=80&fit=crop&crop=face&q=80",
+    avatar: "https://images.unsplash.com/photo-1619380061814-58f03707f082?w=120&h=120&fit=crop&crop=face&q=80",
+    rating: 5,
   },
   {
     quote: "I came in with a vague mood board and left with a fully realized design that exceeded it. The team's aesthetic sensibility is genuinely refined.",
     name: "Vikram Choudhary",
     project: "Boutique Office",
     location: "Film Nagar",
-    avatar: "https://images.unsplash.com/photo-1463453091185-61582044d556?w=80&h=80&fit=crop&crop=face&q=80",
+    avatar: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=120&h=120&fit=crop&crop=face&q=80",
+    rating: 5,
   },
   {
     quote: "From the first consultation to final styling, everything felt curated and intentional. Our home finally feels like it belongs to us. Thank you, Orniva.",
     name: "Meera & Suresh Pillai",
     project: "4BHK Renovation",
     location: "Hitec City",
-    avatar: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=80&h=80&fit=crop&crop=face&q=80",
+    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&h=120&fit=crop&crop=face&q=80",
+    rating: 4,
   },
   {
     quote: "The kitchen redesign changed how we cook and feel at home. Every drawer, shelf, and light placement was thought through with incredible care.",
     name: "Sunita Reddy",
     project: "Kitchen Remodel",
     location: "Secunderabad",
-    avatar: "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=80&h=80&fit=crop&crop=face&q=80",
+    avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=120&h=120&fit=crop&crop=face&q=80",
+    rating: 5,
   },
   {
     quote: "Working with Orniva was effortless. They handled everything — vendors, timelines, decisions — so we could focus on our lives. The result speaks for itself.",
     name: "Aditya & Pooja Bhat",
     project: "Full Home Design",
     location: "Manikonda",
-    avatar: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=80&h=80&fit=crop&crop=face&q=80",
+    avatar: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=120&h=120&fit=crop&crop=face&q=80",
+    rating: 5,
   },
 ];
 
@@ -113,8 +127,8 @@ const FAQItem = ({ question, answer, index }) => {
     <motion.div
       layout
       className={`relative rounded-2xl border transition-all duration-300 overflow-hidden ${isOpen
-        ? 'bg-[#111111] border-accent/30 shadow-[0_8px_32px_rgba(197,164,126,0.08)]'
-        : 'bg-[#0d0d0d] border-white/[0.06] hover:border-white/[0.12]'
+        ? 'bg-white border-accent/30 shadow-[0_8px_32px_rgba(197,164,126,0.08)]'
+        : 'bg-[#fafafa] border-black/[0.06] hover:border-black/[0.12]'
         }`}
     >
       {/* Accent left bar when open */}
@@ -127,17 +141,17 @@ const FAQItem = ({ question, answer, index }) => {
         className="w-full flex items-start gap-5 px-6 py-6 text-left focus:outline-none group"
       >
         {/* Number badge */}
-        <span className={`shrink-0 w-7 h-7 rounded-full border flex items-center justify-center text-[11px] font-medium mt-0.5 transition-colors duration-300 ${isOpen ? 'border-accent/50 text-accent bg-accent/10' : 'border-white/10 text-neutral-500 bg-white/[0.03]'
+        <span className={`shrink-0 w-7 h-7 rounded-full border flex items-center justify-center text-[11px] font-medium mt-0.5 transition-colors duration-300 ${isOpen ? 'border-accent/50 text-accent bg-accent/10' : 'border-black/10 text-neutral-500 bg-black/[0.03]'
           }`}>
           {String(index + 1).padStart(2, '0')}
         </span>
 
         <div className="flex-1 flex justify-between items-start gap-4">
-          <h4 className={`text-base md:text-lg font-heading font-medium leading-snug transition-colors duration-300 ${isOpen ? 'text-white' : 'text-neutral-200 group-hover:text-white'
+          <h4 className={`text-base md:text-lg font-heading font-medium leading-snug transition-colors duration-300 ${isOpen ? 'text-[#111]' : 'text-neutral-600 group-hover:text-[#111]'
             }`}>
             {question}
           </h4>
-          <span className={`shrink-0 w-7 h-7 rounded-full flex items-center justify-center border transition-all duration-300 mt-0.5 ${isOpen ? 'bg-accent border-accent text-primary rotate-0' : 'border-white/10 text-neutral-500 group-hover:border-white/20'
+          <span className={`shrink-0 w-7 h-7 rounded-full flex items-center justify-center border transition-all duration-300 mt-0.5 ${isOpen ? 'bg-accent border-accent text-white rotate-0' : 'border-black/10 text-neutral-500 group-hover:border-black/20'
             }`}>
             {isOpen ? <Minus size={12} /> : <Plus size={12} />}
           </span>
@@ -154,7 +168,7 @@ const FAQItem = ({ question, answer, index }) => {
             className="overflow-hidden"
           >
             <div className="pl-[4.5rem] pr-6 pb-6">
-              <p className="text-neutral-400 text-sm md:text-base leading-relaxed font-light">{answer}</p>
+              <p className="text-neutral-600 text-sm md:text-base leading-relaxed font-light">{answer}</p>
             </div>
           </motion.div>
         )}
@@ -163,7 +177,7 @@ const FAQItem = ({ question, answer, index }) => {
   );
 };
 
-const PromiseItem = ({ title, desc, icon, index, isOpen, onClick }) => {
+const PromiseItem = ({ title, desc, icon, isOpen, onClick }) => {
   return (
     <motion.div
       layout
@@ -207,6 +221,15 @@ const PromiseItem = ({ title, desc, icon, index, isOpen, onClick }) => {
 
 const Home = () => {
   const [formData, setFormData] = useState({ name: '', phone: '', project_type: '' });
+  const { scrollY } = useScroll();
+
+  // High-end real-time scroll parallax for the background image
+  const yBg = useTransform(scrollY, [0, 800], [0, 180]);
+  const scaleBg = useTransform(scrollY, [0, 800], [1.03, 1.15]);
+
+  // Sleek drift-up and fade-out animation for the text content
+  const opacityText = useTransform(scrollY, [0, 500], [1, 0]);
+  const yText = useTransform(scrollY, [0, 500], [0, -60]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
@@ -252,76 +275,115 @@ const Home = () => {
 
   return (
     <div className="bg-white">
+      <Helmet>
+        <title>Orniva Design Studio | End to end Interiors</title>
+        <meta name="description" content="Orniva Design Studio offers premium, bespoke interior design services for residential and commercial spaces in Hyderabad." />
+      </Helmet>
 
-      {/* 2. Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-neutral-900 z-0 overflow-hidden">
-          <img
-            src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80"
-            alt="Interior Design Studio"
-            className="w-full h-full object-cover opacity-50 blur-[5px] scale-105"
+      {/* 2. Hero Section — ELORIA-Style Moody Luxury */}
+      <section className="relative h-screen w-full overflow-visible z-10">
+
+        {/* ── Full-bleed moody background photo with dynamic parallax & entrance zoom ── */}
+        <motion.div
+          initial={{ scale: 1.08, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 2.0, ease: [0.16, 1, 0.3, 1] }}
+          className="sticky top-0 left-0 right-0 h-screen z-0 overflow-hidden"
+        >
+          <motion.img
+            src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=2560&q=95"
+            alt="Orniva luxury interior design"
+            className="w-full h-full object-cover origin-center"
+            style={{
+              y: yBg,
+              scale: scaleBg
+            }}
           />
-        </div>
+          {/* Custom cinematic background overlay */}
+          <div
+            className="absolute inset-0 z-10"
+            style={{
+              background: 'linear-gradient(90deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.45) 40%, rgba(0,0,0,0.15) 100%)'
+            }}
+          />
+        </motion.div>
 
-        <div className="container mx-auto px-4 relative z-10 text-center text-white pt-32 pb-16 md:py-24">
+        {/* ── Main content block — dynamically floats and fades on scroll ── */}
+        <motion.div
+          style={{ opacity: opacityText, y: yText }}
+          className="absolute inset-0 z-20 flex flex-col justify-end px-6 sm:px-12 md:px-16 lg:px-24 pb-16 sm:pb-24 md:pb-28 lg:pb-32 pt-32 sm:pt-40"
+        >
+
+          {/* Headline — Cinematic Staggered Split Line Reveal */}
+          <div className="flex flex-col items-start w-full">
+            <div className="overflow-hidden h-auto mb-1 flex items-center justify-start w-full">
+              <motion.h1
+                initial={{ y: "100%", opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
+                className="font-heading text-white leading-tight tracking-tight text-left"
+                style={{ fontSize: 'clamp(2.2rem, 5vw, 4.5rem)', fontWeight: 400 }}
+              >
+                Designing Timeless Spaces
+              </motion.h1>
+            </div>
+            <div className="overflow-hidden h-auto mb-6 flex items-center justify-start w-full">
+              <motion.h1
+                initial={{ y: "100%", opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
+                className="font-heading text-white leading-tight tracking-tight text-left"
+                style={{ fontSize: 'clamp(2.2rem, 5vw, 4.5rem)', fontWeight: 400 }}
+              >
+                Crafted Around Your Lifestyle
+              </motion.h1>
+            </div>
+          </div>
+
+          {/* Description — smooth staggered slide and fade */}
           <motion.p
-            initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
-            className="text-accent text-sm md:text-base font-bold tracking-[0.2em] uppercase mb-6"
-          >
-            Interior Design Studio
-          </motion.p>
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-            className="text-5xl md:text-7xl lg:text-[5.5rem] font-heading font-bold leading-tight mb-8 max-w-5xl mx-auto"
+            transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1], delay: 0.5 }}
+            className="text-white/70 text-xs sm:text-sm md:text-base font-light leading-relaxed max-w-sm sm:max-w-xl mb-8 sm:mb-10 tracking-wide text-left"
           >
-            We design spaces that reflect your lifestyle.
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-lg md:text-xl font-light max-w-3xl mx-auto mb-10 text-neutral-200 leading-relaxed"
-          >
-            A boutique launch studio for people who want premium interiors without the agency markup. Founder-led design, transparent pricing, and confident spaces created from day one.
+            Founder-led interior design studio creating elegant homes and inspiring workspaces through thoughtful design and turnkey execution.
           </motion.p>
+
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4"
+            transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1], delay: 0.65 }}
+            className="flex flex-col min-[500px]:flex-row gap-4 items-center w-full min-[500px]:w-auto"
           >
             <a
               href="https://cal.com/orniva-design-studio/30min"
               target="_blank"
               rel="noreferrer"
-              className="relative overflow-hidden px-8 py-4 bg-accent text-white rounded-full font-medium transition-all duration-500 hover:shadow-[0_0_25px_rgba(197,164,126,0.45)] hover:scale-[1.02] group w-full sm:w-auto text-center"
+              className="inline-block px-8 py-3 bg-white text-primary text-[15px] font-semibold rounded-full hover:bg-accent hover:text-white hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 shadow-lg text-center w-full min-[500px]:w-auto"
             >
-              <span className="relative z-10">Get Free Consultation</span>
-              <span className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300"></span>
+              Book Design Session
             </a>
             <Link
               to="/projects"
-              className="relative overflow-hidden px-8 py-4 border border-white text-white rounded-full font-medium transition-all duration-500 hover:shadow-[0_0_25px_rgba(255,255,255,0.15)] hover:scale-[1.02] group w-full sm:w-auto flex items-center justify-center gap-2"
+              className="inline-block px-8 py-3 bg-transparent border border-white/40 text-white text-[15px] font-semibold rounded-full hover:bg-white hover:text-primary hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 text-center w-full min-[500px]:w-auto"
             >
-              <span className="relative z-10">View Design Concepts</span>
-              <span className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300"></span>
+              View Projects
             </Link>
           </motion.div>
-        </div>
+        </motion.div>
       </section>
 
       {/* 3. Expertise (What We Do) */}
-      <section className="py-24 bg-[#0a0a0a]">
+      <section className="py-24 bg-[#faf9f6] relative z-20 shadow-[0_-20px_50px_rgba(0,0,0,0.15)]">
         <div className="container mx-auto px-4 md:px-8">
           <motion.div
             initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn}
             className="mb-16"
           >
             <h4 className="text-[#C5A47E] text-xs font-bold tracking-[0.2em] uppercase mb-6">What we do</h4>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-normal text-white max-w-4xl leading-[1.1]">
-              Design support from first<br className="hidden md:block" />sketch to final styling.
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-normal text-[#111] max-w-5xl leading-[1.1]">
+              Complete turnkey interior solutions<br className="hidden md:block" />from concept and design to final execution.
             </h2>
           </motion.div>
 
@@ -331,60 +393,43 @@ const Home = () => {
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
           >
             {[
-              { title: 'Residential interiors', desc: 'Warm, functional homes planned around your routines, storage, light, and finishes.' },
-              { title: 'Commercial spaces', desc: 'Workplaces, studios, salons, and retail spaces shaped for flow and brand presence.' },
-              { title: 'Furniture and decor', desc: 'Custom furniture, material palettes, soft furnishings, and styling details.' },
-              { title: 'Space planning', desc: 'Layouts, zoning, 3D views, and detail-ready plans before work begins on site.' }
+              { 
+                title: 'Residential interiors', 
+                desc: 'Warm, functional homes planned around your routines, storage, light, and finishes.'
+              },
+              { 
+                title: 'Commercial spaces', 
+                desc: 'Workplaces, studios, salons, and retail spaces shaped for flow and brand presence.'
+              },
+              { 
+                title: 'Furniture and decor', 
+                desc: 'Custom furniture, material palettes, soft furnishings, and styling details.'
+              },
+              { 
+                title: 'Space planning', 
+                desc: 'Layouts, zoning, 3D views, and detail-ready plans before work begins on site.'
+              }
             ].map((service, i) => (
-              <motion.div key={i} variants={fadeIn} className="bg-[#1a1a1a] p-8 rounded-2xl hover:bg-[#222] transition-colors duration-300 h-full flex flex-col">
-                <h3 className="text-lg font-heading font-semibold text-white mb-4">{service.title}</h3>
-                <p className="text-[#999999] leading-relaxed text-sm">{service.desc}</p>
+              <motion.div key={i} variants={fadeIn} className="group bg-white border border-black/[0.06] shadow-sm p-6 rounded-2xl hover:border-accent/30 transition-all duration-300 h-full flex flex-col cursor-pointer">
+                <h3 className="text-lg font-heading font-semibold text-[#111] mb-3 group-hover:text-accent transition-colors">{service.title}</h3>
+                <p className="text-neutral-500 leading-relaxed text-sm flex-grow">{service.desc}</p>
               </motion.div>
             ))}
           </motion.div>
         </div>
       </section>
 
-      {/* 4. Concept Design (Portfolio) */}
-      <section className="py-24 bg-white">
-        <div className="container mx-auto px-4 md:px-8">
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} className="mb-16">
-            <h4 className="text-accent text-xs font-bold tracking-[0.2em] uppercase mb-4">CONCEPT DESIGN | NOT EXECUTED</h4>
-            <h2 className="text-4xl md:text-5xl font-heading font-bold text-primary mb-6 max-w-3xl">Early visual directions for your first look.</h2>
-            <p className="text-neutral-500 max-w-2xl text-lg">These are concept explorations created for our launch portfolio. They show how we think about space, materials, and modern living.</p>
-          </motion.div>
 
-          <motion.div
-            variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true }}
-            className="grid grid-cols-1 lg:grid-cols-3 gap-8"
-          >
-            {[
-              { title: 'Courtyard Residence', type: 'Living', desc: 'A calm, layered home built around natural light and daily rituals.', img: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-              { title: 'Urban Minimalist Lounge', type: 'Living', desc: 'A refined communal space with clean lines, warm texture, and quiet luxury.', img: 'https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-              { title: 'Compact City Apartment', type: 'Bedroom', desc: 'Smart planning for city living that feels spacious, elegant, and personal.', img: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' }
-            ].map((project, i) => (
-              <motion.div key={i} variants={fadeIn} className="group cursor-pointer flex flex-col h-full">
-                <div className="relative overflow-hidden rounded-2xl aspect-[4/5] mb-6">
-                  <img src={project.img} alt={project.title} className="w-full h-full object-cover transform scale-100 group-hover:scale-[1.04] transition-transform duration-[1200ms] ease-[cubic-bezier(0.25,1,0.5,1)]" />
-                </div>
-                <span className="text-xs font-bold text-accent tracking-wider uppercase mb-2 block">{project.type}</span>
-                <h3 className="text-2xl font-heading font-semibold text-primary mb-3">{project.title}</h3>
-                <p className="text-neutral-600 flex-grow">{project.desc}</p>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
 
       {/* 5. Why Us */}
-      <section className="py-24 bg-secondary/50">
+      <section className="py-24 bg-gradient-dark">
         <div className="container mx-auto px-4 md:px-8">
           <div className="flex flex-col lg:flex-row gap-16 items-center">
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} className="w-full lg:w-1/2">
-              <h2 className="text-4xl md:text-5xl font-heading font-bold text-primary mb-8 leading-tight">Built for clients who value clarity and craft.</h2>
-              <div className="bg-white p-8 rounded-2xl shadow-sm border border-neutral-100 mb-8 inline-block">
+              <h2 className="text-4xl md:text-5xl font-heading font-bold text-[#111] mb-8 leading-tight">Built for clients who value clarity and craft.</h2>
+              <div className="bg-white p-8 rounded-2xl shadow-sm border border-black/[0.06] mb-8 inline-block">
                 <h4 className="text-accent font-bold uppercase tracking-wider text-sm mb-2">Exclusive Offer</h4>
-                <p className="text-primary font-heading font-bold text-2xl">Only 10 slots left - Free 3D Design Consultation for the first 10 clients.</p>
+                <p className="text-[#111] font-heading font-bold text-2xl">Only 10 slots left - Free 3D Design Consultation for the first 10 clients.</p>
               </div>
             </motion.div>
 
@@ -396,11 +441,11 @@ const Home = () => {
                 { title: 'Flexible Design Options', desc: 'Choices ranging from concept-only to full execution support.' }
               ].map((prop, i) => (
                 <motion.div key={i} variants={fadeIn}>
-                  <div className="w-12 h-12 bg-white text-primary rounded-full flex items-center justify-center font-bold mb-4 shadow-sm">
+                  <div className="w-12 h-12 bg-accent/10 text-accent rounded-full flex items-center justify-center font-bold mb-4 shadow-sm">
                     {i + 1}
                   </div>
-                  <h3 className="text-xl font-heading font-bold text-primary mb-2">{prop.title}</h3>
-                  <p className="text-neutral-600 text-sm leading-relaxed">{prop.desc}</p>
+                  <h3 className="text-xl font-heading font-bold text-[#111] mb-2">{prop.title}</h3>
+                  <p className="text-neutral-500 text-sm leading-relaxed">{prop.desc}</p>
                 </motion.div>
               ))}
             </motion.div>
@@ -410,7 +455,7 @@ const Home = () => {
 
       {/* 5.5 Promises */}
       <section className="py-24 relative overflow-hidden bg-gradient-to-b from-[#f8f9fa] to-white">
-        
+
         <div className="container mx-auto px-4 md:px-8 relative z-10">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-heading font-normal text-[#111]">
@@ -458,9 +503,10 @@ const Home = () => {
                 <Link
                   to="/contact"
                   onClick={() => window.scrollTo(0, 0)}
-                  className="inline-flex items-center gap-2 px-8 py-4 bg-[#EA7B4C] hover:bg-[#d66a3d] text-white text-sm font-bold rounded-full transition-all duration-300 shadow-lg shadow-[#EA7B4C]/30 hover:scale-[1.02]"
+                  className="inline-flex items-center gap-2 px-8 py-4 bg-accent hover:bg-accent/90 text-primary text-sm font-bold rounded-full transition-all duration-300 shadow-lg shadow-accent/15 hover:scale-[1.02] group"
                 >
-                  Get a Free Quote <ArrowRight size={16} />
+                  Get a Free Quote
+                  <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                 </Link>
               </div>
             </div>
@@ -512,34 +558,21 @@ const Home = () => {
                 />
               </motion.div>
 
-              {/* Far Right Small Image */}
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
-                className="absolute z-10 top-[40%] right-[-5%] lg:right-[-2%] w-[120px] h-[120px] sm:w-[150px] sm:h-[150px] rounded-full overflow-hidden border-4 border-white shadow-lg hidden sm:block"
-              >
-                <img
-                  src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
-                  alt="Kitchen Design"
-                  className="w-full h-full object-cover"
-                />
-              </motion.div>
+
             </div>
           </div>
         </div>
       </section>
 
       {/* 6. Process (How We Work) */}
-      <section className="py-24 bg-primary text-white">
+      <section className="py-24 bg-gradient-dark">
         <div className="container mx-auto px-4 md:px-8">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} className="text-center mb-16">
             <h4 className="text-accent text-xs font-bold tracking-[0.2em] uppercase mb-4">How we work</h4>
-            <h2 className="text-4xl md:text-5xl font-heading font-bold mb-6">A simple five-step journey<br className="hidden md:block" />to your new space.</h2>
+            <h2 className="text-4xl md:text-5xl font-heading font-bold mb-6 text-[#111]">A simple five-step journey<br className="hidden md:block" />to your new space.</h2>
           </motion.div>
 
-          <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true }} className="grid grid-cols-1 md:grid-cols-5 gap-8">
+          <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true }} className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
             {[
               { title: 'Consultation', desc: 'Understanding lifestyle and requirements.' },
               { title: 'Concept Development', desc: 'Mood boards, layouts, and design direction.' },
@@ -548,12 +581,12 @@ const Home = () => {
               { title: 'Final Styling', desc: 'Furniture, decor, and finishing touches.' }
             ].map((step, i) => (
               <motion.div key={i} variants={fadeIn} className="relative">
-                {i !== 4 && <div className="hidden md:block absolute top-6 left-12 w-full h-[1px] bg-neutral-800 z-0"></div>}
-                <div className="relative z-10 w-12 h-12 bg-neutral-900 border border-neutral-700 rounded-full flex items-center justify-center font-bold text-accent mb-6">
+                {i !== 4 && <div className="hidden lg:block absolute top-6 left-12 w-full h-[1px] bg-neutral-200 z-0"></div>}
+                <div className="relative z-10 w-12 h-12 bg-white border border-neutral-200 rounded-full flex items-center justify-center font-bold text-accent mb-6">
                   0{i + 1}
                 </div>
-                <h3 className="text-xl font-heading font-semibold mb-3">{step.title}</h3>
-                <p className="text-neutral-400 text-sm leading-relaxed">{step.desc}</p>
+                <h3 className="text-xl font-heading font-semibold mb-3 text-[#111]">{step.title}</h3>
+                <p className="text-neutral-500 text-sm leading-relaxed">{step.desc}</p>
               </motion.div>
             ))}
           </motion.div>
@@ -561,11 +594,9 @@ const Home = () => {
       </section>
 
       {/* 6.5 Client Portal Promotion */}
-      <section className="py-28 bg-[#080809] relative overflow-hidden">
+      <section className="py-28 bg-[#f8f9fa] relative overflow-hidden">
         {/* Background grid */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808006_1px,transparent_1px),linear-gradient(to_bottom,#80808006_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none" />
-        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-accent/[0.05] rounded-full blur-[140px] pointer-events-none" />
-        <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-accent/[0.04] rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#00000006_1px,transparent_1px),linear-gradient(to_bottom,#00000006_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none" />
 
         <div className="container mx-auto px-4 md:px-8 relative z-10">
           <div className="max-w-6xl mx-auto">
@@ -577,10 +608,10 @@ const Home = () => {
                   <span className="inline-block text-accent text-[11px] font-semibold tracking-[0.3em] uppercase border border-accent/20 px-4 py-1.5 rounded-full bg-accent/5">
                     Client Experience
                   </span>
-                  <h2 className="text-4xl md:text-5xl lg:text-[3.25rem] font-heading font-normal text-white leading-tight">
-                    No Waiting.<br />No Wondering.
+                  <h2 className="text-4xl md:text-5xl lg:text-[3.25rem] font-heading font-normal text-[#111] leading-tight">
+                    No Waiting.
                   </h2>
-                  <p className="text-neutral-400 text-base md:text-lg font-light leading-relaxed max-w-lg">
+                  <p className="text-neutral-600 text-base md:text-lg font-light leading-relaxed max-w-lg">
                     From first concept to final handover — every milestone of your project is tracked, documented, and accessible live. Zero chasing, zero guessing.
                   </p>
                 </div>
@@ -599,8 +630,8 @@ const Home = () => {
                         </svg>
                       </div>
                       <div>
-                        <h4 className="text-white text-sm font-semibold mb-0.5">{f.title}</h4>
-                        <p className="text-neutral-500 text-xs leading-relaxed">{f.desc}</p>
+                        <h4 className="text-[#111] text-sm font-semibold mb-0.5">{f.title}</h4>
+                        <p className="text-neutral-600 text-xs leading-relaxed">{f.desc}</p>
                       </div>
                     </motion.div>
                   ))}
@@ -626,67 +657,115 @@ const Home = () => {
                 transition={{ duration: 0.7, ease: 'easeOut' }}
                 className="relative"
               >
-                {/* Glow behind card */}
-                <div className="absolute -inset-4 bg-accent/5 rounded-3xl blur-2xl pointer-events-none" />
+                <div className="relative bg-[#111113] border border-white/10 rounded-3xl overflow-hidden shadow-2xl">
+                  <div className="p-6 sm:p-8 space-y-6">
 
-                <div className="relative bg-[#111113] border border-white/10 rounded-3xl overflow-hidden shadow-[0_32px_80px_rgba(0,0,0,0.6)]">
-                  {/* Card header bar */}
-                  <div className="flex items-center justify-between px-5 py-3.5 border-b border-white/[0.07] bg-[#0d0d0f]">
-                    <div className="flex items-center gap-2">
-                      <div className="flex gap-1.5">
-                        <span className="w-2.5 h-2.5 rounded-full bg-[#FF5F57]" />
-                        <span className="w-2.5 h-2.5 rounded-full bg-[#FEBC2E]" />
-                        <span className="w-2.5 h-2.5 rounded-full bg-[#28C840]" />
-                      </div>
-                      <span className="text-[11px] text-neutral-600 ml-2 font-mono">odscp.vercel.app/dashboard</span>
-                    </div>
-                    <span className="text-[10px] text-accent bg-accent/10 border border-accent/20 px-2 py-0.5 rounded-full font-semibold tracking-wide">LIVE</span>
-                  </div>
-
-                  <div className="p-6 space-y-5">
-                    {/* Project header */}
-                    <div className="flex justify-between items-start">
-                      <div>
-                        <p className="text-[10px] text-neutral-600 uppercase tracking-widest mb-1">Active Project</p>
-                        <h3 className="text-white font-heading font-semibold text-lg">Jubilee Hills Villa</h3>
-                        <p className="text-neutral-500 text-xs mt-0.5">Banjara Hills, Hyderabad</p>
-                      </div>
-                      <span className="text-[11px] text-green-400 bg-green-400/10 border border-green-400/20 px-3 py-1 rounded-full font-semibold flex items-center gap-1.5">
-                        <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-                        On Track
-                      </span>
-                    </div>
-
-                    {/* Milestones */}
-                    <div className="space-y-3">
-                      {[
-                        { label: 'Concept & 3D Design', pct: 100, done: true },
-                        { label: 'Material Procurement', pct: 100, done: true },
-                        { label: 'Carpentry & Fixtures', pct: 80, done: false },
-                        { label: 'Final Styling & Handover', pct: 15, done: false },
-                      ].map((m, i) => (
-                        <div key={i} className="space-y-1.5">
-                          <div className="flex justify-between text-[11px]">
-                            <span className={m.done ? 'text-neutral-400' : 'text-white'}>{m.label}</span>
-                            <span className={m.done ? 'text-green-400' : 'text-accent'}>{m.done ? '✓ Done' : `${m.pct}%`}</span>
-                          </div>
-                          <div className="w-full bg-white/[0.05] rounded-full h-1.5 overflow-hidden">
-                            <motion.div
-                              initial={{ width: 0 }}
-                              whileInView={{ width: `${m.pct}%` }}
-                              viewport={{ once: true }}
-                              transition={{ duration: 1, delay: i * 0.15, ease: 'easeOut' }}
-                              className={`h-full rounded-full ${m.done ? 'bg-green-500/70' : 'bg-gradient-to-r from-accent/60 to-accent'}`}
-                            />
-                          </div>
+                    {/* Top Row: Current Project Header & 3D Render Image */}
+                    <div className="flex flex-col sm:flex-row justify-between items-start gap-6">
+                      <div className="flex-1 space-y-3">
+                        <div>
+                          <p className="text-[10px] text-neutral-500 uppercase tracking-widest font-semibold">Current Project</p>
+                          <h3 className="text-white font-heading font-normal text-2xl mt-1 tracking-tight">Jubilee Hills Villa</h3>
                         </div>
-                      ))}
+                        <button className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#C5A47E]/10 border border-[#C5A47E]/20 hover:bg-[#C5A47E]/20 text-[#C5A47E] hover:text-white text-xs font-semibold rounded-xl transition-all duration-300">
+                          View Project Details
+                          <ArrowRight size={14} />
+                        </button>
+                      </div>
+
+                      {/* 3D Render Image with Rounded Corners */}
+                      <div className="w-full sm:w-[220px] md:w-[240px] shrink-0 rounded-2xl overflow-hidden border border-white/[0.08] aspect-[16/10] bg-neutral-900 shadow-md">
+                        <img
+                          src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                          alt="Jubilee Hills Living Room Render"
+                          className="w-full h-full object-cover opacity-90"
+                        />
+                      </div>
                     </div>
 
-                    {/* Next update row */}
-                    <div className="flex items-center justify-between pt-3 border-t border-white/[0.06] text-[11px] text-neutral-500">
-                      <span>Next update: <span className="text-accent">Tomorrow, 10 AM</span></span>
-                      <span className="flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" /> Designer online</span>
+                    {/* Second Row: Design Concept Milestone Box */}
+                    <div className="bg-white/[0.02] border border-white/[0.05] rounded-2xl p-5 space-y-4">
+                      <div className="flex justify-between items-center text-sm">
+                        <span className="text-white font-semibold">Design Concept</span>
+                        <span className="text-xs text-green-400 font-semibold flex items-center gap-1.5">
+                          <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+                          Approved
+                        </span>
+                      </div>
+
+                      {/* Gold Progress Bar */}
+                      <div className="space-y-2">
+                        <div className="w-full bg-white/[0.05] rounded-full h-2 overflow-hidden">
+                          <motion.div
+                            initial={{ width: 0 }}
+                            whileInView={{ width: "80%" }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 1.2, ease: 'easeOut' }}
+                            className="h-full rounded-full bg-accent"
+                          />
+                        </div>
+                        <div className="flex justify-end text-xs text-neutral-400 font-semibold">
+                          <span>80%</span>
+                        </div>
+                      </div>
+
+                      {/* Milestone Subtext */}
+                      <div className="flex justify-between items-center text-xs border-t border-white/[0.05] pt-3">
+                        <span className="text-neutral-400">Milestone: Carpentry & Custom Fixtures</span>
+                        <span className="text-accent font-semibold">In Progress</span>
+                      </div>
+                    </div>
+
+                    {/* Third Row: 4-Card Navigation Grid */}
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+
+                      {/* Card 1: Floor Plans */}
+                      <div className="bg-white/[0.01] border border-white/[0.05] hover:border-accent/40 rounded-2xl p-4 flex flex-col items-center text-center cursor-pointer transition-all duration-300 group">
+                        <div className="w-12 h-12 rounded-xl bg-accent/5 border border-accent/10 flex items-center justify-center mb-3 group-hover:bg-accent/15 transition-colors">
+                          <svg className="w-6 h-6 text-accent" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                            <rect x="3" y="3" width="18" height="18" rx="2" />
+                            <path d="M9 3v18M9 11h12M3 15h6" />
+                          </svg>
+                        </div>
+                        <span className="text-xs font-semibold text-white group-hover:text-accent transition-colors">Floor Plans</span>
+                        <span className="text-[10px] text-neutral-500 mt-1 uppercase tracking-wider font-semibold">View Now</span>
+                      </div>
+
+                      {/* Card 2: 3D Renders */}
+                      <div className="bg-white/[0.01] border border-white/[0.05] hover:border-accent/40 rounded-2xl p-4 flex flex-col items-center text-center cursor-pointer transition-all duration-300 group">
+                        <div className="w-12 h-12 rounded-xl bg-accent/5 border border-accent/10 flex items-center justify-center mb-3 group-hover:bg-accent/15 transition-colors">
+                          <svg className="w-6 h-6 text-accent" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                            <path d="M12 3v18M12 3L4 7.5v9L12 21l8-4.5v-9L12 3z M4 7.5L12 12l8-4.5" />
+                          </svg>
+                        </div>
+                        <span className="text-xs font-semibold text-white group-hover:text-accent transition-colors">3D Renders</span>
+                        <span className="text-[10px] text-neutral-500 mt-1 uppercase tracking-wider font-semibold">View Now</span>
+                      </div>
+
+                      {/* Card 3: Moodboard */}
+                      <div className="bg-white/[0.01] border border-white/[0.05] hover:border-accent/40 rounded-2xl p-4 flex flex-col items-center text-center cursor-pointer transition-all duration-300 group">
+                        <div className="w-12 h-12 rounded-xl bg-accent/5 border border-accent/10 flex items-center justify-center mb-3 group-hover:bg-accent/15 transition-colors">
+                          <svg className="w-6 h-6 text-accent" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                            <rect x="4" y="4" width="6" height="6" rx="1.5" />
+                            <rect x="14" y="4" width="6" height="6" rx="1.5" />
+                            <rect x="4" y="14" width="6" height="6" rx="1.5" />
+                            <rect x="14" y="14" width="6" height="6" rx="1.5" />
+                          </svg>
+                        </div>
+                        <span className="text-xs font-semibold text-white group-hover:text-accent transition-colors">Moodboard</span>
+                        <span className="text-[10px] text-neutral-500 mt-1 uppercase tracking-wider font-semibold">View Now</span>
+                      </div>
+
+                      {/* Card 4: Materials */}
+                      <div className="bg-white/[0.01] border border-white/[0.05] hover:border-accent/40 rounded-2xl p-4 flex flex-col items-center text-center cursor-pointer transition-all duration-300 group">
+                        <div className="w-12 h-12 rounded-xl bg-accent/5 border border-accent/10 flex items-center justify-center mb-3 group-hover:bg-accent/15 transition-colors">
+                          <svg className="w-6 h-6 text-accent" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 12l10 4.5 10-4.5M2 17l10 4.5 10-4.5" />
+                          </svg>
+                        </div>
+                        <span className="text-xs font-semibold text-white group-hover:text-accent transition-colors">Materials</span>
+                        <span className="text-[10px] text-neutral-500 mt-1 uppercase tracking-wider font-semibold">View Now</span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -698,7 +777,7 @@ const Home = () => {
       </section>
 
       {/* 7. Philosophy */}
-      <section className="py-28 bg-[#0a0a0b] relative overflow-hidden">
+      <section className="py-28 bg-gradient-dark relative overflow-hidden">
         {/* Decorative ambient glow */}
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-accent/[0.04] rounded-full blur-[160px] pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-accent/[0.03] rounded-full blur-[120px] pointer-events-none" />
@@ -713,7 +792,7 @@ const Home = () => {
             <span className="inline-block text-accent text-[11px] font-semibold tracking-[0.3em] uppercase mb-5 border border-accent/20 px-4 py-1.5 rounded-full bg-accent/5">
               Philosophy
             </span>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-normal text-white leading-tight mb-5">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-normal text-[#111] leading-tight mb-5">
               What we<br className="hidden sm:block" /> believe in.
             </h2>
             <p className="text-neutral-500 text-base md:text-lg font-light leading-relaxed">
@@ -749,7 +828,7 @@ const Home = () => {
               <motion.div
                 key={i}
                 variants={fadeIn}
-                className="group relative bg-[#111113] border border-white/[0.07] rounded-3xl p-8 hover:border-accent/30 transition-all duration-500 hover:shadow-[0_20px_60px_rgba(197,164,126,0.07)] overflow-hidden flex flex-col"
+                className="group relative bg-white border border-black/[0.06] rounded-3xl p-8 hover:border-accent/30 transition-all duration-500 hover:shadow-sm overflow-hidden flex flex-col"
               >
                 {/* Top accent line on hover */}
                 <div className="absolute top-0 left-6 right-6 h-[1px] bg-gradient-to-r from-transparent via-accent/50 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
@@ -764,7 +843,7 @@ const Home = () => {
                   </svg>
                 </div>
 
-                <h3 className="text-xl md:text-2xl font-heading font-normal text-white mb-4 group-hover:text-accent transition-colors duration-300">
+                <h3 className="text-xl md:text-2xl font-heading font-normal text-[#111] mb-4 group-hover:text-accent transition-colors duration-300">
                   {item.title}
                 </h3>
                 <p className="text-neutral-500 text-sm md:text-base leading-relaxed font-light flex-1">
@@ -772,7 +851,7 @@ const Home = () => {
                 </p>
 
                 {/* Watermark on hover */}
-                <div className="absolute -bottom-4 -right-2 font-heading italic text-[5rem] font-extrabold text-white/[0.02] select-none pointer-events-none group-hover:text-accent/[0.04] transition-colors duration-700">
+                <div className="absolute -bottom-4 -right-2 font-heading italic text-[5rem] font-extrabold text-black/[0.03] select-none pointer-events-none group-hover:text-accent/[0.04] transition-colors duration-700">
                   {item.title[0]}
                 </div>
               </motion.div>
@@ -783,7 +862,7 @@ const Home = () => {
       </section>
 
       {/* Collaborators / Brands */}
-      <section className="hidden py-16 bg-[#080809] relative overflow-hidden">
+      <section className="hidden py-16 bg-gradient-dark relative overflow-hidden">
         <div className="container mx-auto px-4 md:px-8 max-w-5xl">
           <h3 className="text-center text-neutral-400 text-lg md:text-[22px] font-light mb-12">
             Companies we <span className="text-white font-semibold">collaborate</span> with.
@@ -815,20 +894,118 @@ const Home = () => {
         </div>
       </section>
 
-      {/* 8. Frequently Asked Questions */}
-      <section className="py-28 bg-[#080809] relative overflow-hidden">
-        {/* Subtle glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-accent/[0.04] rounded-full blur-[120px] pointer-events-none" />
 
+
+
+
+      {/* 9. Contact (Start a Project) */}
+      <section id="contact-section" className="py-24 bg-[#111111] text-white">
+        <div className="container mx-auto px-4 md:px-8 max-w-4xl text-center">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn}>
+            <h4 className="text-accent text-xs font-bold tracking-[0.2em] uppercase mb-4">Start a Project</h4>
+            <h2 className="text-4xl md:text-5xl font-heading font-bold mb-6 text-white">Ready to transform your space?</h2>
+            <p className="text-neutral-400 text-lg mb-12">Tell us what you are dreaming of. We will reply within 24 hours with next steps and a rough estimate.</p>
+
+            {isSubmitted ? (
+              <div className="max-w-2xl mx-auto mb-8 p-6 bg-accent/10 border border-accent/20 rounded-xl text-center">
+                <h3 className="text-xl font-heading font-bold text-white mb-2">Request Received!</h3>
+                <p className="text-neutral-300">Thank you for reaching out. Our team will contact you shortly.</p>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto mb-8 text-left">
+                <div>
+                  <input
+                    type="text" required placeholder="Your Name"
+                    value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })}
+                    className="w-full px-5 py-4 bg-[#18181b]/50 border border-white/10 rounded-xl focus:outline-none focus:border-accent text-white placeholder-neutral-500"
+                  />
+                </div>
+                <div>
+                  <input
+                    type="tel" required placeholder="Phone Number"
+                    value={formData.phone} onChange={e => setFormData({ ...formData, phone: e.target.value })}
+                    className="w-full px-5 py-4 bg-[#18181b]/50 border border-white/10 rounded-xl focus:outline-none focus:border-accent text-white placeholder-neutral-500"
+                  />
+                </div>
+                <div className="md:col-span-2 relative">
+                  <div
+                    onClick={() => setIsSelectOpen(!isSelectOpen)}
+                    className="w-full px-5 py-4 bg-[#18181b]/50 border border-white/10 rounded-xl cursor-pointer flex justify-between items-center text-white"
+                  >
+                    <span className={formData.project_type ? "text-white" : "text-neutral-400"}>
+                      {formData.project_type === 'residential' ? 'Residential Interior' :
+                        formData.project_type === 'commercial' ? 'Commercial Space' :
+                          formData.project_type === 'renovation' ? 'Renovation' :
+                            'Select Project Type'}
+                    </span>
+                    <ChevronDown size={20} className={`text-neutral-400 transition-transform ${isSelectOpen ? 'rotate-180' : ''}`} />
+                  </div>
+ 
+                  <AnimatePresence>
+                    {isSelectOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        className="absolute z-50 w-full mt-2 bg-[#18181b] border border-white/10 rounded-xl overflow-hidden shadow-2xl"
+                      >
+                        {[
+                          { value: 'residential', label: 'Residential Interior' },
+                          { value: 'commercial', label: 'Commercial Space' },
+                          { value: 'renovation', label: 'Renovation' }
+                        ].map((option) => (
+                          <div
+                            key={option.value}
+                            onClick={() => {
+                              setFormData({ ...formData, project_type: option.value });
+                              setIsSelectOpen(false);
+                            }}
+                            className={`px-5 py-4 cursor-pointer transition-colors ${formData.project_type === option.value ? 'bg-accent/20 text-accent' : 'text-white hover:bg-white/5'}`}
+                          >
+                            {option.label}
+                          </div>
+                        ))}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+ 
+                {errorMsg && (
+                  <div className="md:col-span-2 p-3 bg-red-500/10 text-red-400 text-sm rounded-xl border border-red-500/20">
+                    {errorMsg}
+                  </div>
+                )}
+ 
+                <div className="md:col-span-2 mt-4">
+                  <button
+                    type="submit"
+                    disabled={isSubmitting || !formData.project_type}
+                    className="w-full py-4 bg-accent/80 hover:bg-accent text-neutral-100 rounded-xl font-bold transition-all duration-300 shadow-lg shadow-accent/15 hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+                  >
+                    {isSubmitting ? (
+                      <>Submitting... <Loader2 size={18} className="animate-spin" /></>
+                    ) : (
+                      'Submit Inquiry'
+                    )}
+                  </button>
+                </div>
+              </form>
+            )}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* 10. Frequently Asked Questions (Moved to end) */}
+      <section className="py-28 bg-white relative overflow-hidden">
         <div className="container mx-auto px-4 md:px-8 max-w-3xl relative z-10">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} className="text-center mb-14">
             <span className="inline-block text-accent text-[11px] font-semibold tracking-[0.3em] uppercase mb-4 border border-accent/20 px-4 py-1.5 rounded-full bg-accent/5">
               FAQ
             </span>
-            <h2 className="text-3xl md:text-5xl font-heading font-normal text-white mt-4 mb-4 leading-tight">
+            <h2 className="text-3xl md:text-5xl font-heading font-normal text-[#111] mt-4 mb-4 leading-tight">
               Answers before<br className="hidden sm:block" /> we begin.
             </h2>
-            <p className="text-neutral-500 text-sm md:text-base font-light max-w-lg mx-auto">
+            <p className="text-neutral-600 text-sm md:text-base font-light max-w-lg mx-auto">
               Everything you need to know about working with Orniva.
             </p>
           </motion.div>
@@ -856,9 +1033,9 @@ const Home = () => {
           {/* Bottom CTA */}
           <motion.div
             initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn}
-            className="mt-14 text-center border-t border-white/[0.06] pt-10"
+            className="mt-14 text-center border-t border-black/[0.06] pt-10"
           >
-            <p className="text-neutral-500 text-sm mb-5">Still have questions? We're happy to help.</p>
+            <p className="text-neutral-600 text-sm mb-5">Still have questions? We're happy to help.</p>
             <a
               href="https://cal.com/orniva-design-studio/30min"
               target="_blank"
@@ -872,217 +1049,22 @@ const Home = () => {
         </div>
       </section>
 
-      {/* 9.5 Testimonials */}
-      <section className="py-28 bg-[#060607] relative overflow-hidden">
-        {/* Ambient glows */}
-        <div className="absolute top-1/4 left-0 w-[600px] h-[600px] bg-accent/[0.03] rounded-full blur-[150px] pointer-events-none" />
-        <div className="absolute bottom-1/4 right-0 w-[500px] h-[500px] bg-accent/[0.03] rounded-full blur-[130px] pointer-events-none" />
-
-        {/* Section header */}
-        <div className="container mx-auto px-4 md:px-8 relative z-10 mb-16">
-          <motion.div
-            initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn}
-            className="flex flex-col md:flex-row md:items-end md:justify-between gap-8"
-          >
-            <div>
-              <span className="inline-block text-accent text-[11px] font-semibold tracking-[0.3em] uppercase mb-5 border border-accent/20 px-4 py-1.5 rounded-full bg-accent/5">
-                Client Testimonials
-              </span>
-              <h2 className="text-3xl md:text-5xl font-heading font-normal text-white mt-4 leading-tight">
-                What our clients<br className="hidden sm:block" /> say about us.
-              </h2>
-            </div>
-
-            {/* Rating badge */}
-            <div className="flex items-center gap-5 bg-white/[0.03] border border-white/[0.07] rounded-2xl px-6 py-4 shrink-0 self-start md:self-auto">
-              <div>
-                <p className="text-4xl font-heading font-bold text-white leading-none">5.0</p>
-                <div className="flex gap-0.5 mt-1.5">
-                  {[1,2,3,4,5].map(s => (
-                    <svg key={s} className="w-3.5 h-3.5 text-accent" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
-                  ))}
-                </div>
-                <p className="text-neutral-500 text-[11px] mt-1 tracking-wide">Average Rating</p>
-              </div>
-              <div className="w-px h-12 bg-white/[0.08]" />
-              <div>
-                <p className="text-2xl font-heading font-bold text-white leading-none">50+</p>
-                <p className="text-neutral-500 text-[11px] mt-1.5 tracking-wide">Happy Clients</p>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-
-        {/* Row 1 — scrolls left */}
-        <div className="relative w-full overflow-hidden mb-5">
-          <div className="absolute left-0 top-0 bottom-0 w-20 md:w-40 bg-gradient-to-r from-[#060607] to-transparent z-10 pointer-events-none" />
-          <div className="absolute right-0 top-0 bottom-0 w-20 md:w-40 bg-gradient-to-l from-[#060607] to-transparent z-10 pointer-events-none" />
-          <div className="flex gap-5 w-max testimonial-row-1 hover:[animation-play-state:paused]">
-            {/* Duplicated for seamless infinite scroll — edit TESTIMONIALS at the top of this file */}
-            {[...TESTIMONIALS.slice(0, 5), ...TESTIMONIALS.slice(0, 5)].map((t, i) => (
-              <div key={i} className="w-[300px] md:w-[360px] shrink-0 relative bg-[#0d0d10] border border-white/[0.06] rounded-2xl p-6 flex flex-col gap-4 group hover:border-accent/30 hover:bg-[#111114] transition-all duration-400 hover:shadow-[0_12px_50px_rgba(197,164,126,0.08)] overflow-hidden">
-                {/* Watermark quote */}
-                <span className="absolute -bottom-4 -right-2 text-[8rem] font-serif text-white/[0.025] leading-none select-none pointer-events-none group-hover:text-accent/[0.04] transition-colors duration-700">"</span>
-                {/* Top accent line */}
-                <div className="absolute top-0 left-6 right-6 h-[1px] bg-gradient-to-r from-transparent via-accent/40 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
-                <div className="flex gap-0.5">
-                  {[1,2,3,4,5].map(s => <svg key={s} className="w-3.5 h-3.5 text-accent" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>)}
-                </div>
-                <p className="text-neutral-300 text-sm leading-relaxed font-light flex-1">"{t.quote}"</p>
-                <div className="flex items-center gap-3 pt-4 border-t border-white/[0.05]">
-                  <div className="w-10 h-10 rounded-full shrink-0 bg-white/[0.05] border border-white/[0.12]" />
-                  <div className="min-w-0">
-                    <p className="text-white text-sm font-semibold leading-tight truncate">{t.name}</p>
-                    <p className="text-neutral-500 text-[11px] mt-0.5 truncate">{t.project} · {t.location}</p>
-                  </div>
-                  <span className="ml-auto shrink-0 text-[10px] font-semibold text-accent/70 bg-accent/10 border border-accent/15 px-2 py-0.5 rounded-full">✓ Verified</span>
-                </div>
-              </div>
-            ))}
+      {/* 11. Interactive WebGL Shader Demo */}
+      <section className="relative flex w-full flex-col items-center justify-center overflow-hidden min-h-[50vh] bg-primary py-24 z-10">
+        <WebGLShader />
+        <div className="relative w-full mx-auto max-w-3xl z-20 text-center px-6">
+          <h1 className="mb-3 text-white text-center text-7xl font-extrabold tracking-tighter md:text-[clamp(2rem,8vw,7rem)]">Design is Everything</h1>
+          <p className="text-white/60 px-6 text-center text-xs md:text-sm lg:text-lg font-light max-w-2xl mx-auto mb-8">Unleashing creativity through bold visuals, seamless execution, and limitless possibilities.</p>
+          <div className="flex justify-center">
+            <a
+              href="https://cal.com/orniva-design-studio/30min"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-block"
+            >
+              <LiquidButton className="text-white border rounded-full font-semibold" size="xl">Contact Us</LiquidButton>
+            </a>
           </div>
-        </div>
-
-        {/* Row 2 — scrolls right */}
-        <div className="relative w-full overflow-hidden">
-          <div className="absolute left-0 top-0 bottom-0 w-20 md:w-40 bg-gradient-to-r from-[#060607] to-transparent z-10 pointer-events-none" />
-          <div className="absolute right-0 top-0 bottom-0 w-20 md:w-40 bg-gradient-to-l from-[#060607] to-transparent z-10 pointer-events-none" />
-          <div className="flex gap-5 w-max testimonial-row-2 hover:[animation-play-state:paused]">
-            {/* Duplicated for seamless infinite scroll — edit TESTIMONIALS at the top of this file */}
-            {[...TESTIMONIALS.slice(5), ...TESTIMONIALS.slice(5)].map((t, i) => (
-              <div key={i} className="w-[300px] md:w-[360px] shrink-0 relative bg-[#0d0d10] border border-white/[0.06] rounded-2xl p-6 flex flex-col gap-4 group hover:border-accent/30 hover:bg-[#111114] transition-all duration-400 hover:shadow-[0_12px_50px_rgba(197,164,126,0.08)] overflow-hidden">
-                <span className="absolute -bottom-4 -right-2 text-[8rem] font-serif text-white/[0.025] leading-none select-none pointer-events-none group-hover:text-accent/[0.04] transition-colors duration-700">"</span>
-                <div className="absolute top-0 left-6 right-6 h-[1px] bg-gradient-to-r from-transparent via-accent/40 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
-                <div className="flex gap-0.5">
-                  {[1,2,3,4,5].map(s => <svg key={s} className="w-3.5 h-3.5 text-accent" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>)}
-                </div>
-                <p className="text-neutral-300 text-sm leading-relaxed font-light flex-1">"{t.quote}"</p>
-                <div className="flex items-center gap-3 pt-4 border-t border-white/[0.05]">
-                  <div className="w-10 h-10 rounded-full shrink-0 bg-white/[0.05] border border-white/[0.12]" />
-                  <div className="min-w-0">
-                    <p className="text-white text-sm font-semibold leading-tight truncate">{t.name}</p>
-                    <p className="text-neutral-500 text-[11px] mt-0.5 truncate">{t.project} · {t.location}</p>
-                  </div>
-                  <span className="ml-auto shrink-0 text-[10px] font-semibold text-accent/70 bg-accent/10 border border-accent/15 px-2 py-0.5 rounded-full">✓ Verified</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <style>{`
-          .testimonial-row-1 {
-            animation: t-scroll-left 40s linear infinite;
-          }
-          .testimonial-row-2 {
-            animation: t-scroll-right 45s linear infinite;
-          }
-          @keyframes t-scroll-left {
-            0%   { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-          }
-          @keyframes t-scroll-right {
-            0%   { transform: translateX(-50%); }
-            100% { transform: translateX(0); }
-          }
-        `}</style>
-      </section>
-
-      {/* 9. Contact (Start a Project) */}
-      <section id="contact-section" className="py-24 bg-primary text-white">
-        <div className="container mx-auto px-4 md:px-8 max-w-4xl text-center">
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn}>
-            <h4 className="text-accent text-xs font-bold tracking-[0.2em] uppercase mb-4">Start a Project</h4>
-            <h2 className="text-4xl md:text-5xl font-heading font-bold mb-6">Ready to transform your space?</h2>
-            <p className="text-neutral-400 text-lg mb-12">Tell us what you are dreaming of. We will reply within 24 hours with next steps and a rough estimate.</p>
-
-            {isSubmitted ? (
-              <div className="max-w-2xl mx-auto mb-8 p-6 bg-accent/20 border border-accent/30 rounded-xl text-center">
-                <h3 className="text-xl font-heading font-bold text-white mb-2">Request Received!</h3>
-                <p className="text-neutral-300">Thank you for reaching out. Our team will contact you shortly.</p>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto mb-8 text-left">
-                <div>
-                  <input
-                    type="text" required placeholder="Your Name"
-                    value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-accent text-white"
-                  />
-                </div>
-                <div>
-                  <input
-                    type="tel" required placeholder="Phone Number"
-                    value={formData.phone} onChange={e => setFormData({ ...formData, phone: e.target.value })}
-                    className="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-accent text-white"
-                  />
-                </div>
-                <div className="md:col-span-2 relative">
-                  <div
-                    onClick={() => setIsSelectOpen(!isSelectOpen)}
-                    className="w-full px-5 py-4 bg-[#141414] border border-white/10 rounded-xl cursor-pointer flex justify-between items-center text-white"
-                  >
-                    <span className={formData.project_type ? "text-white" : "text-neutral-400"}>
-                      {formData.project_type === 'residential' ? 'Residential Interior' :
-                        formData.project_type === 'commercial' ? 'Commercial Space' :
-                          formData.project_type === 'renovation' ? 'Renovation' :
-                            'Select Project Type'}
-                    </span>
-                    <ChevronDown size={20} className={`text-neutral-400 transition-transform ${isSelectOpen ? 'rotate-180' : ''}`} />
-                  </div>
-
-                  <AnimatePresence>
-                    {isSelectOpen && (
-                      <motion.div
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -10 }}
-                        className="absolute z-50 w-full mt-2 bg-[#1a1a1a] border border-white/10 rounded-xl overflow-hidden shadow-2xl"
-                      >
-                        {[
-                          { value: 'residential', label: 'Residential Interior' },
-                          { value: 'commercial', label: 'Commercial Space' },
-                          { value: 'renovation', label: 'Renovation' }
-                        ].map((option) => (
-                          <div
-                            key={option.value}
-                            onClick={() => {
-                              setFormData({ ...formData, project_type: option.value });
-                              setIsSelectOpen(false);
-                            }}
-                            className={`px-5 py-4 cursor-pointer transition-colors ${formData.project_type === option.value ? 'bg-accent/20 text-accent' : 'text-white hover:bg-white/5'}`}
-                          >
-                            {option.label}
-                          </div>
-                        ))}
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-
-                {errorMsg && (
-                  <div className="md:col-span-2 p-3 bg-red-500/10 text-red-400 text-sm rounded-xl border border-red-500/20">
-                    {errorMsg}
-                  </div>
-                )}
-
-                <div className="md:col-span-2 mt-4">
-                  <button
-                    type="submit"
-                    disabled={isSubmitting || !formData.project_type}
-                    className="w-full py-4 bg-accent text-white rounded-xl font-medium hover:bg-white hover:text-primary transition-colors flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
-                  >
-                    {isSubmitting ? (
-                      <>Submitting... <Loader2 size={18} className="animate-spin" /></>
-                    ) : (
-                      'Submit Inquiry'
-                    )}
-                  </button>
-                </div>
-              </form>
-            )}
-          </motion.div>
         </div>
       </section>
     </div>

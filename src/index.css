@@ -8,7 +8,24 @@
   body {
     @apply font-sans text-primary bg-white;
   }
-  h1, h2, h3, h4, h5, h6 {
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-heading tracking-tight;
+    font-variant-ligatures: none;
+  }
+}
+
+@layer utilities {
+  .bg-gradient-dark {
+    @apply bg-gradient-to-b from-[#c5a47e0d] via-[#c5a47e0d] to-[#c5a47e0d];
+  }
+
+  .text-gradient-gold {
+    @apply bg-gradient-to-r from-[#c5a47e0d] via-[#c5a47e0d] to-[#c5a47e0d] bg-clip-text text-transparent;
   }
 }

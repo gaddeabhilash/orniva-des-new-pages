@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState } from 'react';
+import { motion } from 'framer-motion';
 import { Calculator, ArrowRight, Check } from 'lucide-react';
+import manasAvatar from '../assets/manas_avatar.png';
 
 const CostCalculator = () => {
   const [step, setStep] = useState(0); // 0 = Hero, 1 = Form
@@ -280,11 +281,11 @@ const CostCalculator = () => {
             </div>
 
             {/* Info Side */}
-            <div className="w-full md:w-2/5 bg-primary text-white p-6 md:p-8 flex flex-col justify-between relative overflow-hidden">
+            <div className="w-full md:w-2/5 bg-[#111111] text-white p-6 md:p-8 flex flex-col justify-between relative overflow-hidden">
               <div className="absolute top-0 right-0 w-64 h-64 bg-accent/10 rounded-full blur-3xl -mr-20 -mt-20"></div>
 
               <div className="relative z-10">
-                <h3 className="text-xl font-heading font-semibold mb-4">What's included?</h3>
+                <h3 className="text-xl font-heading font-semibold mb-4 text-white">What's included?</h3>
                 <ul className="space-y-3">
                   {[
                     'Detailed 2D & 3D planning',
@@ -301,15 +302,19 @@ const CostCalculator = () => {
                 </ul>
               </div>
 
-              <div className="relative z-10 mt-8 pt-6 border-t border-neutral-800">
+              <div className="relative z-10 mt-8 pt-6 border-t border-white/10">
                 <p className="text-xs text-neutral-400 italic">
                   "The calculator gave us a very realistic idea of what to expect, making our planning phase so much easier."
                 </p>
                 <div className="mt-3 flex items-center gap-3">
-                  <div className="w-8 h-8 bg-neutral-800 rounded-full"></div>
+                  <img
+                    src={manasAvatar}
+                    alt="Manas"
+                    className="w-8 h-8 rounded-full object-cover border border-white/10"
+                  />
                   <div>
-                    <p className="text-xs font-medium text-white">Sarah Jenkins</p>
-                    <p className="text-[10px] text-neutral-500">Residential Client</p>
+                    <p className="text-xs font-medium text-white">Manas</p>
+                    <p className="text-[10px] text-neutral-400">Residential Client</p>
                   </div>
                 </div>
               </div>

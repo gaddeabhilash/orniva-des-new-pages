@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Lock, Eye, EyeOff, ShieldCheck } from 'lucide-react';
 
@@ -6,18 +6,11 @@ const LUXE_PASSWORD = '0987';
 const STORAGE_KEY = 'orniva_luxe_access';
 
 const LuxeGate = ({ children }) => {
-  const [unlocked, setUnlocked] = useState(false);
+  const [unlocked, setUnlocked] = useState(() => sessionStorage.getItem(STORAGE_KEY) === 'true');
   const [input, setInput] = useState('');
   const [showPin, setShowPin] = useState(false);
   const [error, setError] = useState(false);
   const [shaking, setShaking] = useState(false);
-
-  // Persist access across page refreshes (session only)
-  useEffect(() => {
-    if (sessionStorage.getItem(STORAGE_KEY) === 'true') {
-      setUnlocked(true);
-    }
-  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();

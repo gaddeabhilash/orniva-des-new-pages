@@ -1,39 +1,28 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { FaWhatsapp } from 'react-icons/fa';
 import { 
   Sparkles, 
   Layers, 
-  ShieldCheck, 
   Clock, 
-  MapPin, 
-  Phone, 
   Send, 
   Check, 
   ArrowRight, 
   ChevronLeft, 
   ChevronRight, 
   CheckCircle,
-  HelpCircle,
-  MessageCircle,
   Volume2,
   Sun,
   Maximize2,
   Users,
   Compass,
   Wand2,
-  ArrowUpRight,
-  Loader2,
-  Building,
   Sliders,
-  DollarSign,
-  Briefcase,
   Smartphone,
   Play,
   Pause,
-  Award,
   SunDim
 } from 'lucide-react';
-import { supabase } from '../lib/supabase';
 
 // High-fidelity animations
 const fadeInUp = {
@@ -41,13 +30,6 @@ const fadeInUp = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } }
 };
 
-const staggerContainer = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.15 }
-  }
-};
 
 const LuxeInteriors = () => {
   // Mouse position tracking for atmospheric light leak
@@ -57,33 +39,8 @@ const LuxeInteriors = () => {
     setMousePos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
   };
 
-  // Booking Form State
-  const [formData, setFormData] = useState({ name: '', phone: '', message: '', type: 'Penthouse' });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [errorMsg, setErrorMsg] = useState('');
-
-  // Interactive Hero Space Selection State & Profiles
-  const [heroSpaceType, setHeroSpaceType] = useState('Penthouse');
-
-  const heroProfiles = {
-    Penthouse: {
-      desc: "An elite architectural vision designed for soaring heights. Features full-slab Statuario marble walls, 4.5m double-height glass corridors, and suspended Italian luminaires tracking sun vector paths.",
-      img: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=2000&q=80"
-    },
-    Villa: {
-      desc: "A sprawling layout meticulously optimized for estate harmony. Seamlessly integrates wide-profile grain-matched European walnut veneers and dynamic soundwave isolation sanctuaries.",
-      img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2000&q=80"
-    },
-    Duplex: {
-      desc: "A symmetrical multi-level sanctuary balancing soaring structural arches, biophilic velvet-lined accent walls, and custom-cured Italian cabinetry applied in 7 dust-free coats.",
-      img: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=2000&q=80"
-    }
-  };
-
   // Interactive Before/After Split-Screen Slider State (Render vs. Reality)
   const [sliderPos, setSliderPos] = useState(50); // percentage 0 - 100
-  const [isDragging, setIsDragging] = useState(false);
 
   // Interactive Acoustic mapping widget state
   const [acousticRoom, setAcousticRoom] = useState('Sanctuary');
@@ -101,7 +58,6 @@ const LuxeInteriors = () => {
     lighting: false,
     concierge: true
   });
-  const [calculatorApplied, setCalculatorApplied] = useState(false);
 
   // Interactive WhatsApp Chat Simulator State
   const [chatMessages, setChatMessages] = useState([
@@ -288,43 +244,7 @@ const LuxeInteriors = () => {
     }, 1500);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setErrorMsg('');
 
-    const cleanedPhone = formData.phone.replace(/\D/g, '');
-    if (cleanedPhone.length !== 10) {
-      setErrorMsg('Please enter a valid 10-digit phone number.');
-      setIsSubmitting(false);
-      return;
-    }
-
-    try {
-      const { error } = await supabase
-        .from('inquiries')
-        .insert([
-          {
-            source: 'luxe_page',
-            name: formData.name,
-            phone: formData.phone,
-            message: `Luxe Project Interest: ${formData.type}. ${formData.message}`
-          }
-        ]);
-
-      if (error) throw error;
-
-      setIsSubmitted(true);
-      setFormData({ name: '', phone: '', message: '', type: 'Penthouse' });
-      setCalculatorApplied(false);
-      setTimeout(() => setIsSubmitted(false), 5000);
-    } catch (err) {
-      console.error('Error submitting inquiry:', err);
-      setErrorMsg(err.message || 'Error sending request. Please verify Supabase connections.');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
 
   const nextProject = () => {
     setActiveProject((prev) => (prev + 1) % luxeProjects.length);
@@ -505,9 +425,6 @@ const LuxeInteriors = () => {
             className="relative h-[300px] sm:h-[450px] md:h-[520px] rounded-3xl overflow-hidden border border-white/10 cursor-ew-resize shadow-2xl select-none"
             onMouseMove={handleSliderMove}
             onTouchMove={handleSliderMove}
-            onMouseDown={() => setIsDragging(true)}
-            onMouseUp={() => setIsDragging(false)}
-            onMouseLeave={() => setIsDragging(false)}
           >
             {/* Base Image (Reality) */}
             <div className="absolute inset-0 select-none">
@@ -954,7 +871,7 @@ const LuxeInteriors = () => {
                 
                 <input 
                   type="range" min="1500" max="10000" step="500"
-                  value={estateSize} onChange={e => { setEstateSize(Number(e.target.value)); setCalculatorApplied(false); }}
+                  value={estateSize} onChange={e => setEstateSize(Number(e.target.value))}
                   className="w-full h-1 bg-gradient-to-r from-accent/20 via-accent/60 to-accent rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-primary [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-accent [&::-webkit-slider-thumb]:shadow-[0_0_10px_rgba(197,164,126,0.8)] [&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:hover:scale-125 focus:outline-none"
                 />
                 
@@ -970,7 +887,7 @@ const LuxeInteriors = () => {
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <button
-                    onClick={() => { setAddons({ ...addons, statuario: !addons.statuario }); setCalculatorApplied(false); }}
+                    onClick={() => setAddons({ ...addons, statuario: !addons.statuario })}
                     className={`p-3 rounded-xl border text-left flex items-center justify-between text-xs transition-all ${
                       addons.statuario ? 'bg-accent/10 border-accent text-accent' : 'bg-neutral-900 border-white/5 text-neutral-400 hover:border-white/10'
                     }`}
@@ -980,7 +897,7 @@ const LuxeInteriors = () => {
                   </button>
 
                   <button
-                    onClick={() => { setAddons({ ...addons, veneer: !addons.veneer }); setCalculatorApplied(false); }}
+                    onClick={() => setAddons({ ...addons, veneer: !addons.veneer })}
                     className={`p-3 rounded-xl border text-left flex items-center justify-between text-xs transition-all ${
                       addons.veneer ? 'bg-accent/10 border-accent text-accent' : 'bg-neutral-900 border-white/5 text-neutral-400 hover:border-white/10'
                     }`}
@@ -990,7 +907,7 @@ const LuxeInteriors = () => {
                   </button>
 
                   <button
-                    onClick={() => { setAddons({ ...addons, acoustic: !addons.acoustic }); setCalculatorApplied(false); }}
+                    onClick={() => setAddons({ ...addons, acoustic: !addons.acoustic })}
                     className={`p-3 rounded-xl border text-left flex items-center justify-between text-xs transition-all ${
                       addons.acoustic ? 'bg-accent/10 border-accent text-accent' : 'bg-neutral-900 border-white/5 text-neutral-400 hover:border-white/10'
                     }`}
@@ -1000,7 +917,7 @@ const LuxeInteriors = () => {
                   </button>
 
                   <button
-                    onClick={() => { setAddons({ ...addons, lighting: !addons.lighting }); setCalculatorApplied(false); }}
+                    onClick={() => setAddons({ ...addons, lighting: !addons.lighting })}
                     className={`p-3 rounded-xl border text-left flex items-center justify-between text-xs transition-all ${
                       addons.lighting ? 'bg-accent/10 border-accent text-accent' : 'bg-neutral-900 border-white/5 text-neutral-400 hover:border-white/10'
                     }`}
@@ -1644,9 +1561,9 @@ const LuxeInteriors = () => {
               href="https://wa.me/919398801834"
               target="_blank" 
               rel="noreferrer" 
-              className="px-10 py-4 border border-white/10 hover:border-white/30 text-white font-medium rounded-full text-xs uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-2 w-full sm:w-auto hover:bg-white/5"
+              className="px-10 py-4 border border-white/10 hover:border-white/30 text-white font-medium rounded-full text-xs uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-2.5 w-full sm:w-auto hover:bg-white/5"
             >
-              <MessageCircle size={16} />
+              <FaWhatsapp size={20} className="text-[#25D366] shrink-0" />
               <span>Discuss via WhatsApp</span>
             </a>
           </div>

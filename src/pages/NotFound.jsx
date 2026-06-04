@@ -1,7 +1,6 @@
-import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ArrowRight, ChevronRight, Home, Sparkles, Calculator, Briefcase } from 'lucide-react';
+import { ChevronRight, Home, Sparkles, Calculator, Briefcase } from 'lucide-react';
 
 const BrickWall = () => {
   const rows = 16;

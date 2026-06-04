@@ -1,21 +1,19 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
 const projects = [
-  { id: 1, title: 'Mr. Madhusudan Rao - Vidyanagar', cat: 'Residential', img: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-  { id: 2, title: 'Gym Studio - Hyderabad', cat: 'Commercial', img: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-  { id: 3, title: 'Mini Banquet Hall', cat: 'Hospitality', img: 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
+  { id: 1, title: 'Mr. Abhi - Vidyanagar', cat: 'Residential', img: 'https://res.cloudinary.com/dbmvjtbqk/image/upload/v1779111279/imresizer-2_rwnmyw.jpg' },
   { id: 4, title: 'Premium Modular Kitchen', cat: 'Residential', img: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
   { id: 5, title: 'Master Bedroom Suite', cat: 'Residential', img: 'https://images.unsplash.com/photo-1616594039964-ae9021a400a0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
   { id: 6, title: 'Children\'s Bedroom Design', cat: 'Residential', img: 'https://images.unsplash.com/photo-1505693314120-0d443867891c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
   { id: 7, title: 'Ergonomic Study Unit', cat: 'Residential', img: 'https://images.unsplash.com/photo-1512290923902-8a9f81dc2069?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
   { id: 8, title: 'Pooja Unit Detailing', cat: 'Residential', img: 'https://images.unsplash.com/photo-1585412727339-54e4bae3bbf9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-  { id: 9, title: 'Contemporary Ceiling Concepts', cat: 'Residential', img: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
   { id: 10, title: 'Luxury Living Area', cat: 'Residential', img: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
 ];
 
-const categories = ['All', 'Residential', 'Commercial', 'Hospitality'];
+const categories = ['All', 'Residential'];
 
 const Projects = () => {
   const [activeCat, setActiveCat] = useState('All');
@@ -26,6 +24,10 @@ const Projects = () => {
 
   return (
     <div className="pt-32 pb-24 min-h-screen bg-white">
+      <Helmet>
+        <title>Our Portfolio | Orniva Design Studio</title>
+        <meta name="description" content="Explore our diverse collection of interior design projects, showcasing our commitment to excellence and innovative spatial solutions." />
+      </Helmet>
       <div className="container mx-auto px-4 md:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
@@ -71,7 +73,8 @@ const Projects = () => {
                   <img
                     src={project.img}
                     alt={project.title}
-                    className="w-full h-full object-cover transform scale-100 group-hover:scale-[1.04] transition-transform duration-[1200ms] ease-[cubic-bezier(0.25,1,0.5,1)]"
+                    className={`w-full h-full object-cover transform transition-transform duration-[1200ms] ease-[cubic-bezier(0.25,1,0.5,1)] ${project.id === 1 ? 'scale-[1.4] object-top group-hover:scale-[1.5]' : 'scale-100 group-hover:scale-[1.04]'
+                      }`}
                   />
                 </div>
                 <span className="text-xs font-medium text-neutral-400 tracking-wider uppercase mb-1 block">{project.cat}</span>

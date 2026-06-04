@@ -1,7 +1,5 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, MapPin, Phone, Calendar } from 'lucide-react';
-import { FaInstagram } from 'react-icons/fa';
+import { FaInstagram, FaLinkedin, FaTwitter } from 'react-icons/fa';
 
 const Footer = () => {
   return (
@@ -18,73 +16,50 @@ const Footer = () => {
           </span>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-12 mb-16 border-t border-neutral-800/40 pt-16">
-
-          {/* Quick Links */}
-          <div className="col-span-1">
-            <h4 className="text-lg font-heading font-semibold mb-6">Quick Links</h4>
-            <ul className="space-y-3 text-neutral-400 text-sm">
-              <li><Link to="/projects" className="hover:text-accent transition-colors">Our Projects</Link></li>
-              <li><Link to="/services" className="hover:text-accent transition-colors">Services</Link></li>
-              <li><Link to="/about" className="hover:text-accent transition-colors">About Us</Link></li>
-              <li><Link to="/calculator" className="hover:text-accent transition-colors">Cost Calculator</Link></li>
-              <li><Link to="/contact" className="hover:text-accent transition-colors">Contact</Link></li>
-            </ul>
-          </div>
-
-          {/* Services */}
-          <div className="col-span-1">
-            <h4 className="text-lg font-heading font-semibold mb-6">Services</h4>
-            <ul className="space-y-3 text-neutral-400 text-sm">
-              <li>Residential Design</li>
-              <li>Commercial Spaces</li>
-              <li>Space Planning</li>
-              <li>Custom Furniture</li>
-              <li>Styling & Decor</li>
-            </ul>
-          </div>
-
-          {/* Contact Info & Socials */}
-          <div className="col-span-2 md:col-span-1 space-y-6 flex flex-col items-start md:items-start">
-            <div className="w-full flex flex-col items-start md:items-start text-left md:text-left">
-              <h4 className="text-lg font-heading font-semibold mb-6">Get in Touch</h4>
-              <ul className="space-y-4 text-neutral-400 text-sm flex flex-col items-start md:items-start w-full">
-                <li className="flex flex-row items-start gap-3 w-full">
-                  <MapPin size={18} className="text-accent shrink-0 mt-0.5" />
-                  <span>Hyderabad, Telangana</span>
-                </li>
-                <li className="flex flex-row items-center gap-3 w-full">
-                  <Phone size={18} className="text-accent shrink-0" />
-                  <span className="text-left">+91 93988 01834<br/>+91 79931 07169</span>
-                </li>
-                <li className="flex flex-row items-center gap-3 w-full">
-                  <Mail size={18} className="text-accent shrink-0" />
-                  <span>ornivadesignstudio@gmail.com</span>
-                </li>
-              </ul>
-            </div>
-            
-            <div className="flex gap-4 justify-start md:justify-start">
-              <a href="https://www.instagram.com/orniva.design_studio/" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full border border-neutral-700 flex items-center justify-center text-neutral-400 hover:bg-accent hover:text-white hover:border-accent transition-all">
-                <FaInstagram size={18} />
-              </a>
-
-              <a href="https://cal.com/orniva-design-studio/30min" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full border border-neutral-700 flex items-center justify-center text-neutral-400 hover:bg-accent hover:text-white hover:border-accent transition-all">
-                <Calendar size={18} />
-              </a>
-            </div>
-          </div>
-          
+        {/* Centered Navigation Links */}
+        <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 mb-16 pt-8 border-t border-neutral-800/40">
+          <Link to="/about" onClick={() => window.scrollTo(0, 0)} className="text-sm font-medium text-white/80 hover:text-accent transition-colors">
+            About Us
+          </Link>
+          <Link to="/services" onClick={() => window.scrollTo(0, 0)} className="text-sm font-medium text-white/80 hover:text-accent transition-colors">
+            Services
+          </Link>
+          <Link to="/projects" onClick={() => window.scrollTo(0, 0)} className="text-sm font-medium text-white/80 hover:text-accent transition-colors">
+            Our Projects
+          </Link>
+          <Link to="/calculator" onClick={() => window.scrollTo(0, 0)} className="text-sm font-medium text-white/80 hover:text-accent transition-colors">
+            Cost Calculator
+          </Link>
+          <Link to="/contact" onClick={() => window.scrollTo(0, 0)} className="text-sm font-medium text-white/80 hover:text-accent transition-colors">
+            Contact
+          </Link>
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 border-t border-neutral-800 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-neutral-500">
-          <p>&copy; {new Date().getFullYear()} Orniva Design Studio. All rights reserved.</p>
-          <div className="flex gap-6">
-            <Link to="#" className="hover:text-white transition-colors">Privacy Policy</Link>
-            <Link to="#" className="hover:text-white transition-colors">Terms of Service</Link>
+        <div className="pt-8 border-t border-neutral-800 flex flex-col md:flex-row justify-between items-center gap-6 text-xs text-neutral-400">
+          {/* Copyright */}
+          <p className="order-3 md:order-1">&copy; {new Date().getFullYear()} Orniva Design Studio</p>
+          
+          {/* Terms & Privacy */}
+          <div className="flex gap-6 order-1 md:order-2">
+            <Link to="#" className="hover:text-white transition-colors">Privacy policy</Link>
+            <Link to="#" className="hover:text-white transition-colors">Terms & Conditions</Link>
+          </div>
+
+          {/* Socials */}
+          <div className="flex gap-6 order-2 md:order-3 text-lg">
+            <a href="https://x.com" target="_blank" rel="noreferrer" className="text-neutral-400 hover:text-white transition-colors">
+              <FaTwitter />
+            </a>
+            <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="text-neutral-400 hover:text-white transition-colors">
+              <FaLinkedin />
+            </a>
+            <a href="https://www.instagram.com/orniva.design_studio/" target="_blank" rel="noreferrer" className="text-neutral-400 hover:text-white transition-colors">
+              <FaInstagram />
+            </a>
           </div>
         </div>
+
       </div>
     </footer>
   );

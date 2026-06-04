@@ -1,16 +1,16 @@
-import React from 'react';
+import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
-import { Check } from 'lucide-react';
+import { Check, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Services = () => {
   const services = [
     {
       id: 1,
-      title: 'Residential Design',
-      desc: 'Complete home transformations that reflect your personal aesthetic while maximizing functionality and comfort.',
+      title: 'End to End Interiors',
+      desc: 'Complete turnkey interior solutions—from conceptual design and 3D visualization to material sourcing and final on-site execution.',
       img: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-      features: ['Space Planning & Layout', 'Custom Furniture Selection', 'Color Consultation', 'Lighting Design', 'Material Sourcing']
+      features: ['Concept Design & 3D Renders', 'Modular Kitchens & Wardrobes', 'Material Sourcing & Procurement', 'Lighting & Ceiling Layouts', 'Turnkey Project Execution']
     },
     {
       id: 2,
@@ -30,6 +30,10 @@ const Services = () => {
 
   return (
     <div className="pt-32 pb-24 bg-white">
+      <Helmet>
+        <title>Services | Orniva Design Studio</title>
+        <meta name="description" content="Comprehensive end-to-end interiors, commercial workspace, and bespoke furnishing solutions tailored to meet the unique demands of your space." />
+      </Helmet>
       <div className="container mx-auto px-4 md:px-8">
         
         {/* Header */}
@@ -101,6 +105,52 @@ const Services = () => {
         </div>
 
       </div>
+
+      {/* Turn Ideas Into Reality Section */}
+      <section 
+        className="mt-32 py-24 border-t border-b border-neutral-100 bg-[#FAF9F6]/20 relative overflow-hidden"
+        style={{ 
+          backgroundImage: 'linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px)', 
+          backgroundSize: '40px 40px' 
+        }}
+      >
+        <div className="container mx-auto px-4 md:px-8 text-center relative z-10">
+          {/* Badge */}
+          <div className="flex justify-center mb-6">
+            <span className="inline-flex items-center px-6 py-2 bg-white border border-neutral-200/80 rounded-full text-xs font-bold text-primary shadow-[0_4px_20px_rgba(0,0,0,0.02)] uppercase tracking-widest">
+              On-Time Delivery
+            </span>
+          </div>
+
+          {/* Heading */}
+          <h2 className="text-5xl md:text-7xl font-heading font-extrabold text-[#111] tracking-tighter leading-[1.08] mb-6 max-w-4xl mx-auto">
+            Turn Ideas <br className="sm:hidden" /> Into <span className="text-accent">Reality.</span>
+          </h2>
+
+          {/* Paragraph */}
+          <p className="text-neutral-500 text-xs sm:text-sm md:text-base lg:text-lg max-w-3xl mx-auto leading-relaxed mb-6 font-light">
+            Got a vision for your space? We help you visualize, design, and execute with our expert floor planning, 3D visualizations, material curation, and complete turnkey interior solutions.
+          </p>
+
+          {/* Subtitle */}
+          <p className="text-[#111] font-heading font-bold text-sm sm:text-base md:text-lg mb-10">
+            Ready to bring your dream home to life? Let's design together!
+          </p>
+
+          {/* CTA Button */}
+          <div className="flex justify-center">
+            <a 
+              href="https://cal.com/orniva-design-studio/30min" 
+              target="_blank" 
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 px-7 py-3.5 bg-accent hover:bg-accent/90 text-primary text-sm font-semibold rounded-full transition-all duration-300 hover:scale-[1.03] shadow-lg shadow-accent/15 group"
+            >
+              Get a Free Consultation Call
+              <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+            </a>
+          </div>
+        </div>
+      </section>
     </div>
   );
 };

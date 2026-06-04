@@ -1,10 +1,14 @@
-import React from 'react';
+import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
 const About = () => {
   return (
     <div className="bg-white">
+      <Helmet>
+        <title>About Us | Orniva Design Studio</title>
+        <meta name="description" content="Founded in 2026, Orniva Design Studio is a forward-thinking agency dedicated to transforming how people experience interior environments." />
+      </Helmet>
       {/* Hero */}
       <section className="pt-32 pb-20 bg-secondary/50">
         <div className="container mx-auto px-4 md:px-8 text-center max-w-4xl">
