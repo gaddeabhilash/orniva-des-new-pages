@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
-import { ArrowRight, ChevronDown, Loader2, Plus, Minus } from 'lucide-react';
+import { ArrowRight, ChevronDown, Loader2, Plus, Minus, MessageSquare, Layers, Palette, Hammer, Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
-import { WebGLShader } from '@/components/ui/web-gl-shader';
 import { LiquidButton } from '@/components/ui/liquid-glass-button';
+import { WebGLShader } from '@/components/ui/web-gl-shader';
 
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
@@ -219,9 +219,47 @@ const PromiseItem = ({ title, desc, icon, isOpen, onClick }) => {
   );
 };
 
+const STEPS = [
+  { 
+    title: 'Consultation', 
+    desc: 'Understanding your lifestyle, requirements, space potential, and vision.',
+    icon: MessageSquare,
+    image: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=800&auto=format&fit=crop&q=80',
+    deliverables: ['Lifestyle Review', 'Site Mapping', 'Scope Definition', 'Initial Budgeting']
+  },
+  { 
+    title: 'Concept Development', 
+    desc: 'Crafting layout options, mood boards, and overall design direction.',
+    icon: Layers,
+    image: 'https://images.unsplash.com/photo-1507652313519-d4e9174996dd?w=800&auto=format&fit=crop&q=80',
+    deliverables: ['2D Floor Plans', 'Color Palettes', 'Moodboards', 'Design Direction']
+  },
+  { 
+    title: 'Material Selection', 
+    desc: 'Choosing finishes, textures, lighting fixtures, hardware, and color schemes.',
+    icon: Palette,
+    image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&auto=format&fit=crop&q=80',
+    deliverables: ['Hardware Selection', 'Finishes & Textures', 'Lighting Plans', 'Custom Carpentry specs']
+  },
+  { 
+    title: 'Execution', 
+    desc: 'Turnkey site implementation, carpentry, electrical work, and quality audits.',
+    icon: Hammer,
+    image: 'https://images.unsplash.com/photo-1504148455328-c376907d081c?w=800&auto=format&fit=crop&q=80',
+    deliverables: ['Site Coordination', 'Carpentry & Fittings', 'Electrical Execution', 'Quality Inspections']
+  },
+  { 
+    title: 'Final Styling', 
+    desc: 'Placing custom furniture, decor items, and perfect handover touches.',
+    icon: Sparkles,
+    image: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=800&auto=format&fit=crop&q=80',
+    deliverables: ['Furniture Setup', 'Custom Decor layout', 'Deep Cleaning', 'Sanctuary Handover']
+  }
+];
+
 const Home = () => {
   const [formData, setFormData] = useState({ name: '', phone: '', project_type: '' });
-  const { scrollY } = useScroll();
+          const { scrollY } = useScroll();
 
   // High-end real-time scroll parallax for the background image
   const yBg = useTransform(scrollY, [0, 800], [0, 180]);
@@ -290,15 +328,28 @@ const Home = () => {
           transition={{ duration: 2.0, ease: [0.16, 1, 0.3, 1] }}
           className="sticky top-0 left-0 right-0 h-screen z-0 overflow-hidden"
         >
-          <motion.img
-            src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=2560&q=95"
-            alt="Orniva luxury interior design"
-            className="w-full h-full object-cover origin-center"
-            style={{
-              y: yBg,
-              scale: scaleBg
-            }}
-          />
+          {/* LCP hero image — plain <img> for fastest LCP measurement, motion wrapper handles animation */}
+          <motion.div
+            className="w-full h-full"
+            style={{ y: yBg, scale: scaleBg }}
+          >
+            <img
+              src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80"
+              srcSet="
+                https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80 800w,
+                https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80 1600w,
+                https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=2560&q=80 2560w
+              "
+              sizes="100vw"
+              alt="Orniva luxury interior design — elegant living room with warm lighting"
+              className="w-full h-full object-cover origin-center"
+              fetchPriority="high"
+              loading="eager"
+              decoding="sync"
+              width="1600"
+              height="900"
+            />
+          </motion.div>
           {/* Custom cinematic background overlay */}
           <div
             className="absolute inset-0 z-10"
@@ -328,7 +379,7 @@ const Home = () => {
               </motion.h1>
             </div>
             <div className="overflow-hidden h-auto mb-6 flex items-center justify-start w-full">
-              <motion.h1
+              <motion.p
                 initial={{ y: "100%", opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
@@ -336,7 +387,7 @@ const Home = () => {
                 style={{ fontSize: 'clamp(2.2rem, 5vw, 4.5rem)', fontWeight: 400 }}
               >
                 Crafted Around Your Lifestyle
-              </motion.h1>
+              </motion.p>
             </div>
           </div>
 
@@ -523,8 +574,12 @@ const Home = () => {
               >
                 <img
                   src="https://images.unsplash.com/photo-1600210491369-e753d80a41f3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                  alt="Modern TV Unit"
+                  alt="Modern contemporary living room interior design by Orniva"
                   className="w-full h-full object-cover"
+                  loading="lazy"
+                  decoding="async"
+                  width="800"
+                  height="800"
                 />
               </motion.div>
 
@@ -538,8 +593,12 @@ const Home = () => {
               >
                 <img
                   src="https://images.unsplash.com/photo-1600607686527-6fb886090705?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
-                  alt="Pooja Unit Design"
+                  alt="Elegant pooja unit interior design with warm ambient lighting"
                   className="w-full h-full object-cover"
+                  loading="lazy"
+                  decoding="async"
+                  width="600"
+                  height="600"
                 />
               </motion.div>
 
@@ -553,8 +612,12 @@ const Home = () => {
               >
                 <img
                   src="https://images.unsplash.com/photo-1540518614846-7eded433c457?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
-                  alt="Bedroom Design"
+                  alt="Luxury bedroom interior design with premium materials by Orniva"
                   className="w-full h-full object-cover"
+                  loading="lazy"
+                  decoding="async"
+                  width="600"
+                  height="600"
                 />
               </motion.div>
 
@@ -565,31 +628,203 @@ const Home = () => {
       </section>
 
       {/* 6. Process (How We Work) */}
-      <section className="py-24 bg-gradient-dark">
+      <section className="py-12 lg:py-20 bg-gradient-dark relative overflow-hidden">
         <div className="container mx-auto px-4 md:px-8">
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} className="text-center mb-16">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} className="text-center mb-16 md:mb-20">
             <h4 className="text-accent text-xs font-bold tracking-[0.2em] uppercase mb-4">How we work</h4>
-            <h2 className="text-4xl md:text-5xl font-heading font-bold mb-6 text-[#111]">A simple five-step journey<br className="hidden md:block" />to your new space.</h2>
+            <h2 className="text-4xl md:text-5xl font-heading font-bold mb-6 text-[#111]">A simple five-step journey <br className="hidden md:block" />to your new space.</h2>
           </motion.div>
 
-          <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true }} className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
-            {[
-              { title: 'Consultation', desc: 'Understanding lifestyle and requirements.' },
-              { title: 'Concept Development', desc: 'Mood boards, layouts, and design direction.' },
-              { title: 'Material Selection', desc: 'Finishes, textures, lighting, and colors.' },
-              { title: 'Execution', desc: 'Coordinated implementation.' },
-              { title: 'Final Styling', desc: 'Furniture, decor, and finishing touches.' }
-            ].map((step, i) => (
-              <motion.div key={i} variants={fadeIn} className="relative">
-                {i !== 4 && <div className="hidden lg:block absolute top-6 left-12 w-full h-[1px] bg-neutral-200 z-0"></div>}
-                <div className="relative z-10 w-12 h-12 bg-white border border-neutral-200 rounded-full flex items-center justify-center font-bold text-accent mb-6">
-                  0{i + 1}
-                </div>
-                <h3 className="text-xl font-heading font-semibold mb-3 text-[#111]">{step.title}</h3>
-                <p className="text-neutral-500 text-sm leading-relaxed">{step.desc}</p>
+          {/* Process Timeline */}
+          <div className="process-timeline-wrapper relative z-30 max-w-full">
+            {/* Style 2 Desktop Timeline (Hidden on small screens) */}
+            <div className="hidden lg:block relative min-h-[380px] mb-12">
+              {/* Horizontal SVG Bezier Wavy Line */}
+              <svg 
+                className="absolute top-0 left-0 w-full h-[200px] pointer-events-none z-0 overflow-visible" 
+                viewBox="0 0 1000 200" 
+                preserveAspectRatio="none"
+              >
+                {/* Light background track line */}
+                <path 
+                  d="M 100 40 C 200 40, 200 136, 300 136 C 400 136, 400 40, 500 40 C 600 40, 600 136, 700 136 C 800 136, 800 40, 900 40" 
+                  stroke="#C5A47E" 
+                  strokeWidth="2" 
+                  strokeOpacity="0.15" 
+                  fill="none"
+                />
+                {/* Glow blur behind moving pulse */}
+                <motion.path 
+                  d="M 100 40 C 200 40, 200 136, 300 136 C 400 136, 400 40, 500 40 C 600 40, 600 136, 700 136 C 800 136, 800 40, 900 40" 
+                  stroke="#C5A47E" 
+                  strokeWidth="8" 
+                  strokeLinecap="round"
+                  strokeOpacity="0.4"
+                  style={{ filter: "blur(6px)" }}
+                  strokeDasharray="60 200"
+                  fill="none"
+                  animate={{ strokeDashoffset: [0, -260] }}
+                  transition={{ strokeDashoffset: { repeat: Infinity, ease: "linear", duration: 3.5 } }}
+                />
+                {/* Flowing animated pulse */}
+                <motion.path 
+                  d="M 100 40 C 200 40, 200 136, 300 136 C 400 136, 400 40, 500 40 C 600 40, 600 136, 700 136 C 800 136, 800 40, 900 40" 
+                  stroke="#C5A47E" 
+                  strokeWidth="3" 
+                  strokeLinecap="round"
+                  strokeDasharray="60 200"
+                  fill="none"
+                  animate={{ strokeDashoffset: [0, -260] }}
+                  transition={{ strokeDashoffset: { repeat: Infinity, ease: "linear", duration: 3.5 } }}
+                />
+              </svg>
+
+              {/* Steps grid */}
+              <motion.div 
+                variants={staggerContainer} 
+                initial="hidden" 
+                whileInView="visible" 
+                viewport={{ once: true }} 
+                className="grid grid-cols-5 gap-8 relative z-10"
+              >
+                {STEPS.map((step, i) => {
+                  const Icon = step.icon;
+                  const isOdd = i % 2 !== 0;
+                  return (
+                    <motion.div 
+                      key={i} 
+                      variants={fadeIn} 
+                      className={`flex flex-col items-center text-center group transition-all duration-500 ${isOdd ? 'mt-24' : 'mt-0'}`}
+                    >
+                      {/* Circle Node Container */}
+                      <div className="relative mb-6">
+                        {/* Step Number Badge */}
+                        <span className="absolute -top-2.5 -right-2.5 bg-primary text-white text-[10px] font-bold px-2 py-0.5 rounded-full border border-white/10 shadow-sm z-20 transition-all duration-300 group-hover:bg-accent group-hover:scale-110">
+                          0{i + 1}
+                        </span>
+                        
+                        {/* Circle Outer Glow */}
+                        <div className="absolute inset-0 rounded-full bg-accent/20 opacity-0 blur-md transition-all duration-500 group-hover:opacity-100 group-hover:scale-125 z-0" />
+                        
+                        {/* Inner Circle Node */}
+                        <motion.div 
+                          className="relative w-20 h-20 rounded-full bg-white border border-neutral-200 flex items-center justify-center shadow-sm z-10 transition-all duration-500 group-hover:border-accent/80 group-hover:scale-105"
+                          whileHover={{ scale: 1.05 }}
+                          transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                        >
+                          <Icon className="w-8 h-8 text-primary group-hover:text-accent transition-colors duration-300" />
+                        </motion.div>
+                      </div>
+
+                      {/* Step Content */}
+                      <h3 className="text-xl font-heading font-semibold mb-3 text-primary group-hover:text-accent transition-colors duration-300">
+                        {step.title}
+                      </h3>
+                      <p className="text-neutral-500 text-sm leading-relaxed max-w-[200px]">
+                        {step.desc}
+                      </p>
+                    </motion.div>
+                  );
+                })}
               </motion.div>
-            ))}
-          </motion.div>
+            </div>
+
+            {/* Style 2 Mobile Timeline (Visible on small screens) */}
+            <motion.div
+              className="lg:hidden"
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+            >
+              {STEPS.map((step, i) => {
+                const Icon = step.icon;
+                const isLast = i === STEPS.length - 1;
+                return (
+                  <motion.div
+                    key={i}
+                    variants={fadeIn}
+                    className="flex gap-5 group"
+                  >
+                    {/* Left column: circle + serpentine connector */}
+                    <div className="flex flex-col items-center shrink-0">
+                      {/* Circle Node */}
+                      <div className="relative shrink-0">
+                        <span className="absolute -top-1.5 -right-1.5 bg-primary text-white text-[8px] font-bold px-1.5 py-0.5 rounded-full border border-white/10 shadow-sm z-20 transition-all duration-300 group-hover:bg-accent">
+                          0{i + 1}
+                        </span>
+                        <div className="absolute inset-0 rounded-full bg-accent/20 opacity-0 blur-sm transition-all duration-500 group-hover:opacity-100 group-hover:scale-125 z-0" />
+                        <motion.div
+                          className="relative w-12 h-12 rounded-full bg-white border border-neutral-200 flex items-center justify-center shadow-sm z-10 transition-all duration-500 group-hover:border-accent/80"
+                          whileHover={{ scale: 1.05 }}
+                          transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                        >
+                          <Icon className="w-5 h-5 text-primary group-hover:text-accent transition-colors duration-300" />
+                        </motion.div>
+                      </div>
+
+                      {/* Straight vertical connector with desktop-style flowing animation */}
+                      {/* Straight vertical connector with desktop-style flowing animation */}
+                      {!isLast && (
+                        <div className="relative flex-1 my-1" style={{ minHeight: '48px', width: '24px' }}>
+                          <svg
+                            className="absolute inset-0 w-full h-full pointer-events-none overflow-visible"
+                            viewBox="0 0 24 56"
+                            preserveAspectRatio="none"
+                          >
+                            {/* Light background track line */}
+                            <path
+                              d="M 12 0 L 12 56"
+                              stroke="#C5A47E"
+                              strokeWidth="2"
+                              strokeOpacity="0.15"
+                              fill="none"
+                            />
+                            {/* Glow blur behind active line */}
+                            <motion.path
+                              d="M 12 0 L 12 56"
+                              stroke="#C5A47E"
+                              strokeWidth="6"
+                              strokeLinecap="round"
+                              strokeOpacity="0.4"
+                              style={{ filter: "blur(4px)" }}
+                              strokeDasharray="15 45"
+                              fill="none"
+                              animate={{ strokeDashoffset: [0, -60] }}
+                              transition={{ strokeDashoffset: { repeat: Infinity, ease: "linear", duration: 1.5 } }}
+                            />
+                            {/* Flowing animated pulse matching desktop */}
+                            <motion.path
+                              d="M 12 0 L 12 56"
+                              stroke="#C5A47E"
+                              strokeWidth="2.5"
+                              strokeLinecap="round"
+                              strokeDasharray="15 45"
+                              fill="none"
+                              animate={{ strokeDashoffset: [0, -60] }}
+                              transition={{ strokeDashoffset: { repeat: Infinity, ease: "linear", duration: 1.5 } }}
+                            />
+                          </svg>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Right column: card */}
+                    <div className={`pt-1 ${isLast ? 'pb-0' : 'pb-6'} flex-1`}>
+                      <div className="bg-white/50 backdrop-blur-sm border border-neutral-200/50 p-5 rounded-2xl group-hover:border-accent/30 group-hover:bg-white/85 transition-all duration-300 shadow-sm">
+                        <h3 className="text-base font-heading font-semibold mb-2 text-primary group-hover:text-accent transition-colors duration-300">
+                          {step.title}
+                        </h3>
+                        <p className="text-neutral-500 text-xs leading-relaxed font-light">
+                          {step.desc}
+                        </p>
+                      </div>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </motion.div>
+          </div>
         </div>
       </section>
 

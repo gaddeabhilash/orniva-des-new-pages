@@ -64,12 +64,13 @@ const Navbar = () => {
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="hidden md:flex items-center gap-8" aria-label="Main navigation">
           <ul className="flex items-center gap-8 text-[15px] font-semibold transition-colors duration-300">
             {navLinks.map((link) => (
               <li key={link.name}>
                 <Link
                   to={link.path}
+                  aria-current={location.pathname === link.path ? 'page' : undefined}
                   className={`hover:text-accent transition-colors duration-300 relative flex items-center gap-1.5 ${location.pathname === link.path
                       ? 'text-accent'
                       : useWhiteText
@@ -98,6 +99,9 @@ const Navbar = () => {
           className={`md:hidden z-50 p-2 transition-colors duration-300 ${isMobileMenuOpen ? 'text-primary' : useWhiteText ? 'text-white' : 'text-primary'
             }`}
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          aria-label={isMobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+          aria-expanded={isMobileMenuOpen}
+          aria-controls="mobile-nav"
         >
           {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
@@ -112,6 +116,9 @@ const Navbar = () => {
 
         {/* Mobile Nav Overlay / Drawer */}
         <div
+          id="mobile-nav"
+          role="navigation"
+          aria-label="Mobile navigation"
           className={`fixed top-0 left-0 right-0 h-[60vh] min-h-[420px] bg-white z-40 flex flex-col justify-center items-center shadow-xl border-b border-neutral-100 transition-transform duration-500 ease-in-out md:hidden ${isMobileMenuOpen ? 'translate-y-0' : '-translate-y-full'
             }`}
         >

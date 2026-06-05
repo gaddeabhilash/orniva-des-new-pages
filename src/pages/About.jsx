@@ -46,7 +46,15 @@ const About = () => {
                 'https://images.unsplash.com/photo-1600121848594-d8644e57abab'
               ].map((img, i) => (
                 <div key={i} className={`shrink-0 rounded-2xl overflow-hidden shadow-xl ${i % 2 === 0 ? 'w-[300px] h-[400px]' : 'w-[450px] h-[320px]'}`}>
-                  <img src={`${img}?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80`} alt="Project" className="w-full h-full object-cover" />
+                  <img
+                    src={`${img}?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80`}
+                    alt={`Interior design project showcase ${i + 1} by Orniva Design Studio`}
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                    decoding="async"
+                    width="800"
+                    height="600"
+                  />
                 </div>
               ))}
             </div>
@@ -61,7 +69,15 @@ const About = () => {
                 'https://images.unsplash.com/photo-1600121848594-d8644e57abab'
               ].map((img, i) => (
                 <div key={i} className={`shrink-0 rounded-2xl overflow-hidden shadow-xl ${i % 2 === 0 ? 'w-[300px] h-[400px]' : 'w-[450px] h-[320px]'}`}>
-                  <img src={`${img}?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80`} alt="Project" className="w-full h-full object-cover" />
+                  <img
+                    src={`${img}?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80`}
+                    alt={`Interior design project showcase ${i + 1} by Orniva Design Studio`}
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                    decoding="async"
+                    width="800"
+                    height="600"
+                  />
                 </div>
               ))}
             </div>

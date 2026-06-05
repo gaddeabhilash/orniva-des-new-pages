@@ -48,14 +48,14 @@ const Footer = () => {
 
           {/* Socials */}
           <div className="flex gap-6 order-2 md:order-3 text-lg">
-            <a href="https://x.com" target="_blank" rel="noreferrer" className="text-neutral-400 hover:text-white transition-colors">
-              <FaTwitter />
+            <a href="https://x.com" target="_blank" rel="noopener noreferrer" aria-label="Follow Orniva Design Studio on X (Twitter)" className="text-neutral-400 hover:text-white transition-colors">
+              <FaTwitter aria-hidden="true" />
             </a>
-            <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="text-neutral-400 hover:text-white transition-colors">
-              <FaLinkedin />
+            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="Connect with Orniva Design Studio on LinkedIn" className="text-neutral-400 hover:text-white transition-colors">
+              <FaLinkedin aria-hidden="true" />
             </a>
-            <a href="https://www.instagram.com/orniva.design_studio/" target="_blank" rel="noreferrer" className="text-neutral-400 hover:text-white transition-colors">
-              <FaInstagram />
+            <a href="https://www.instagram.com/orniva.design_studio/" target="_blank" rel="noopener noreferrer" aria-label="Follow Orniva Design Studio on Instagram" className="text-neutral-400 hover:text-white transition-colors">
+              <FaInstagram aria-hidden="true" />
             </a>
           </div>
         </div>

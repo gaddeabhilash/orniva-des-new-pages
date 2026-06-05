@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+/* Fonts are loaded non-blocking in index.html — no @import here to avoid double-loading */
 
 @tailwind base;
 @tailwind components;
@@ -18,6 +18,12 @@
     @apply font-heading tracking-tight;
     font-variant-ligatures: none;
   }
+
+  /* Improve focus visibility for accessibility */
+  :focus-visible {
+    outline: 2px solid #C5A47E;
+    outline-offset: 2px;
+  }
 }
 
 @layer utilities {
@@ -27,5 +33,10 @@
 
   .text-gradient-gold {
     @apply bg-gradient-to-r from-[#c5a47e0d] via-[#c5a47e0d] to-[#c5a47e0d] bg-clip-text text-transparent;
+  }
+
+  /* Prevent scrollbar flash on mobile menu open */
+  .no-scroll {
+    overflow: hidden;
   }
 }
