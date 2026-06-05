@@ -220,36 +220,36 @@ const PromiseItem = ({ title, desc, icon, isOpen, onClick }) => {
 };
 
 const STEPS = [
-  { 
-    title: 'Consultation', 
+  {
+    title: 'Consultation',
     desc: 'Understanding your lifestyle, requirements, space potential, and vision.',
     icon: MessageSquare,
     image: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=800&auto=format&fit=crop&q=80',
     deliverables: ['Lifestyle Review', 'Site Mapping', 'Scope Definition', 'Initial Budgeting']
   },
-  { 
-    title: 'Concept Development', 
+  {
+    title: 'Concept Development',
     desc: 'Crafting layout options, mood boards, and overall design direction.',
     icon: Layers,
     image: 'https://images.unsplash.com/photo-1507652313519-d4e9174996dd?w=800&auto=format&fit=crop&q=80',
     deliverables: ['2D Floor Plans', 'Color Palettes', 'Moodboards', 'Design Direction']
   },
-  { 
-    title: 'Material Selection', 
+  {
+    title: 'Material Selection',
     desc: 'Choosing finishes, textures, lighting fixtures, hardware, and color schemes.',
     icon: Palette,
     image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&auto=format&fit=crop&q=80',
     deliverables: ['Hardware Selection', 'Finishes & Textures', 'Lighting Plans', 'Custom Carpentry specs']
   },
-  { 
-    title: 'Execution', 
+  {
+    title: 'Execution',
     desc: 'Turnkey site implementation, carpentry, electrical work, and quality audits.',
     icon: Hammer,
     image: 'https://images.unsplash.com/photo-1504148455328-c376907d081c?w=800&auto=format&fit=crop&q=80',
     deliverables: ['Site Coordination', 'Carpentry & Fittings', 'Electrical Execution', 'Quality Inspections']
   },
-  { 
-    title: 'Final Styling', 
+  {
+    title: 'Final Styling',
     desc: 'Placing custom furniture, decor items, and perfect handover touches.',
     icon: Sparkles,
     image: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=800&auto=format&fit=crop&q=80',
@@ -259,7 +259,7 @@ const STEPS = [
 
 const Home = () => {
   const [formData, setFormData] = useState({ name: '', phone: '', project_type: '' });
-          const { scrollY } = useScroll();
+  const { scrollY } = useScroll();
 
   // High-end real-time scroll parallax for the background image
   const yBg = useTransform(scrollY, [0, 800], [0, 180]);
@@ -444,20 +444,20 @@ const Home = () => {
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
           >
             {[
-              { 
-                title: 'Residential interiors', 
+              {
+                title: 'Residential interiors',
                 desc: 'Warm, functional homes planned around your routines, storage, light, and finishes.'
               },
-              { 
-                title: 'Commercial spaces', 
+              {
+                title: 'Commercial spaces',
                 desc: 'Workplaces, studios, salons, and retail spaces shaped for flow and brand presence.'
               },
-              { 
-                title: 'Furniture and decor', 
+              {
+                title: 'Furniture and decor',
                 desc: 'Custom furniture, material palettes, soft furnishings, and styling details.'
               },
-              { 
-                title: 'Space planning', 
+              {
+                title: 'Space planning',
                 desc: 'Layouts, zoning, 3D views, and detail-ready plans before work begins on site.'
               }
             ].map((service, i) => (
@@ -640,24 +640,24 @@ const Home = () => {
             {/* Style 2 Desktop Timeline (Hidden on small screens) */}
             <div className="hidden lg:block relative min-h-[380px] mb-12">
               {/* Horizontal SVG Bezier Wavy Line */}
-              <svg 
-                className="absolute top-0 left-0 w-full h-[200px] pointer-events-none z-0 overflow-visible" 
-                viewBox="0 0 1000 200" 
+              <svg
+                className="absolute top-0 left-0 w-full h-[200px] pointer-events-none z-0 overflow-visible"
+                viewBox="0 0 1000 200"
                 preserveAspectRatio="none"
               >
                 {/* Light background track line */}
-                <path 
-                  d="M 100 40 C 200 40, 200 136, 300 136 C 400 136, 400 40, 500 40 C 600 40, 600 136, 700 136 C 800 136, 800 40, 900 40" 
-                  stroke="#C5A47E" 
-                  strokeWidth="2" 
-                  strokeOpacity="0.15" 
+                <path
+                  d="M 100 40 C 200 40, 200 136, 300 136 C 400 136, 400 40, 500 40 C 600 40, 600 136, 700 136 C 800 136, 800 40, 900 40"
+                  stroke="#C5A47E"
+                  strokeWidth="2"
+                  strokeOpacity="0.15"
                   fill="none"
                 />
                 {/* Glow blur behind moving pulse */}
-                <motion.path 
-                  d="M 100 40 C 200 40, 200 136, 300 136 C 400 136, 400 40, 500 40 C 600 40, 600 136, 700 136 C 800 136, 800 40, 900 40" 
-                  stroke="#C5A47E" 
-                  strokeWidth="8" 
+                <motion.path
+                  d="M 100 40 C 200 40, 200 136, 300 136 C 400 136, 400 40, 500 40 C 600 40, 600 136, 700 136 C 800 136, 800 40, 900 40"
+                  stroke="#C5A47E"
+                  strokeWidth="8"
                   strokeLinecap="round"
                   strokeOpacity="0.4"
                   style={{ filter: "blur(6px)" }}
@@ -667,10 +667,10 @@ const Home = () => {
                   transition={{ strokeDashoffset: { repeat: Infinity, ease: "linear", duration: 3.5 } }}
                 />
                 {/* Flowing animated pulse */}
-                <motion.path 
-                  d="M 100 40 C 200 40, 200 136, 300 136 C 400 136, 400 40, 500 40 C 600 40, 600 136, 700 136 C 800 136, 800 40, 900 40" 
-                  stroke="#C5A47E" 
-                  strokeWidth="3" 
+                <motion.path
+                  d="M 100 40 C 200 40, 200 136, 300 136 C 400 136, 400 40, 500 40 C 600 40, 600 136, 700 136 C 800 136, 800 40, 900 40"
+                  stroke="#C5A47E"
+                  strokeWidth="3"
                   strokeLinecap="round"
                   strokeDasharray="60 200"
                   fill="none"
@@ -680,20 +680,20 @@ const Home = () => {
               </svg>
 
               {/* Steps grid */}
-              <motion.div 
-                variants={staggerContainer} 
-                initial="hidden" 
-                whileInView="visible" 
-                viewport={{ once: true }} 
+              <motion.div
+                variants={staggerContainer}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
                 className="grid grid-cols-5 gap-8 relative z-10"
               >
                 {STEPS.map((step, i) => {
                   const Icon = step.icon;
                   const isOdd = i % 2 !== 0;
                   return (
-                    <motion.div 
-                      key={i} 
-                      variants={fadeIn} 
+                    <motion.div
+                      key={i}
+                      variants={fadeIn}
                       className={`flex flex-col items-center text-center group transition-all duration-500 ${isOdd ? 'mt-24' : 'mt-0'}`}
                     >
                       {/* Circle Node Container */}
@@ -702,12 +702,12 @@ const Home = () => {
                         <span className="absolute -top-2.5 -right-2.5 bg-primary text-white text-[10px] font-bold px-2 py-0.5 rounded-full border border-white/10 shadow-sm z-20 transition-all duration-300 group-hover:bg-accent group-hover:scale-110">
                           0{i + 1}
                         </span>
-                        
+
                         {/* Circle Outer Glow */}
                         <div className="absolute inset-0 rounded-full bg-accent/20 opacity-0 blur-md transition-all duration-500 group-hover:opacity-100 group-hover:scale-125 z-0" />
-                        
+
                         {/* Inner Circle Node */}
-                        <motion.div 
+                        <motion.div
                           className="relative w-20 h-20 rounded-full bg-white border border-neutral-200 flex items-center justify-center shadow-sm z-10 transition-all duration-500 group-hover:border-accent/80 group-hover:scale-105"
                           whileHover={{ scale: 1.05 }}
                           transition={{ type: "spring", stiffness: 300, damping: 20 }}
@@ -1175,7 +1175,7 @@ const Home = () => {
                     </span>
                     <ChevronDown size={20} className={`text-neutral-400 transition-transform ${isSelectOpen ? 'rotate-180' : ''}`} />
                   </div>
- 
+
                   <AnimatePresence>
                     {isSelectOpen && (
                       <motion.div
@@ -1204,13 +1204,13 @@ const Home = () => {
                     )}
                   </AnimatePresence>
                 </div>
- 
+
                 {errorMsg && (
                   <div className="md:col-span-2 p-3 bg-red-500/10 text-red-400 text-sm rounded-xl border border-red-500/20">
                     {errorMsg}
                   </div>
                 )}
- 
+
                 <div className="md:col-span-2 mt-4">
                   <button
                     type="submit"
