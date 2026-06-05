@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight, ChevronDown, Loader2, Plus, Minus, MessageSquare, Layers, Palette, Hammer, Sparkles } from 'lucide-react';
@@ -26,100 +26,6 @@ const collaborators = [
   "TURSO", "clerk", "Claude", "Vercel"
 ];
 
-// ─────────────────────────────────────────────────────────────
-// TESTIMONIALS — Edit, add or remove reviews here.
-// • To ADD a review    → copy any block below and paste it at the end of the array.
-// • To REMOVE a review → delete the entire { ... } block for that entry.
-// • To EDIT a review   → change any field: quote, name, project, location, or avatar.
-//
-// Row 1 uses entries [0–4]  (first 5)
-// Row 2 uses entries [5–9]  (last 5)
-// Keep the total at 10 for the best layout (5 per row).
-// ─────────────────────────────────────────────────────────────
-const TESTIMONIALS = [
-  // ── Row 1 ──────────────────────────────────────────────────
-  {
-    quote: "Orniva completely transformed our 3BHK into something we genuinely love coming home to. The attention to detail in every corner was remarkable. Worth every rupee.",
-    name: "Priya & Arjun Mehta",
-    project: "3BHK Residential",
-    location: "Banjara Hills",
-    avatar: "https://images.unsplash.com/photo-1614283233556-f35b0c801ef1?w=120&h=120&fit=crop&crop=face&q=80",
-    rating: 5,
-  },
-  {
-    quote: "What impressed me most was how they understood our lifestyle and translated it into the design without us having to explain twice. The 3D renders were spot on.",
-    name: "Siddharth Rao",
-    project: "Villa Interior",
-    location: "Jubilee Hills",
-    avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=120&h=120&fit=crop&crop=face&q=80",
-    rating: 4,
-  },
-  {
-    quote: "We were worried about the budget but Orniva gave us a premium outcome at a price that made sense. The founder was involved at every step — that made all the difference.",
-    name: "Kavitha Nair",
-    project: "2BHK Apartment",
-    location: "Madhapur",
-    avatar: "https://images.unsplash.com/photo-1589156280159-27698a70f29e?w=120&h=120&fit=crop&crop=face&q=80",
-    rating: 5,
-  },
-  {
-    quote: "Our salon looks absolutely stunning. Clients comment on the interiors every single day. The brand feel we wanted came through perfectly. Highly recommend.",
-    name: "Deepika Sharma",
-    project: "Commercial Salon",
-    location: "Kukatpally",
-    avatar: "https://images.unsplash.com/photo-1609357605129-26f69add5d6e?w=120&h=120&fit=crop&crop=face&q=80",
-    rating: 5,
-  },
-  {
-    quote: "Fast, transparent, and incredibly creative. The WhatsApp updates kept us in the loop without us having to chase anyone. The handover was seamless.",
-    name: "Rahul & Sneha Verma",
-    project: "Duplex Penthouse",
-    location: "Gachibowli",
-    avatar: "https://images.unsplash.com/photo-1566492031773-4f4e44671857?w=120&h=120&fit=crop&crop=face&q=80",
-    rating: 4,
-  },
-  // ── Row 2 ──────────────────────────────────────────────────
-  {
-    quote: "The space planning alone saved us so much space we didn't even know we had. Our small apartment now feels open, elegant, and surprisingly spacious.",
-    name: "Ananya Krishnan",
-    project: "Compact Apartment",
-    location: "Kondapur",
-    avatar: "https://images.unsplash.com/photo-1619380061814-58f03707f082?w=120&h=120&fit=crop&crop=face&q=80",
-    rating: 5,
-  },
-  {
-    quote: "I came in with a vague mood board and left with a fully realized design that exceeded it. The team's aesthetic sensibility is genuinely refined.",
-    name: "Vikram Choudhary",
-    project: "Boutique Office",
-    location: "Film Nagar",
-    avatar: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=120&h=120&fit=crop&crop=face&q=80",
-    rating: 5,
-  },
-  {
-    quote: "From the first consultation to final styling, everything felt curated and intentional. Our home finally feels like it belongs to us. Thank you, Orniva.",
-    name: "Meera & Suresh Pillai",
-    project: "4BHK Renovation",
-    location: "Hitec City",
-    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&h=120&fit=crop&crop=face&q=80",
-    rating: 4,
-  },
-  {
-    quote: "The kitchen redesign changed how we cook and feel at home. Every drawer, shelf, and light placement was thought through with incredible care.",
-    name: "Sunita Reddy",
-    project: "Kitchen Remodel",
-    location: "Secunderabad",
-    avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=120&h=120&fit=crop&crop=face&q=80",
-    rating: 5,
-  },
-  {
-    quote: "Working with Orniva was effortless. They handled everything — vendors, timelines, decisions — so we could focus on our lives. The result speaks for itself.",
-    name: "Aditya & Pooja Bhat",
-    project: "Full Home Design",
-    location: "Manikonda",
-    avatar: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=120&h=120&fit=crop&crop=face&q=80",
-    rating: 5,
-  },
-];
 
 const FAQItem = ({ question, answer, index }) => {
   const [isOpen, setIsOpen] = useState(false);
