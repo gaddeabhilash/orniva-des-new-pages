@@ -16,8 +16,7 @@ const Services = lazy(() => import('./pages/Services'));
 const About = lazy(() => import('./pages/About'));
 const Contact = lazy(() => import('./pages/Contact'));
 const CostCalculator = lazy(() => import('./pages/CostCalculator'));
-const LuxeInteriors = lazy(() => import('./pages/LuxeInteriors'));
-const LuxeGate = lazy(() => import('./components/LuxeGate'));
+
 const NotFound = lazy(() => import('./pages/NotFound'));
 
 // Minimal loading fallback — invisible to avoid CLS
@@ -57,7 +56,7 @@ function App() {
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/calculator" element={<CostCalculator />} />
-              <Route path="/luxe" element={<LuxeGate><LuxeInteriors /></LuxeGate>} />
+
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>
