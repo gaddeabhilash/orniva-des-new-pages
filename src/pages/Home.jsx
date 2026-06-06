@@ -559,18 +559,17 @@ const Home = () => {
                   strokeOpacity="0.15"
                   fill="none"
                 />
-                {/* Glow blur behind moving pulse */}
+                {/* Glow blur behind active line */}
                 <motion.path
                   d="M 100 40 C 200 40, 200 136, 300 136 C 400 136, 400 40, 500 40 C 600 40, 600 136, 700 136 C 800 136, 800 40, 900 40"
                   stroke="#C5A47E"
                   strokeWidth="8"
                   strokeLinecap="round"
-                  strokeOpacity="0.4"
                   style={{ filter: "blur(6px)" }}
-                  strokeDasharray="60 200"
                   fill="none"
-                  animate={{ strokeDashoffset: [0, -260] }}
-                  transition={{ strokeDashoffset: { repeat: Infinity, ease: "linear", duration: 3.5 } }}
+                  initial={{ pathLength: 0, opacity: 0 }}
+                  animate={{ pathLength: [0, 1, 1], opacity: [0, 0.4, 0] }}
+                  transition={{ repeat: Infinity, ease: "easeInOut", duration: 3, times: [0, 0.8, 1] }}
                 />
                 {/* Flowing animated pulse */}
                 <motion.path
@@ -578,10 +577,10 @@ const Home = () => {
                   stroke="#C5A47E"
                   strokeWidth="3"
                   strokeLinecap="round"
-                  strokeDasharray="60 200"
                   fill="none"
-                  animate={{ strokeDashoffset: [0, -260] }}
-                  transition={{ strokeDashoffset: { repeat: Infinity, ease: "linear", duration: 3.5 } }}
+                  initial={{ pathLength: 0, opacity: 0 }}
+                  animate={{ pathLength: [0, 1, 1], opacity: [0, 1, 0] }}
+                  transition={{ repeat: Infinity, ease: "easeInOut", duration: 3, times: [0, 0.8, 1] }}
                 />
               </svg>
 
@@ -692,12 +691,11 @@ const Home = () => {
                               stroke="#C5A47E"
                               strokeWidth="6"
                               strokeLinecap="round"
-                              strokeOpacity="0.4"
                               style={{ filter: "blur(4px)" }}
-                              strokeDasharray="15 45"
                               fill="none"
-                              animate={{ strokeDashoffset: [0, -60] }}
-                              transition={{ strokeDashoffset: { repeat: Infinity, ease: "linear", duration: 1.5 } }}
+                              initial={{ pathLength: 0, opacity: 0 }}
+                              animate={{ pathLength: [0, 1, 1], opacity: [0, 0.4, 0] }}
+                              transition={{ repeat: Infinity, ease: "easeInOut", duration: 3, times: [0, 0.8, 1] }}
                             />
                             {/* Flowing animated pulse matching desktop */}
                             <motion.path
@@ -705,10 +703,10 @@ const Home = () => {
                               stroke="#C5A47E"
                               strokeWidth="2.5"
                               strokeLinecap="round"
-                              strokeDasharray="15 45"
                               fill="none"
-                              animate={{ strokeDashoffset: [0, -60] }}
-                              transition={{ strokeDashoffset: { repeat: Infinity, ease: "linear", duration: 1.5 } }}
+                              initial={{ pathLength: 0, opacity: 0 }}
+                              animate={{ pathLength: [0, 1, 1], opacity: [0, 1, 0] }}
+                              transition={{ repeat: Infinity, ease: "easeInOut", duration: 3, times: [0, 0.8, 1] }}
                             />
                           </svg>
                         </div>
